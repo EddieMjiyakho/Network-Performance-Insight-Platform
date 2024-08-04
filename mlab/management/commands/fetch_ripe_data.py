@@ -1,6 +1,6 @@
 import requests
 from django.core.management.base import BaseCommand
-from mlab.models import RipeData
+from mlab.models import RipeAtlasData
 from datetime import datetime
 
 class Command(BaseCommand):
@@ -40,7 +40,7 @@ class Command(BaseCommand):
         if response.status_code == 200:
             data = response.json()
             for record in data:
-                RipeData.objects.create(
+                RipeAtlasData.objects.create(
                     probe_id=record.get('probe', {}).get('id'),
                     measurement_id=record.get('measurement_id'),
                     timestamp=record.get('timestamp'),
