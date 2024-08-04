@@ -26,7 +26,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR("Start time and End time must be in the format YYYY-MM-DDTHH:MM:SSZ"))
             return
 
-        url = "https://atlas.ripe.net/api/v2/measurements"
+        url = "https://atlas.ripe.net/api/v2/measurements?format=api"
         params = {
             "start_time": start_time,
             "end_time": end_time,
