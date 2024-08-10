@@ -1,36 +1,69 @@
-# Script to fetch data from the M-Lab API and stores it in the database
+# network/management/commands/fetch_data.py
 
-import requests
 from django.core.management.base import BaseCommand
-from mlab.models import MLabData
+from google.cloud import bigquery
+from mlab.models import NetworkPerformance 
 
 class Command(BaseCommand):
-    help = 'Fetches data from the M-Lab API and stores it in the database'
+    help = 'Fetch data from BigQuery and insert into PostgreSQL'
 
-    # Define the API endpoint and parameter
     def handle(self, *args, **kwargs):
-        url = "https://api.measurementlab.net/v1/ndt/tcpinfo"
-        params = {
-            "start_time": "2023-01-01T00:00:00Z",  # Example start time
-            "end_time": "2023-01-02T00:00:00Z",    # Example end time
-            "format": "json",                      # Response format
-            "limit": 10                            # Number of results
-        }
+        query = """
+            SELECT
+            date,
+            clientCountry,
+            clientASN,
+            -- Calculate average for download.bps array and round to 2 decimal places
+            ROUND(
+                (
+                SELECT
+                    AVG(value)
+                FROM
+                    UNNEST(download.bps) AS value
+                ), 2
+            ) AS avg_download_speed,
+            -- Calculate average for upload.bps array and round to 2 decimal places
+            ROUND(
+                (
+                SELECT
+                    AVG(value)
+                FROM
+                    UNNEST(upload.bps) AS value
+                ), 2
+            ) AS avg_upload_speed,
+            -- Calculate average for latencyMs array and round to 2 decimal places
+            ROUND(
+                (
+                SELECT
+                    AVG(value)
+                FROM
+                    UNNEST(latencyMs) AS value
+                ), 2
+            ) AS avg_latency
+            FROM
+            `measurement-lab.cloudflare.speedtest_speed1`
+            WHERE
+            clientCountry IN ('AD', 'AO', 'BJ', 'BW', 'BF', 'BI', 'CM', 'CV', 'CF', 'TD', 'KM', 'CG', 'CD', 'DJ', 'EG', 'GQ', 'ER', 'SZ', 'ET', 'GA', 'GM', 'GH', 'GN', 'GW', 'CI', 'KE', 'LS', 'LR', 'LY', 'MG', 'MW', 'ML', 'MR', 'MU', 'MA', 'MZ', 'NA', 'NE', 'NG', 'RW', 'SH', 'ST', 'SN', 'SC', 'SL', 'SO', 'ZA', 'SS', 'SD', 'TZ', 'TG', 'TN', 'UG', 'ZM', 'ZW')
+            AND date >= '2023-01-01' AND date <= '2023-12-31'
+            ORDER BY
+            date ASC
+            LIMIT 100;
+        """
 
-        # Make the request to M-Lab API
-        response = requests.get(url, params=params)
+        client = bigquery.Client()
+        query_job = client.query(query)
+        results = query_job.result()
 
-        # Check if the request was successful
-        if response.status_code == 200:
-            data = response.json()
-            for record in data:
-                MLabData.objects.create(
-                    test_id=record.get('test_id'),
-                    download_throughput=record.get('download_throughput'),
-                    upload_throughput=record.get('upload_throughput'),
-                    latency=record.get('latency')
-                )
-            self.stdout.write(self.style.SUCCESS('Data inserted successfully.'))
-        else:
-            self.stdout.write(self.style.ERROR(f"Failed to retrieve data: {response.status_code}"))
+        for row in results:
+            NetworkPerformance.objects.update_or_create(
+                date=row.date,
+                clientCountry=row.clientCountry,
+                clientASN=row.clientASN,
+                defaults={
+                    'avg_download_speed': row.avg_download_speed,
+                    'avg_upload_speed': row.avg_upload_speed,
+                    'avg_latency': row.avg_latency,
+                }
+            )
 
+        self.stdout.write(self.style.SUCCESS('Successfully fetched and inserted data'))
