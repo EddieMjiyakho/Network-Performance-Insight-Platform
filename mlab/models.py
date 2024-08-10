@@ -18,3 +18,11 @@ class RipeAtlasData(models.Model):
 
     def __str__(self):
         return f"Probe ID: {self.probe_id}, Measurement ID: {self.measurement_id}"
+
+class NetworkPerformance(models.Model):
+    date = models.DateField()
+    clientCountry = models.CharField(max_length=255)
+    clientASN = models.CharField(max_length=255)
+    avg_download_speed = models.FloatField()
+    avg_upload_speed = models.FloatField()
+    avg_latency = models.FloatField()
