@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 class MLabData(models.Model):
     download_throughput = models.FloatField()
     upload_throughput = models.FloatField()
