@@ -1,6 +1,14 @@
 from django.db import models
 
-# Create your models here.
+from rest_framework import serializers
+from .models import MyModel
+
+# Define your models in models.py and create serializers in serializers.py
+
+class MyModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyModel
+        fields = '__all__'
 
 class MLabData(models.Model):
     download_throughput = models.FloatField()
