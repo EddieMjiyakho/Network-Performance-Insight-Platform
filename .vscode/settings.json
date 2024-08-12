@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "name": "BigQuery",
+            "authenticator": "CLI",
+            "location": "us",
+            "previewLimit": 500000,
+            "driver": "BigQuery",
+            "projectId": "measurement-lab"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
