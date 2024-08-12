@@ -67,6 +67,8 @@ class Command(BaseCommand):
             NetworkPerformance.objects.update_or_create(
                 date=row.date,
                 clientCountry=row.clientCountry,
+                clientCity=row.clientCity,
+                clientRegion=row.clientRegion,
                 clientASN=row.clientASN,
                 defaults={
                     'avg_download_speed': row.avg_download_speed,
