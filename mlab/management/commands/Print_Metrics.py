@@ -1,11 +1,11 @@
 from django.core.management.base import BaseCommand
-from mlab.models import NetworkPerformance  # Replace 'your_app' with your app name
+from mlab.models import NetworkPerformanceData  # Replace 'your_app' with your app name
 
 class Command(BaseCommand):
     help = 'Print all network performance metrics'
 
     def handle(self, *args, **kwargs):
-        metrics = NetworkPerformance.objects.all()
+        metrics = NetworkPerformanceData.objects.all()
         for metric in metrics:
             self.stdout.write(
                 f"Date: {metric.date}, Download Speed: {metric.avg_download_speed}, "
