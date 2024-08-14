@@ -2,7 +2,7 @@
 
 from django.core.management.base import BaseCommand
 from google.cloud import bigquery
-from mlab.models import NetworkPerformance 
+from mlab.models import NetworkPerformanceData 
 
 class Command(BaseCommand):
     help = 'Fetch data from BigQuery and insert into PostgreSQL'
@@ -56,15 +56,16 @@ class Command(BaseCommand):
                 AND ARRAY_LENGTH(latencyMs) > 0
             ORDER BY
                 date ASC
-            LIMIT 500000;
+            LIMIT 30000;
         """
 
         client = bigquery.Client()
         query_job = client.query(query)
         results = query_job.result()
 
+
         for row in results:
-            NetworkPerformance.objects.update_or_create(
+            NetworkPerformanceData.objects.update_or_create(
                 date=row.date,
                 clientCountry=row.clientCountry,
                 clientCity=row.clientCity,
