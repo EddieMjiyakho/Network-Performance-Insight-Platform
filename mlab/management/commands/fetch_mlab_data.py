@@ -56,7 +56,7 @@ class Command(BaseCommand):
                 AND ARRAY_LENGTH(latencyMs) > 0
             ORDER BY
                 date ASC
-            LIMIT 30000;
+            LIMIT 300000;
         """
 
         client = bigquery.Client()
