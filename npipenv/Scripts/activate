@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Sakhile Mjiyakho\OneDrive - University of Cape Town\Desktop\NPIP\npip\npipenv"
+VIRTUAL_ENV="C:\Users\Lehlohonolo\OneDrive - University of Cape Town\Desktop\NPIP\npip\npipenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
