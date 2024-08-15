@@ -1,13 +1,14 @@
-# network/management/commands/fetch_data.py
-
 from django.core.management.base import BaseCommand
 from google.cloud import bigquery
-from mlab.models import NetworkPerformanceData 
+from mlab.models import NetworkPerformanceData
+import logging
 
 class Command(BaseCommand):
     help = 'Fetch data from BigQuery and insert into PostgreSQL'
 
     def handle(self, *args, **kwargs):
+        logging.info('Starting data fetch from BigQuery')
+
         query = """
             SELECT
                 date,
@@ -69,23 +70,30 @@ class Command(BaseCommand):
                 date, clientCountry, clientCity, clientRegion, clientASN
         """
 
-        client = bigquery.Client()
-        query_job = client.query(query)
-        results = query_job.result()
+        try:
+            client = bigquery.Client()
+            query_job = client.query(query)
+            results = query_job.result()
+            
+            objects_to_update = []
 
+            for row in results:
+                obj, created = NetworkPerformanceData.objects.update_or_create(
+                    date=row.date,
+                    clientCountry=row.clientCountry,
+                    clientCity=row.clientCity,
+                    clientRegion=row.clientRegion,
+                    clientASN=row.clientASN,
+                    defaults={
+                        'avg_download_speed': row.avg_download_speed,
+                        'avg_upload_speed': row.avg_upload_speed,
+                        'avg_latency': row.avg_latency,
+                    }
+                )
+                objects_to_update.append(obj)
 
-        for row in results:
-            NetworkPerformanceData.objects.update_or_create(
-                date=row.date,
-                clientCountry=row.clientCountry,
-                clientCity=row.clientCity,
-                clientRegion=row.clientRegion,
-                clientASN=row.clientASN,
-                defaults={
-                    'avg_download_speed': row.avg_download_speed,
-                    'avg_upload_speed': row.avg_upload_speed,
-                    'avg_latency': row.avg_latency,
-                }
-            )
+            self.stdout.write(self.style.SUCCESS(f'Successfully fetched and inserted data for {len(objects_to_update)} records'))
 
-        self.stdout.write(self.style.SUCCESS('Successfully fetched and inserted data'))
+        except Exception as e:
+            logging.error(f'Error occurred: {e}')
+            self.stdout.write(self.style.ERROR(f'Failed to fetch and insert data: {e}'))
