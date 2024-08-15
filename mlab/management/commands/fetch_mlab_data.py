@@ -63,7 +63,7 @@ class Command(BaseCommand):
                     AND ARRAY_LENGTH(latencyMs) > 0
                 ORDER BY
                     date ASC
-                LIMIT 100000;
+                LIMIT 100000
             )
             GROUP BY
                 date, clientCountry, clientCity, clientRegion, clientASN
