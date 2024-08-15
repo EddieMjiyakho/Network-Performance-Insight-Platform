@@ -46,7 +46,7 @@ class Command(BaseCommand):
                 `measurement-lab.cloudflare.speedtest_speed1`
             WHERE
                 clientCountry IN ('AD', 'AO', 'BJ', 'BW', 'BF', 'BI', 'CM', 'CV', 'CF', 'TD', 'KM', 'CG', 'CD', 'DJ', 'EG', 'GQ', 'ER', 'SZ', 'ET', 'GA', 'GM', 'GH', 'GN', 'GW', 'CI', 'KE', 'LS', 'LR', 'LY', 'MG', 'MW', 'ML', 'MR', 'MU', 'MA', 'MZ', 'NA', 'NE', 'NG', 'RW', 'SH', 'ST', 'SN', 'SC', 'SL', 'SO', 'ZA', 'SS', 'SD', 'TZ', 'TG', 'TN', 'UG', 'ZM', 'ZW')
-                AND date >= '2023-08-01' AND date <= '2024-08-12'
+                AND date >= '2023-08-01'
                 AND clientCountry IS NOT NULL AND clientCountry != ''
                 AND clientRegion IS NOT NULL AND clientRegion != ''
                 AND clientCity IS NOT NULL AND clientCity != ''
