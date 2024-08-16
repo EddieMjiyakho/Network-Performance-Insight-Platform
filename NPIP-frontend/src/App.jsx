@@ -1,31 +1,89 @@
-import { useState } from 'react'
-import './App.css'
+import React from "react";
+import { Chart as ChartJS, defaults } from "chart.js/auto";
+import { Bar } from "react-chartjs-2";
 
-function App() {
-  const [count, setCount] = useState(0)
+import "./App.css";
+import sourceData from "./data/sourceData.json"; 
 
-  useEffect(() => {
-    // Accessing the environment variable for the API URL
-    const apiUrl = import.meta.env.VITE_API_URL;
+defaults.maintainAspectRatio = false;
+defaults.responsive = true;
 
-    // Making a fetch request to the Django backend
-    fetch(`${apiUrl}/mymodel/`)
-        .then(response => response.json())
-        .then(data => setData(data))
-        .catch(error => console.error('Error fetching data:', error));
-  }, []);
+defaults.plugins.title.display = true;
+defaults.plugins.title.align = "start";
+defaults.plugins.title.font.size = 20;
+defaults.plugins.title.color = "black";
 
+export const App = () => {
   return (
-      <div className="App">
-          <h1>Data from Django API</h1>
-          <ul>
-              {data.map(item => (
-                  <li key={item.id}>{item.name}</li>
-              ))}
-          </ul>
+    <div className="App">
+      <div className="dataCard downloadSpeedCard">
+        <Bar
+          data={{
+            labels: sourceData.map((data) => data.clientASN),
+            datasets: [
+              {
+                label: "Average Download Speed",
+                data: sourceData.map((data) => Number(data.avg_download_speed)),
+                backgroundColor: "rgba(75, 192, 192, 0.8)",
+                borderRadius: 5,
+              },
+            ],
+          }}
+          options={{
+            plugins: {
+              title: {
+                text: "Average Download Speed by ASN",
+              },
+            },
+          }}
+        />
       </div>
+
+      <div className="dataCard uploadSpeedCard">
+        <Bar
+          data={{
+            labels: sourceData.map((data) => data.clientASN),
+            datasets: [
+              {
+                label: "Average Upload Speed",
+                data: sourceData.map((data) => Number(data.avg_upload_speed)),
+                backgroundColor: "rgba(153, 102, 255, 0.8)",
+                borderRadius: 5,
+              },
+            ],
+          }}
+          options={{
+            plugins: {
+              title: {
+                text: "Average Upload Speed by ASN",
+              },
+            },
+          }}
+        />
+      </div>
+
+      <div className="dataCard latencyCard">
+        <Bar
+          data={{
+            labels: sourceData.map((data) => data.clientASN),
+            datasets: [
+              {
+                label: "Average Latency",
+                data: sourceData.map((data) => Number(data.avg_latency)),
+                backgroundColor: "rgba(255, 99, 132, 0.8)",
+                borderRadius: 5,
+              },
+            ],
+          }}
+          options={{
+            plugins: {
+              title: {
+                text: "Average Latency by ASN",
+              },
+            },
+          }}
+        />
+      </div>
+    </div>
   );
-}
-
-
-export default App
+};
