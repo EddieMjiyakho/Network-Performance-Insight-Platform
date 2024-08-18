@@ -1,38 +1,81 @@
 import React from "react";
-import { Chart as ChartJS, defaults } from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
-
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
 import "./App.css";
-import sourceData from "./data/sourceData.json"; 
+import sourceData from "./data/sourceData.json";
 
-defaults.maintainAspectRatio = false;
-defaults.responsive = true;
-
-defaults.plugins.title.display = true;
-defaults.plugins.title.align = "start";
-defaults.plugins.title.font.size = 20;
-defaults.plugins.title.color = "black";
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
 
 export const App = () => {
+  // Ensure data is properly formatted
+  const downloadSpeedData = {
+    labels: sourceData.map((data) => data.clientASN),
+    datasets: [
+      {
+        label: "Average Download Speed",
+        data: sourceData.map((data) => Number(data.avg_download_speed)),
+        backgroundColor: "rgba(75, 192, 192, 0.8)",
+        borderRadius: 5,
+      },
+    ],
+  };
+
+  const uploadSpeedData = {
+    labels: sourceData.map((data) => data.clientASN),
+    datasets: [
+      {
+        label: "Average Upload Speed",
+        data: sourceData.map((data) => Number(data.avg_upload_speed)),
+        backgroundColor: "rgba(153, 102, 255, 0.8)",
+        borderRadius: 5,
+      },
+    ],
+  };
+
+  const latencyData = {
+    labels: sourceData.map((data) => data.clientASN),
+    datasets: [
+      {
+        label: "Average Latency",
+        data: sourceData.map((data) => Number(data.avg_latency)),
+        backgroundColor: "rgba(255, 99, 132, 0.8)",
+        borderRadius: 5,
+      },
+    ],
+  };
+
   return (
     <div className="App">
       <div className="dataCard downloadSpeedCard">
         <Bar
-          data={{
-            labels: sourceData.map((data) => data.clientASN),
-            datasets: [
-              {
-                label: "Average Download Speed",
-                data: sourceData.map((data) => Number(data.avg_download_speed)),
-                backgroundColor: "rgba(75, 192, 192, 0.8)",
-                borderRadius: 5,
-              },
-            ],
-          }}
+          data={downloadSpeedData}
           options={{
             plugins: {
               title: {
+                display: true,
                 text: "Average Download Speed by ASN",
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Client ASN",
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Speed (bps)",
+                },
+                beginAtZero: true,
               },
             },
           }}
@@ -41,21 +84,27 @@ export const App = () => {
 
       <div className="dataCard uploadSpeedCard">
         <Bar
-          data={{
-            labels: sourceData.map((data) => data.clientASN),
-            datasets: [
-              {
-                label: "Average Upload Speed",
-                data: sourceData.map((data) => Number(data.avg_upload_speed)),
-                backgroundColor: "rgba(153, 102, 255, 0.8)",
-                borderRadius: 5,
-              },
-            ],
-          }}
+          data={uploadSpeedData}
           options={{
             plugins: {
               title: {
+                display: true,
                 text: "Average Upload Speed by ASN",
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Client ASN",
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Speed (bps)",
+                },
+                beginAtZero: true,
               },
             },
           }}
@@ -64,21 +113,27 @@ export const App = () => {
 
       <div className="dataCard latencyCard">
         <Bar
-          data={{
-            labels: sourceData.map((data) => data.clientASN),
-            datasets: [
-              {
-                label: "Average Latency",
-                data: sourceData.map((data) => Number(data.avg_latency)),
-                backgroundColor: "rgba(255, 99, 132, 0.8)",
-                borderRadius: 5,
-              },
-            ],
-          }}
+          data={latencyData}
           options={{
             plugins: {
               title: {
+                display: true,
                 text: "Average Latency by ASN",
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Client ASN",
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Latency (ms)",
+                },
+                beginAtZero: true,
               },
             },
           }}
