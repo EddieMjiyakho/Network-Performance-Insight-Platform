@@ -3,6 +3,9 @@ from google.cloud import bigquery
 from mlab.models import NetworkPerformanceData
 import logging
 
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+
 class Command(BaseCommand):
     help = 'Fetch data from BigQuery and insert into PostgreSQL'
 
@@ -74,8 +77,9 @@ class Command(BaseCommand):
             client = bigquery.Client()
             query_job = client.query(query)
             results = query_job.result()
-            
-            objects_to_update = []
+
+            new_records_count = 0
+            updated_records_count = 0
 
             for row in results:
                 obj, created = NetworkPerformanceData.objects.update_or_create(
@@ -90,10 +94,17 @@ class Command(BaseCommand):
                         'avg_latency': row.avg_latency,
                     }
                 )
-                objects_to_update.append(obj)
+                if created:
+                    new_records_count += 1
+                else:
+                    updated_records_count += 1
 
-            self.stdout.write(self.style.SUCCESS(f'Successfully fetched and inserted data for {len(objects_to_update)} records'))
+            # Print results
+            self.stdout.write(self.style.SUCCESS(f'Successfully fetched data. New records: {new_records_count}, Updated records: {updated_records_count}'))
 
         except Exception as e:
             logging.error(f'Error occurred: {e}')
             self.stdout.write(self.style.ERROR(f'Failed to fetch and insert data: {e}'))
+
+        finally:
+            client.close()
