@@ -99,8 +99,14 @@ class Command(BaseCommand):
                 else:
                     updated_records_count += 1
 
+            # Calculate total records in the database
+            total_records_count = NetworkPerformanceData.objects.count()
+
             # Print results
-            self.stdout.write(self.style.SUCCESS(f'Successfully fetched data. New records: {new_records_count}, Updated records: {updated_records_count}'))
+            self.stdout.write(self.style.SUCCESS(
+                f'Successfully fetched data. New records: {new_records_count}, Updated records: {updated_records_count}'
+            ))
+            self.stdout.write(self.style.SUCCESS(f'Total number of records in the database: {total_records_count}'))
 
         except Exception as e:
             logging.error(f'Error occurred: {e}')
