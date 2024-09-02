@@ -21,7 +21,8 @@ class Command(BaseCommand):
                 clientASN,
                 ROUND(AVG(download_speed), 2) AS avg_download_speed,
                 ROUND(AVG(upload_speed), 2) AS avg_upload_speed,
-                ROUND(AVG(latency), 2) AS avg_latency
+                ROUND(AVG(latency), 2) AS avg_latency,
+                region
             FROM (
                 SELECT
                     date,
@@ -52,7 +53,15 @@ class Command(BaseCommand):
                         FROM
                             UNNEST(latencyMs) AS value
                         ), 2
-                    ) AS latency
+                    ) AS latency,
+                    CASE 
+                        WHEN clientCountry IN ('ET', 'ER', 'SO', 'DJ', 'KE', 'TZ', 'UG', 'RW', 'BI', 'SS') THEN 'East Africa'
+                        WHEN clientCountry IN ('NG', 'GH', 'SL', 'LR', 'CI', 'TG', 'BJ', 'BF', 'ML', 'GM', 'SN', 'GN', 'GW', 'CV') THEN 'West Africa'
+                        WHEN clientCountry IN ('MA', 'DZ', 'TN', 'LY', 'EG', 'SD') THEN 'North Africa'
+                        WHEN clientCountry IN ('ZA', 'NA', 'BW', 'LS', 'SZ', 'MZ', 'ZM', 'ZW', 'AO', 'MW') THEN 'Southern Africa'
+                        WHEN clientCountry IN ('CM', 'CF', 'TD', 'CG', 'CD', 'GA', 'GQ') THEN 'Central Africa'
+                        ELSE 'Other'
+                    END AS region
                 FROM
                     `measurement-lab.cloudflare.speedtest_speed1`
                 WHERE
@@ -70,7 +79,7 @@ class Command(BaseCommand):
                 LIMIT 100000
             )
             GROUP BY
-                date, clientCountry, clientCity, clientRegion, clientASN
+                date, clientCountry, clientCity, clientRegion, clientASN, region
         """
 
         try:
