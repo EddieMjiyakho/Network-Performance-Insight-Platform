@@ -24,38 +24,31 @@ def normalize_data():
     unique_asns = df['clientASN'].unique()
     unique_africa_regions = df['africa_regions'].unique()
 
-    # Insert unique values into the new tables
+    # Insert unique values into the new tables and create normalized data records
     with transaction.atomic():
         # Insert countries
-        country_objects = [Country(name=country) for country in unique_countries]
-        Country.objects.bulk_create(country_objects, ignore_conflicts=True)
+        for country in unique_countries:
+            Country.objects.get_or_create(name=country)
 
         # Insert cities
-        city_objects = []
         for _, row in unique_cities.iterrows():
             country, _ = Country.objects.get_or_create(name=row['clientCountry'])
-            city_objects.append(City(name=row['clientCity'], country=country))
-        City.objects.bulk_create(city_objects, ignore_conflicts=True)
+            City.objects.get_or_create(name=row['clientCity'], country=country)
 
         # Insert regions
-        existing_regions = set(Region.objects.values_list('name', flat=True))
-        region_objects = []
         for _, row in unique_regions.iterrows():
-            if row['clientRegion'] not in existing_regions:
-                country, _ = Country.objects.get_or_create(name=row['clientCountry'])
-                region_objects.append(Region(name=row['clientRegion'], country=country))
-        Region.objects.bulk_create(region_objects, ignore_conflicts=True)
+            country, _ = Country.objects.get_or_create(name=row['clientCountry'])
+            Region.objects.get_or_create(name=row['clientRegion'], country=country)
 
         # Insert ASNs
-        asn_objects = [ASN(asn=asn) for asn in unique_asns]
-        ASN.objects.bulk_create(asn_objects, ignore_conflicts=True)
+        for asn in unique_asns:
+            ASN.objects.get_or_create(asn=asn)
 
         # Insert Africa regions
-        africa_region_objects = [AfricaRegion(name=africa_region) for africa_region in unique_africa_regions]
-        AfricaRegion.objects.bulk_create(africa_region_objects, ignore_conflicts=True)
+        for africa_region in unique_africa_regions:
+            AfricaRegion.objects.get_or_create(name=africa_region)
 
-    # Create normalized data records
-    with transaction.atomic():
+        # Create normalized data records
         for record in NetworkPerformanceData.objects.all():
             # Retrieve or create normalized references
             country, _ = Country.objects.get_or_create(name=record.clientCountry)
@@ -77,5 +70,4 @@ def normalize_data():
                 africa_regions=africa_region
             )
 
-    print("Data normalization process is completed successfully.")
 
