@@ -7,7 +7,11 @@ class Command(BaseCommand):
     help = 'Normalize data from NetworkPerformanceData to NetworkPerformanceDataNormalized'
 
     def handle(self, *args, **kwargs):
-        normalize_data()
+        try:
+            normalize_data()
+            self.stdout.write(self.style.SUCCESS('Data normalization completed successfully.'))
+        except Exception as e:
+            self.stderr.write(self.style.ERROR(f'Error during data normalization: {str(e)}'))
 
 def normalize_data():
     # Load data from the NetworkPerformanceData model into a DataFrame
@@ -34,10 +38,12 @@ def normalize_data():
         City.objects.bulk_create(city_objects, ignore_conflicts=True)
 
         # Insert regions
+        existing_regions = set(Region.objects.values_list('name', flat=True))
         region_objects = []
         for _, row in unique_regions.iterrows():
-            country, _ = Country.objects.get_or_create(name=row['clientCountry'])
-            region_objects.append(Region(name=row['clientRegion'], country=country))
+            if row['clientRegion'] not in existing_regions:
+                country, _ = Country.objects.get_or_create(name=row['clientCountry'])
+                region_objects.append(Region(name=row['clientRegion'], country=country))
         Region.objects.bulk_create(region_objects, ignore_conflicts=True)
 
         # Insert ASNs
@@ -70,3 +76,6 @@ def normalize_data():
                 avg_latency=record.avg_latency,
                 africa_regions=africa_region
             )
+
+    print("Data normalization process is completed successfully.")
+
