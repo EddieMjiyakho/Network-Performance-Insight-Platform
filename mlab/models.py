@@ -9,4 +9,5 @@ class NetworkPerformanceData(models.Model):
     avg_download_speed = models.FloatField()
     avg_upload_speed = models.FloatField()
     avg_latency = models.FloatField()
+    region = models.CharField(max_length=255) 
 
