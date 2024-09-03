@@ -101,6 +101,7 @@ class Command(BaseCommand):
                         'avg_download_speed': row.avg_download_speed,
                         'avg_upload_speed': row.avg_upload_speed,
                         'avg_latency': row.avg_latency,
+                        'region': row.region,
                     }
                 )
                 if created:
