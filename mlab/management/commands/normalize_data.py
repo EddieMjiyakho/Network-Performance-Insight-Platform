@@ -48,7 +48,7 @@ def normalize_data():
         for africa_region in unique_africa_regions:
             AfricaRegion.objects.get_or_create(name=africa_region)
 
-        # Create normalized data records
+        # Create or update normalized data records
         for record in NetworkPerformanceData.objects.all():
             # Retrieve or create normalized references
             country, _ = Country.objects.get_or_create(name=record.clientCountry)
@@ -57,17 +57,17 @@ def normalize_data():
             asn, _ = ASN.objects.get_or_create(asn=record.clientASN)
             africa_region, _ = AfricaRegion.objects.get_or_create(name=record.africa_regions)
 
-            # Create new normalized data record
-            NetworkPerformanceDataNormalized.objects.create(
+            # Create or update the normalized data record
+            NetworkPerformanceDataNormalized.objects.update_or_create(
                 date=record.date,
                 clientCountry=country,
                 clientCity=city,
                 clientRegion=region,
                 clientASN=asn,
-                avg_download_speed=record.avg_download_speed,
-                avg_upload_speed=record.avg_upload_speed,
-                avg_latency=record.avg_latency,
-                africa_regions=africa_region
+                africa_regions=africa_region,
+                defaults={
+                    'avg_download_speed': record.avg_download_speed,
+                    'avg_upload_speed': record.avg_upload_speed,
+                    'avg_latency': record.avg_latency
+                }
             )
-
-

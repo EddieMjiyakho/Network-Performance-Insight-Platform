@@ -9,5 +9,6 @@
             "projectId": "measurement-lab"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }

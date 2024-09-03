@@ -22,7 +22,7 @@ class Command(BaseCommand):
                 ROUND(AVG(download_speed), 2) AS avg_download_speed,
                 ROUND(AVG(upload_speed), 2) AS avg_upload_speed,
                 ROUND(AVG(latency), 2) AS avg_latency,
-                region
+                africa_regions
             FROM (
                 SELECT
                     date,
