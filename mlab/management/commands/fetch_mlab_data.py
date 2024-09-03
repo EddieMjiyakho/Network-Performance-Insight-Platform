@@ -61,7 +61,7 @@ class Command(BaseCommand):
                         WHEN clientCountry IN ('ZA', 'NA', 'BW', 'LS', 'SZ', 'MZ', 'ZM', 'ZW', 'AO', 'MW') THEN 'Southern Africa'
                         WHEN clientCountry IN ('CM', 'CF', 'TD', 'CG', 'CD', 'GA', 'GQ') THEN 'Central Africa'
                         ELSE 'Other'
-                    END AS region
+                    END AS africa_regions
                 FROM
                     `measurement-lab.cloudflare.speedtest_speed1`
                 WHERE
@@ -79,7 +79,7 @@ class Command(BaseCommand):
                 LIMIT 100000
             )
             GROUP BY
-                date, clientCountry, clientCity, clientRegion, clientASN, region
+                date, clientCountry, clientCity, clientRegion, clientASN, africa_regions
         """
 
         try:
@@ -101,7 +101,7 @@ class Command(BaseCommand):
                         'avg_download_speed': row.avg_download_speed,
                         'avg_upload_speed': row.avg_upload_speed,
                         'avg_latency': row.avg_latency,
-                        'region': row.region,
+                        'africa_regions': row.africa_regions,
                     }
                 )
                 if created:
