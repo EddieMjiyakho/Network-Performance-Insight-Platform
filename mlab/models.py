@@ -14,28 +14,14 @@ class NetworkPerformanceData(models.Model):
 class ASN(models.Model):
     asn = models.CharField(max_length=255, unique=True)
 
-class NetworkMetric(models.Model):
-    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
-    avg_download_speed = models.FloatField()
-    avg_upload_speed = models.FloatField()
-    avg_latency = models.FloatField()
-
 class AfricaRegion(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
+    africa_region_name = models.CharField(max_length=255, unique=True)
 
 class Country(models.Model):
-    name = models.CharField(max_length=255)
-    africa_region = models.ForeignKey(AfricaRegion, on_delete=models.CASCADE)
-    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
+    country_name = models.CharField(max_length=255)
 
 class Region(models.Model):
-    name = models.CharField(max_length=255)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
+    region_name = models.CharField(max_length=255)
 
 class City(models.Model):
-    name = models.CharField(max_length=255)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
-
+    city_name = models.CharField(max_length=255)

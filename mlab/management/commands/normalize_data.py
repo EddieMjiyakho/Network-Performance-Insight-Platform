@@ -1,109 +1,46 @@
 from django.core.management.base import BaseCommand
-from django.db import connection, transaction
-from django.db.utils import DatabaseError
+from django.db import transaction
+from mlab.models import (
+    NetworkPerformanceData,
+    ASN,
+    AfricaRegion,
+    Country,
+    Region,
+    City,
+)
 
 class Command(BaseCommand):
-    help = 'Normalize data from NetworkPerformanceData into normalized tables'
+    help = 'Normalize data from NetworkPerformanceData model into separate tables'
 
-    def handle(self, *args, **options):
-        with connection.cursor() as cursor:
-            self.stdout.write('Starting update... Normalizing data into different schemas')
+    def handle(self, *args, **kwargs):
+        self.normalize_data()
 
-            try:
-                with transaction.atomic():
-                    # Insert ASN data
-                    cursor.execute("""
-                        INSERT INTO mlab_asn (asn)
-                        SELECT DISTINCT "clientASN"
-                        FROM mlab_networkperformancedata
-                        WHERE "clientASN" IS NOT NULL
-                        ON CONFLICT (asn) DO NOTHING
-                    """)
+    def normalize_data(self):
+        try:
+            with transaction.atomic():
+                # Fetch all records from NetworkPerformanceData
+                network_data_records = NetworkPerformanceData.objects.all()
 
-                    # Insert AfricaRegion data with foreign key to ASN
-                    cursor.execute("""
-                        INSERT INTO mlab_africaregion (name, asn_id)
-                        SELECT DISTINCT
-                            npd."africa_regions",
-                            asn.id
-                        FROM mlab_networkperformancedata npd
-                        JOIN mlab_asn asn
-                            ON npd."clientASN" = asn.asn
-                        WHERE npd."africa_regions" IS NOT NULL
-                        ON CONFLICT (name) DO NOTHING
-                    """)
+                # Extract unique values for each table
+                unique_asns = set(record.clientASN for record in network_data_records)
+                unique_africa_regions = set(record.africa_regions for record in network_data_records)
+                unique_countries = set(record.clientCountry for record in network_data_records)
+                unique_regions = set(record.clientRegion for record in network_data_records)
+                unique_cities = set(record.clientCity for record in network_data_records)
 
-                    # Insert Country data with foreign key to ASN
-                    cursor.execute("""
-                        INSERT INTO mlab_country (name, africa_region_id, asn_id)
-                        SELECT DISTINCT
-                            npd."clientCountry",
-                            africa_region.id,
-                            asn.id
-                        FROM mlab_networkperformancedata npd
-                        JOIN mlab_africaregion africa_region
-                            ON npd."africa_regions" = africa_region.name
-                        JOIN mlab_asn asn
-                            ON npd."clientASN" = asn.asn
-                        WHERE npd."clientCountry" IS NOT NULL
-                        ON CONFLICT (name) DO NOTHING
-                    """)
+                # Insert unique values into the new tables
+                ASN.objects.bulk_create([ASN(asn=asn) for asn in unique_asns if asn], ignore_conflicts=True)
+                AfricaRegion.objects.bulk_create([AfricaRegion(africa_region_name=name) for name in unique_africa_regions if name], ignore_conflicts=True)
+                Country.objects.bulk_create([Country(country_name=name) for name in unique_countries if name], ignore_conflicts=True)
+                Region.objects.bulk_create([Region(region_name=name) for name in unique_regions if name], ignore_conflicts=True)
+                City.objects.bulk_create([City(city_name=name) for name in unique_cities if name], ignore_conflicts=True)
 
-                    # Insert Region data with foreign key to ASN
-                    cursor.execute("""
-                        INSERT INTO mlab_region (name, country_id, asn_id)
-                        SELECT DISTINCT
-                            npd."clientRegion",
-                            country.id,
-                            asn.id
-                        FROM mlab_networkperformancedata npd
-                        JOIN mlab_country country
-                            ON npd."clientCountry" = country.name
-                        JOIN mlab_asn asn
-                            ON npd."clientASN" = asn.asn
-                        WHERE npd."clientRegion" IS NOT NULL
-                        ON CONFLICT (name) DO NOTHING
-                    """)
+                self.stdout.write(self.style.SUCCESS("Data normalization completed successfully."))
 
-                    # Insert City data with foreign key to ASN
-                    cursor.execute("""
-                        INSERT INTO mlab_city (name, region_id, asn_id)
-                        SELECT DISTINCT
-                            npd."clientCity",
-                            region.id,
-                            asn.id
-                        FROM mlab_networkperformancedata npd
-                        JOIN mlab_region region
-                            ON npd."clientRegion" = region.name
-                        JOIN mlab_asn asn
-                            ON npd."clientASN" = asn.asn
-                        WHERE npd."clientCity" IS NOT NULL
-                        ON CONFLICT (name) DO NOTHING
-                    """)
+        except Exception as e:
+            # Catch any error that occurs during the normalization process
+            self.stderr.write(f"Error during data normalization: {e}")
 
-                    # Insert NetworkMetric data with foreign key to ASN
-                    cursor.execute("""
-                        INSERT INTO mlab_networkmetric (avg_download_speed, avg_upload_speed, avg_latency, asn_id)
-                        SELECT DISTINCT 
-                            npd."avg_download_speed", 
-                            npd."avg_upload_speed", 
-                            npd."avg_latency", 
-                            asn.id
-                        FROM mlab_networkperformancedata npd
-                        JOIN mlab_asn asn ON npd."clientASN" = asn.asn
-                        WHERE npd."avg_download_speed" IS NOT NULL
-                          AND npd."avg_upload_speed" IS NOT NULL
-                          AND npd."avg_latency" IS NOT NULL
-                          AND npd."clientASN" IS NOT NULL
-                        ON CONFLICT (avg_download_speed, avg_upload_speed, avg_latency, asn_id) DO NOTHING
-                    """)
-
-                    self.stdout.write('Normalization complete.')
-
-            except DatabaseError as e:
-                self.stderr.write(f'Database error occurred: {e}')
-            except Exception as e:
-                self.stderr.write(f'Error occurred: {e}')
 
 
 
