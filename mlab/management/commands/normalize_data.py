@@ -1,73 +1,74 @@
-import pandas as pd
 from django.core.management.base import BaseCommand
-from mlab.models import NetworkPerformanceData, NetworkPerformanceDataNormalized, Country, City, Region, ASN, AfricaRegion
-from django.db import transaction
+from django.db import connection
 
 class Command(BaseCommand):
-    help = 'Normalize data from NetworkPerformanceData to NetworkPerformanceDataNormalized'
+    help = 'Normalize data from NetworkPerformanceData into normalized tables'
 
-    def handle(self, *args, **kwargs):
-        try:
-            normalize_data()
-            self.stdout.write(self.style.SUCCESS('Data normalization completed successfully.'))
-        except Exception as e:
-            self.stderr.write(self.style.ERROR(f'Error during data normalization: {str(e)}'))
+    def handle(self, *args, **options):
+        with connection.cursor() as cursor:
+            self.stdout.write('Starting update...')
+            
+            # Insert ASN data
+            cursor.execute("""
+                INSERT INTO mlab_asn (asn)
+                SELECT DISTINCT "clientASN"
+                FROM mlab_networkperformancedata
+                WHERE "clientASN" IS NOT NULL
+                ON CONFLICT (asn) DO NOTHING;
+            """)
 
-def normalize_data():
-    # Load data from the NetworkPerformanceData model into a DataFrame
-    df = pd.DataFrame(list(NetworkPerformanceData.objects.all().values()))
+            # Insert NetworkMetric data
+            cursor.execute("""
+                INSERT INTO mlab_networkmetric (asn_id, avg_download_speed, avg_upload_speed, avg_latency)
+                SELECT a.id, npd.avg_download_speed, npd.avg_upload_speed, npd.avg_latency
+                FROM mlab_networkperformancedata npd
+                JOIN mlab_asn a ON a.asn = npd."clientASN"
+                ON CONFLICT (asn_id, avg_download_speed, avg_upload_speed, avg_latency) DO NOTHING;
+            """)
 
-    # Get unique values for each field
-    unique_countries = df['clientCountry'].unique()
-    unique_cities = df[['clientCity', 'clientCountry']].drop_duplicates()
-    unique_regions = df[['clientRegion', 'clientCountry']].drop_duplicates()
-    unique_asns = df['clientASN'].unique()
-    unique_africa_regions = df['africa_regions'].unique()
+            # Insert AfricaRegion data
+            cursor.execute("""
+                INSERT INTO mlab_africaregion (name)
+                SELECT DISTINCT "africa_regions"
+                FROM mlab_networkperformancedata
+                WHERE "africa_regions" IS NOT NULL
+                ON CONFLICT (name) DO NOTHING;
+            """)
 
-    # Insert unique values into the new tables and create normalized data records
-    with transaction.atomic():
-        # Insert countries
-        for country in unique_countries:
-            Country.objects.get_or_create(name=country)
+            # Insert Country data
+            cursor.execute("""
+                INSERT INTO mlab_country (name, africa_region_id, network_metric_id)
+                SELECT DISTINCT npd."clientCountry", ar.id, nm.id
+                FROM mlab_networkperformancedata npd
+                JOIN mlab_africaregion ar ON ar.name = npd."africa_regions"
+                JOIN mlab_networkmetric nm ON nm.asn_id = (SELECT id FROM mlab_asn WHERE asn = npd."clientASN")
+                ON CONFLICT (name) DO NOTHING;
+            """)
 
-        # Insert cities
-        for _, row in unique_cities.iterrows():
-            country, _ = Country.objects.get_or_create(name=row['clientCountry'])
-            City.objects.get_or_create(name=row['clientCity'], country=country)
+            # Insert Region data
+            cursor.execute("""
+                INSERT INTO mlab_region (name, country_id, africa_region_id, network_metric_id)
+                SELECT DISTINCT npd."clientRegion", c.id, ar.id, nm.id
+                FROM mlab_networkperformancedata npd
+                JOIN mlab_country c ON c.name = npd."clientCountry"
+                JOIN mlab_africaregion ar ON ar.name = npd."africa_regions"
+                JOIN mlab_networkmetric nm ON nm.asn_id = (SELECT id FROM mlab_asn WHERE asn = npd."clientASN")
+                ON CONFLICT (name, country_id, africa_region_id, network_metric_id) DO NOTHING;
+            """)
 
-        # Insert regions
-        for _, row in unique_regions.iterrows():
-            country, _ = Country.objects.get_or_create(name=row['clientCountry'])
-            Region.objects.get_or_create(name=row['clientRegion'], country=country)
+            # Insert City data
+            cursor.execute("""
+                INSERT INTO mlab_city (name, client_region_id, country_id, africa_region_id, network_metric_id)
+                SELECT DISTINCT npd."clientCity", r.id, c.id, ar.id, nm.id
+                FROM mlab_networkperformancedata npd
+                JOIN mlab_region r ON r.name = npd."clientRegion"
+                JOIN mlab_country c ON c.name = npd."clientCountry"
+                JOIN mlab_africaregion ar ON ar.name = npd."africa_regions"
+                JOIN mlab_networkmetric nm ON nm.asn_id = (SELECT id FROM mlab_asn WHERE asn = npd."clientASN")
+                ON CONFLICT (name, client_region_id, country_id, africa_region_id, network_metric_id) DO NOTHING;
+            """)
 
-        # Insert ASNs
-        for asn in unique_asns:
-            ASN.objects.get_or_create(asn=asn)
+            self.stdout.write('Update complete.')
 
-        # Insert Africa regions
-        for africa_region in unique_africa_regions:
-            AfricaRegion.objects.get_or_create(name=africa_region)
+            raise
 
-        # Create or update normalized data records
-        for record in NetworkPerformanceData.objects.all():
-            # Retrieve or create normalized references
-            country, _ = Country.objects.get_or_create(name=record.clientCountry)
-            city, _ = City.objects.get_or_create(name=record.clientCity, country=country)
-            region, _ = Region.objects.get_or_create(name=record.clientRegion, country=country)
-            asn, _ = ASN.objects.get_or_create(asn=record.clientASN)
-            africa_region, _ = AfricaRegion.objects.get_or_create(name=record.africa_regions)
-
-            # Create or update the normalized data record
-            NetworkPerformanceDataNormalized.objects.update_or_create(
-                date=record.date,
-                clientCountry=country,
-                clientCity=city,
-                clientRegion=region,
-                clientASN=asn,
-                africa_regions=africa_region,
-                defaults={
-                    'avg_download_speed': record.avg_download_speed,
-                    'avg_upload_speed': record.avg_upload_speed,
-                    'avg_latency': record.avg_latency
-                }
-            )
