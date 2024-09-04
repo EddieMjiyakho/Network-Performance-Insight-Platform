@@ -9,32 +9,36 @@ class NetworkPerformanceData(models.Model):
     avg_download_speed = models.FloatField()
     avg_upload_speed = models.FloatField()
     avg_latency = models.FloatField()
-    africa_regions = models.CharField(max_length=255) 
-
-class Country(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-class City(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-
-class Region(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    africa_regions = models.CharField(max_length=255)
 
 class ASN(models.Model):
     asn = models.CharField(max_length=255, unique=True)
 
-class AfricaRegion(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-class NetworkPerformanceDataNormalized(models.Model):
-    date = models.DateField()
-    clientCountry = models.ForeignKey(Country, on_delete=models.CASCADE)
-    clientCity = models.ForeignKey(City, on_delete=models.CASCADE)
-    clientRegion = models.ForeignKey(Region, on_delete=models.CASCADE)
-    clientASN = models.ForeignKey(ASN, on_delete=models.CASCADE)
+class NetworkMetric(models.Model):
+    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
     avg_download_speed = models.FloatField()
     avg_upload_speed = models.FloatField()
     avg_latency = models.FloatField()
-    africa_regions = models.ForeignKey(AfricaRegion, on_delete=models.CASCADE)
+
+class AfricaRegion(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    network_metric = models.ForeignKey(NetworkMetric, on_delete=models.CASCADE)
+
+class Country(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    africa_region = models.ForeignKey(AfricaRegion, on_delete=models.CASCADE)
+    network_metric = models.ForeignKey(NetworkMetric, on_delete=models.CASCADE)
+
+class Region(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    africa_region = models.ForeignKey(AfricaRegion, on_delete=models.CASCADE)
+    network_metric = models.ForeignKey(NetworkMetric, on_delete=models.CASCADE)
+
+
+class City(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    client_region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    africa_region = models.ForeignKey(AfricaRegion, on_delete=models.CASCADE)
+    network_metric = models.ForeignKey(NetworkMetric, on_delete=models.CASCADE)
