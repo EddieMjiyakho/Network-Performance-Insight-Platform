@@ -1,76 +1,109 @@
 from django.core.management.base import BaseCommand
-from django.db import connection
+from django.db import connection, transaction
+from django.db.utils import DatabaseError
 
 class Command(BaseCommand):
     help = 'Normalize data from NetworkPerformanceData into normalized tables'
 
     def handle(self, *args, **options):
         with connection.cursor() as cursor:
-            self.stdout.write('Starting update...Normalise data to different schemas')
-            
+            self.stdout.write('Starting update... Normalizing data into different schemas')
+
             try:
-                # Insert ASN data
-                cursor.execute("""
-                    INSERT INTO mlab_asn (asn)
-                    SELECT DISTINCT "clientASN"
-                    FROM mlab_networkperformancedata
-                    WHERE "clientASN" IS NOT NULL
-                    ON CONFLICT (asn) DO NOTHING;
-                """)
+                with transaction.atomic():
+                    # Insert ASN data
+                    cursor.execute("""
+                        INSERT INTO mlab_asn (asn)
+                        SELECT DISTINCT "clientASN"
+                        FROM mlab_networkperformancedata
+                        WHERE "clientASN" IS NOT NULL
+                        ON CONFLICT (asn) DO NOTHING
+                    """)
 
-                # Insert NetworkMetric data
-                cursor.execute("""
-                    INSERT INTO mlab_networkmetric (asn_id, avg_download_speed, avg_upload_speed, avg_latency)
-                    SELECT a.id, npd.avg_download_speed, npd.avg_upload_speed, npd.avg_latency
-                    FROM mlab_networkperformancedata npd
-                    JOIN mlab_asn a ON a.asn = npd."clientASN"
-                    ON CONFLICT (asn_id, avg_download_speed, avg_upload_speed, avg_latency) DO NOTHING;
-                """)
+                    # Insert AfricaRegion data with foreign key to ASN
+                    cursor.execute("""
+                        INSERT INTO mlab_africaregion (name, asn_id)
+                        SELECT DISTINCT
+                            npd."africa_regions",
+                            asn.id
+                        FROM mlab_networkperformancedata npd
+                        JOIN mlab_asn asn
+                            ON npd."clientASN" = asn.asn
+                        WHERE npd."africa_regions" IS NOT NULL
+                        ON CONFLICT (name) DO NOTHING
+                    """)
 
-                # Insert AfricaRegion data
-                cursor.execute("""
-                    INSERT INTO mlab_africaregion (name)
-                    SELECT DISTINCT "africa_regions"
-                    FROM mlab_networkperformancedata
-                    WHERE "africa_regions" IS NOT NULL
-                    ON CONFLICT (name) DO NOTHING;
-                """)
+                    # Insert Country data with foreign key to ASN
+                    cursor.execute("""
+                        INSERT INTO mlab_country (name, africa_region_id, asn_id)
+                        SELECT DISTINCT
+                            npd."clientCountry",
+                            africa_region.id,
+                            asn.id
+                        FROM mlab_networkperformancedata npd
+                        JOIN mlab_africaregion africa_region
+                            ON npd."africa_regions" = africa_region.name
+                        JOIN mlab_asn asn
+                            ON npd."clientASN" = asn.asn
+                        WHERE npd."clientCountry" IS NOT NULL
+                        ON CONFLICT (name) DO NOTHING
+                    """)
 
-                # Insert Country data
-                cursor.execute("""
-                    INSERT INTO mlab_country (name, africa_region_id, network_metric_id)
-                    SELECT DISTINCT npd."clientCountry", ar.id, nm.id
-                    FROM mlab_networkperformancedata npd
-                    JOIN mlab_africaregion ar ON ar.name = npd."africa_regions"
-                    JOIN mlab_networkmetric nm ON nm.asn_id = (SELECT id FROM mlab_asn WHERE asn = npd."clientASN")
-                    ON CONFLICT (name, africa_region_id, network_metric_id) DO NOTHING;
-                """)
+                    # Insert Region data with foreign key to ASN
+                    cursor.execute("""
+                        INSERT INTO mlab_region (name, country_id, asn_id)
+                        SELECT DISTINCT
+                            npd."clientRegion",
+                            country.id,
+                            asn.id
+                        FROM mlab_networkperformancedata npd
+                        JOIN mlab_country country
+                            ON npd."clientCountry" = country.name
+                        JOIN mlab_asn asn
+                            ON npd."clientASN" = asn.asn
+                        WHERE npd."clientRegion" IS NOT NULL
+                        ON CONFLICT (name) DO NOTHING
+                    """)
 
-                # Insert Region data
-                cursor.execute("""
-                    INSERT INTO mlab_region (name, country_id, africa_region_id, network_metric_id)
-                    SELECT DISTINCT npd."clientRegion", c.id, ar.id, nm.id
-                    FROM mlab_networkperformancedata npd
-                    JOIN mlab_country c ON c.name = npd."clientCountry"
-                    JOIN mlab_africaregion ar ON ar.name = npd."africa_regions"
-                    JOIN mlab_networkmetric nm ON nm.asn_id = (SELECT id FROM mlab_asn WHERE asn = npd."clientASN")
-                    ON CONFLICT (name, country_id, africa_region_id, network_metric_id) DO NOTHING;
-                """)
+                    # Insert City data with foreign key to ASN
+                    cursor.execute("""
+                        INSERT INTO mlab_city (name, region_id, asn_id)
+                        SELECT DISTINCT
+                            npd."clientCity",
+                            region.id,
+                            asn.id
+                        FROM mlab_networkperformancedata npd
+                        JOIN mlab_region region
+                            ON npd."clientRegion" = region.name
+                        JOIN mlab_asn asn
+                            ON npd."clientASN" = asn.asn
+                        WHERE npd."clientCity" IS NOT NULL
+                        ON CONFLICT (name) DO NOTHING
+                    """)
 
-                # Insert City data
-                cursor.execute("""
-                    INSERT INTO mlab_city (name, client_region_id, country_id, africa_region_id, network_metric_id)
-                    SELECT DISTINCT npd."clientCity", r.id, c.id, ar.id, nm.id
-                    FROM mlab_networkperformancedata npd
-                    JOIN mlab_region r ON r.name = npd."clientRegion"
-                    JOIN mlab_country c ON c.name = npd."clientCountry"
-                    JOIN mlab_africaregion ar ON ar.name = npd."africa_regions"
-                    JOIN mlab_networkmetric nm ON nm.asn_id = (SELECT id FROM mlab_asn WHERE asn = npd."clientASN")
-                    ON CONFLICT (name, client_region_id, country_id, africa_region_id, network_metric_id) DO NOTHING;
-                """)
+                    # Insert NetworkMetric data with foreign key to ASN
+                    cursor.execute("""
+                        INSERT INTO mlab_networkmetric (avg_download_speed, avg_upload_speed, avg_latency, asn_id)
+                        SELECT DISTINCT 
+                            npd."avg_download_speed", 
+                            npd."avg_upload_speed", 
+                            npd."avg_latency", 
+                            asn.id
+                        FROM mlab_networkperformancedata npd
+                        JOIN mlab_asn asn ON npd."clientASN" = asn.asn
+                        WHERE npd."avg_download_speed" IS NOT NULL
+                          AND npd."avg_upload_speed" IS NOT NULL
+                          AND npd."avg_latency" IS NOT NULL
+                          AND npd."clientASN" IS NOT NULL
+                        ON CONFLICT (avg_download_speed, avg_upload_speed, avg_latency, asn_id) DO NOTHING
+                    """)
 
-                self.stdout.write('Normalisation complete.')
+                    self.stdout.write('Normalization complete.')
 
+            except DatabaseError as e:
+                self.stderr.write(f'Database error occurred: {e}')
             except Exception as e:
                 self.stderr.write(f'Error occurred: {e}')
+
+
 

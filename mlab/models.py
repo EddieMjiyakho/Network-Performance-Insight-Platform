@@ -22,20 +22,20 @@ class NetworkMetric(models.Model):
 
 class AfricaRegion(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
 
 class Country(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     africa_region = models.ForeignKey(AfricaRegion, on_delete=models.CASCADE)
-    network_metric = models.ForeignKey(NetworkMetric, on_delete=models.CASCADE)
+    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
 
 class Region(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    network_metric = models.ForeignKey(NetworkMetric, on_delete=models.CASCADE)
-
+    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
 
 class City(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    client_region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    network_metric = models.ForeignKey(NetworkMetric, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    asn = models.ForeignKey(ASN, on_delete=models.CASCADE)
 
