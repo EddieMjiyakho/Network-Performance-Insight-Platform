@@ -23,55 +23,82 @@
         </select>
     </form>
 
-    <!-- Display Chart -->
-    <h2>Filtered Network Performance Data</h2>
-    {% if chart_data %}
-        <canvas id="networkPerformanceChart"></canvas>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const ctx = document.getElementById('networkPerformanceChart').getContext('2d');
-                const chartData = JSON.parse('{{ chart_data|escapejs }}');
+   <!-- Display Charts -->
+   <h2>Filtered Network Performance Data</h2>
+   {% if chart_data %}
+       <!-- Bar Chart -->
+       <h3>Bar Chart: Download and Upload Speeds</h3>
+       <canvas id="barChart"></canvas>
 
-                new Chart(ctx, {
-                    type: 'bar', // Or 'line' if you prefer line charts
-                    data: {
-                        labels: chartData.labels,
-                        datasets: chartData.datasets
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(tooltipItem) {
-                                        return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' Mbps';
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Country'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Metrics (Mbps)'
-                                }
-                            }
-                        }
-                    }
-                });
-            });
-        </script>
-    {% else %}
-        <p>No data available for the selected region.</p>
-    {% endif %}
+       <!-- Pie Chart -->
+       <h3>Pie Chart: Average Latency</h3>
+       <canvas id="pieChart"></canvas>
+
+       <script>
+           document.addEventListener('DOMContentLoaded', function() {
+               const chartData = JSON.parse('{{ chart_data|escapejs }}');
+
+               // Bar Chart
+               const barCtx = document.getElementById('barChart').getContext('2d');
+               new Chart(barCtx, {
+                   type: 'bar',
+                   data: chartData.bar_chart,
+                   options: {
+                       responsive: true,
+                       plugins: {
+                           legend: {
+                               position: 'top',
+                           },
+                           tooltip: {
+                               callbacks: {
+                                   label: function(tooltipItem) {
+                                       return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' Mbps';
+                                   }
+                               }
+                           }
+                       },
+                       scales: {
+                           x: {
+                               title: {
+                                   display: true,
+                                   text: 'Country'
+                               }
+                           },
+                           y: {
+                               title: {
+                                   display: true,
+                                   text: 'Metrics (Mbps)'
+                               }
+                           }
+                       }
+                   }
+               });
+
+               // Pie Chart
+               const pieCtx = document.getElementById('pieChart').getContext('2d');
+               new Chart(pieCtx, {
+                   type: 'pie',
+                   data: chartData.pie_chart,
+                   options: {
+                       responsive: true,
+                       plugins: {
+                           legend: {
+                               position: 'top',
+                           },
+                           tooltip: {
+                               callbacks: {
+                                   label: function(tooltipItem) {
+                                       return tooltipItem.label + ': ' + tooltipItem.raw + ' ms';
+                                   }
+                               }
+                           }
+                       }
+                   }
+               });
+           });
+       </script>
+   {% else %}
+       <p>No data available for the selected region.</p>
+   {% endif %}
 </body>
 </html>
