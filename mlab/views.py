@@ -20,7 +20,6 @@ def network_data_filtered(request):
     countries = list(queryset.values_list('clientCountry', flat=True).distinct())
     avg_download_speeds = [queryset.filter(clientCountry=country).first().avg_download_speed for country in countries]
     avg_upload_speeds = [queryset.filter(clientCountry=country).first().avg_upload_speed for country in countries]
-    avg_latencies = [queryset.filter(clientCountry=country).first().avg_latency for country in countries]
 
     chart_data = {
         'labels': countries,
@@ -39,13 +38,6 @@ def network_data_filtered(request):
                 'backgroundColor': 'rgba(153, 102, 255, 0.2)',
                 'type': 'line'
             },
-            {
-                'label': 'Avg Latency',
-                'data': avg_latencies,
-                'borderColor': 'rgba(255, 159, 64, 1)',
-                'backgroundColor': 'rgba(255, 159, 64, 0.2)',
-                'type': 'line'
-            }
         ]
     }
 
