@@ -12,11 +12,13 @@
     <!-- Filter Form -->
     <form method="get" action="{% url 'network_data_filtered' %}" id="filterForm">
         {% csrf_token %}
-        <label for="africa_region">Select Africa Region:</label>
+        <label for="africa_region">Africa Region:</label>
         <select name="africa_region" id="africa_region" onchange="document.getElementById('filterForm').submit();">
-            <option value="">All Regions</option>
+            <option value="" {% if not request.GET.africa_region %}selected{% endif %}>All Regions</option>
             {% for region in africa_regions %}
-                <option value="{{ region.africa_region_name }}">{{ region.africa_region_name }}</option>
+                <option value="{{ region.africa_region_name }}" {% if request.GET.africa_region == region.africa_region_name %}selected{% endif %}>
+                    {{ region.africa_region_name }}
+                </option>
             {% endfor %}
         </select>
     </form>
