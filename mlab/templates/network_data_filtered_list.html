@@ -10,16 +10,15 @@
     <h1>Filter Network Performance Data</h1>
 
     <!-- Filter Form -->
-    <form method="get" action="{% url 'network_data_filtered' %}">
+    <form method="get" action="{% url 'network_data_filtered' %}" id="filterForm">
         {% csrf_token %}
         <label for="africa_region">Select Africa Region:</label>
-        <select name="africa_region" id="africa_region">
+        <select name="africa_region" id="africa_region" onchange="document.getElementById('filterForm').submit();">
             <option value="">All Regions</option>
             {% for region in africa_regions %}
                 <option value="{{ region.africa_region_name }}">{{ region.africa_region_name }}</option>
             {% endfor %}
         </select>
-        <button type="submit">Filter</button>
     </form>
 
     <!-- Display Chart -->
