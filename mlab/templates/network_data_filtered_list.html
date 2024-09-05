@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered Network Performance Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Filter Network Performance Data</h1>
+
+    <!-- Filter Form -->
+    <form method="get" action="{% url 'network_data_filtered' %}">
+        {% csrf_token %}
+        <label for="africa_region">Select Africa Region:</label>
+        <select name="africa_region" id="africa_region">
+            <option value="">All Regions</option>
+            {% for region in africa_regions %}
+                <option value="{{ region.africa_region_name }}">{{ region.africa_region_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- Display Chart -->
+    <h2>Filtered Network Performance Data</h2>
+    {% if chart_data %}
+        <canvas id="networkPerformanceChart"></canvas>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const ctx = document.getElementById('networkPerformanceChart').getContext('2d');
+                const chartData = JSON.parse('{{ chart_data|escapejs }}');
+
+                new Chart(ctx, {
+                    type: 'bar', // Or 'line' if you prefer line charts
+                    data: {
+                        labels: chartData.labels,
+                        datasets: chartData.datasets
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' Mbps';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Country'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Metrics (Mbps)'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    {% else %}
+        <p>No data available for the selected region.</p>
+    {% endif %}
+</body>
+</html>
