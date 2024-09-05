@@ -28,7 +28,7 @@
    {% if chart_data %}
        <!-- Bar Chart -->
        <h3>Bar Chart: Download and Upload Speeds</h3>
-       <canvas id="barChart"></canvas>
+       <canvas id="lineChart"></canvas>
 
        <!-- Pie Chart -->
        <h3>Pie Chart: Average Latency</h3>
@@ -39,9 +39,9 @@
                const chartData = JSON.parse('{{ chart_data|escapejs }}');
 
                // Bar Chart
-               const barCtx = document.getElementById('barChart').getContext('2d');
+               const barCtx = document.getElementById('lineChart').getContext('2d');
                new Chart(barCtx, {
-                   type: 'bar',
+                   type: 'line',
                    data: chartData.bar_chart,
                    options: {
                        responsive: true,
