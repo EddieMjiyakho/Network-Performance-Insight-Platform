@@ -5,101 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filtered Network Performance Data</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styling for charts */
+        .chart-container {
+            margin-bottom: 20px;
+        }
+        .chart-container .chart {
+            height: 300px; /* Adjust height as needed */
+        }
+    </style>
 </head>
 <body>
-    <h1>Filter Network Performance Data</h1>
+    <div class="container">
+        <h1 class="my-4">Filter Network Performance Data</h1>
 
-    <!-- Filter Form -->
-    <form method="get" action="{% url 'network_data_filtered' %}" id="filterForm">
-        {% csrf_token %}
-        <label for="africa_region">Africa Region:</label>
-        <select name="africa_region" id="africa_region" onchange="document.getElementById('filterForm').submit();">
-            <option value="" {% if not request.GET.africa_region %}selected{% endif %}>All Regions</option>
-            {% for region in africa_regions %}
-                <option value="{{ region.africa_region_name }}" {% if request.GET.africa_region == region.africa_region_name %}selected{% endif %}>
-                    {{ region.africa_region_name }}
-                </option>
-            {% endfor %}
-        </select>
-    </form>
+        <!-- Filter Form -->
+        <form method="get" action="{% url 'network_data_filtered' %}" id="filterForm" class="mb-4">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="africa_region">Africa Region:</label>
+                <select name="africa_region" id="africa_region" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                    <option value="" {% if not request.GET.africa_region %}selected{% endif %}>All Regions</option>
+                    {% for region in africa_regions %}
+                        <option value="{{ region.africa_region_name }}" {% if request.GET.africa_region == region.africa_region_name %}selected{% endif %}>
+                            {{ region.africa_region_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
 
-   <!-- Display Charts -->
-   <h2>Filtered Network Performance Data</h2>
-   {% if chart_data %}
-       <!-- Bar Chart -->
-       <h3>Line Chart: Download and Upload Speeds</h3>
-       <canvas id="lineChart"></canvas>
+        <!-- Display Charts -->
+        <h2 class="mb-4">Filtered Network Performance Data</h2>
+        {% if chart_data %}
+            <div class="row chart-container">
+                <!-- Line Chart -->
+                <div class="col-md-6 mb-4">
+                    <h3>Line Chart: Download and Upload Speeds</h3>
+                    <canvas id="lineChart" class="chart"></canvas>
+                </div>
 
-       <!-- Pie Chart -->
-       <h3>Bar Chart: Average Latency</h3>
-       <canvas id="barChart"></canvas>
+                <!-- Bar Chart -->
+                <div class="col-md-6 mb-4">
+                    <h3>Bar Chart: Average Latency</h3>
+                    <canvas id="barChart" class="chart"></canvas>
+                </div>
+            </div>
 
-       <script>
-           document.addEventListener('DOMContentLoaded', function() {
-               const chartData = JSON.parse('{{ chart_data|escapejs }}');
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const chartData = JSON.parse('{{ chart_data|escapejs }}');
 
-               // Bar Chart
-               const barCtx = document.getElementById('lineChart').getContext('2d');
-               new Chart(barCtx, {
-                   type: 'line',
-                   data: chartData.line_chart,
-                   options: {
-                       responsive: true,
-                       plugins: {
-                           legend: {
-                               position: 'top',
-                           },
-                           tooltip: {
-                               callbacks: {
-                                   label: function(tooltipItem) {
-                                       return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' Mbps';
-                                   }
-                               }
-                           }
-                       },
-                       scales: {
-                           x: {
-                               title: {
-                                   display: true,
-                                   text: 'Country'
-                               }
-                           },
-                           y: {
-                               title: {
-                                   display: true,
-                                   text: 'Metrics (Mbps)'
-                               }
-                           }
-                       }
-                   }
-               });
+                    // Line Chart
+                    const lineCtx = document.getElementById('lineChart').getContext('2d');
+                    new Chart(lineCtx, {
+                        type: 'line',
+                        data: chartData.line_chart,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' Mbps';
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Country'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Metrics (Mbps)'
+                                    }
+                                }
+                            }
+                        }
+                    });
 
-               // Pie Chart
-               const pieCtx = document.getElementById('barChart').getContext('2d');
-               new Chart(pieCtx, {
-                   type: 'bar',
-                   data: chartData.bar_chart,
-                   options: {
-                       responsive: true,
-                       plugins: {
-                           legend: {
-                               position: 'top',
-                           },
-                           tooltip: {
-                               callbacks: {
-                                   label: function(tooltipItem) {
-                                       return tooltipItem.label + ': ' + tooltipItem.raw + ' ms';
-                                   }
-                               }
-                           }
-                       }
-                   }
-               });
-           });
-       </script>
-   {% else %}
-       <p>No data available for the selected region.</p>
-   {% endif %}
+                    // Bar Chart
+                    const barCtx = document.getElementById('barChart').getContext('2d');
+                    new Chart(barCtx, {
+                        type: 'bar',
+                        data: chartData.bar_chart,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return tooltipItem.label + ': ' + tooltipItem.raw + ' ms';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+        {% else %}
+            <p>No data available for the selected region.</p>
+        {% endif %}
+    </div>
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
