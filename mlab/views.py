@@ -16,7 +16,7 @@ def network_data_filtered(request):
     avg_latencies = [queryset.filter(clientCountry=country).first().avg_latency for country in countries]
 
     chart_data = {
-        'bar_chart': {
+        'line_chart': {
             'labels': countries,
             'datasets': [
                 {
@@ -35,20 +35,14 @@ def network_data_filtered(request):
                 },
             ]
         },
-        'pie_chart': {
+        'bar_chart': {
             'labels': countries,
             'datasets': [
                 {
                     'label': 'Avg Latency',
                     'data': avg_latencies,
-                    'backgroundColor': [
-                        'rgba(255, 99, 132, 0.4)',
-                        'rgba(54, 162, 235, 0.4)',
-                        'rgba(255, 206, 86, 0.4)',
-                        'rgba(75, 192, 192, 0.4)',
-                        'rgba(153, 102, 255, 0.4)',
-                        'rgba(255, 159, 64, 0.4)',
-                    ],
+                    'backgroundColor': 'rgba(153, 102, 255, 0.4)',
+                    'type': 'bar'
                 }
             ]
         }
@@ -59,5 +53,5 @@ def network_data_filtered(request):
 
     return render(request, 'network_data_filtered_list.html', {
         'chart_data': chart_data_json,
-        'africa_regions': AfricaRegion.objects.all()
+        'africa_regions': AfricaRegion.objects.all(),
     })

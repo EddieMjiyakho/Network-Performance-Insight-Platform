@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filtered Network Performance Data</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
     <h1>Filter Network Performance Data</h1>
@@ -27,12 +28,12 @@
    <h2>Filtered Network Performance Data</h2>
    {% if chart_data %}
        <!-- Bar Chart -->
-       <h3>Bar Chart: Download and Upload Speeds</h3>
+       <h3>Line Chart: Download and Upload Speeds</h3>
        <canvas id="lineChart"></canvas>
 
        <!-- Pie Chart -->
-       <h3>Pie Chart: Average Latency</h3>
-       <canvas id="pieChart"></canvas>
+       <h3>Bar Chart: Average Latency</h3>
+       <canvas id="barChart"></canvas>
 
        <script>
            document.addEventListener('DOMContentLoaded', function() {
@@ -42,7 +43,7 @@
                const barCtx = document.getElementById('lineChart').getContext('2d');
                new Chart(barCtx, {
                    type: 'line',
-                   data: chartData.bar_chart,
+                   data: chartData.line_chart,
                    options: {
                        responsive: true,
                        plugins: {
@@ -75,10 +76,10 @@
                });
 
                // Pie Chart
-               const pieCtx = document.getElementById('pieChart').getContext('2d');
+               const pieCtx = document.getElementById('barChart').getContext('2d');
                new Chart(pieCtx, {
-                   type: 'pie',
-                   data: chartData.pie_chart,
+                   type: 'bar',
+                   data: chartData.bar_chart,
                    options: {
                        responsive: true,
                        plugins: {
