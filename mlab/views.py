@@ -3,13 +3,6 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from .models import NetworkPerformanceData, AfricaRegion
 
-metrics = NetworkPerformanceData.objects.all()  # object for the db table
-
-countries = []
-
-# def index(request):
-#     return render(request, 'index.html')
-
 def network_data_filtered(request):
     africa_region_name = request.GET.get('africa_region', None)
     if africa_region_name:
@@ -20,25 +13,45 @@ def network_data_filtered(request):
     countries = list(queryset.values_list('clientCountry', flat=True).distinct())
     avg_download_speeds = [queryset.filter(clientCountry=country).first().avg_download_speed for country in countries]
     avg_upload_speeds = [queryset.filter(clientCountry=country).first().avg_upload_speed for country in countries]
+    avg_latencies = [queryset.filter(clientCountry=country).first().avg_latency for country in countries]
 
     chart_data = {
-        'labels': countries,
-        'datasets': [
-            {
-                'label': 'Avg Download Speed',
-                'data': avg_download_speeds,
-                'borderColor': 'rgba(75, 192, 192, 1)',
-                'backgroundColor': 'rgba(75, 192, 192, 0.2)',
-                'type': 'line'
-            },
-            {
-                'label': 'Avg Upload Speed',
-                'data': avg_upload_speeds,
-                'borderColor': 'rgba(153, 102, 255, 1)',
-                'backgroundColor': 'rgba(153, 102, 255, 0.2)',
-                'type': 'line'
-            },
-        ]
+        'bar_chart': {
+            'labels': countries,
+            'datasets': [
+                {
+                    'label': 'Avg Download Speed',
+                    'data': avg_download_speeds,
+                    'borderColor': 'rgba(75, 192, 192, 1)',
+                    'backgroundColor': 'rgba(75, 192, 192, 0.2)',
+                    'type': 'bar'
+                },
+                {
+                    'label': 'Avg Upload Speed',
+                    'data': avg_upload_speeds,
+                    'borderColor': 'rgba(153, 102, 255, 1)',
+                    'backgroundColor': 'rgba(153, 102, 255, 0.2)',
+                    'type': 'bar'
+                },
+            ]
+        },
+        'pie_chart': {
+            'labels': countries,
+            'datasets': [
+                {
+                    'label': 'Avg Latency',
+                    'data': avg_latencies,
+                    'backgroundColor': [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                    ],
+                }
+            ]
+        }
     }
 
     # Convert chart_data to JSON and ensure it's safe for JavaScript
