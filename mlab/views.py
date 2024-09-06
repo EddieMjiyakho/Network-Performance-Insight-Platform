@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import NetworkPerformanceData, AfricaRegion
+from .models import NetworkPerformanceData, AfricaRegion, ASN
 
 def network_data_filtered(request):
     africa_region_name = request.GET.get('africa_region', None)
@@ -11,9 +11,18 @@ def network_data_filtered(request):
         queryset = NetworkPerformanceData.objects.all()
 
     countries = list(queryset.values_list('clientCountry', flat=True).distinct())
+
     avg_download_speeds = [queryset.filter(clientCountry=country).first().avg_download_speed for country in countries]
+
     avg_upload_speeds = [queryset.filter(clientCountry=country).first().avg_upload_speed for country in countries]
+
     avg_latencies = [queryset.filter(clientCountry=country).first().avg_latency for country in countries]
+
+    # New: Count ASNs for each country
+    asn_counts = []
+    for country in countries:
+        count = ASN.objects.filter(networkperformancedata__clientCountry=country).count()
+        asn_counts.append({'x': country, 'y': count, 'r': count})  # Bubble chart expects x, y, and radius (r)
 
     chart_data = {
         'line_chart': {
@@ -43,6 +52,17 @@ def network_data_filtered(request):
                     'data': avg_latencies,
                     'backgroundColor': 'rgba(153, 102, 255, 0.4)',
                     'type': 'bar'
+                }
+            ]
+        },
+        'bubble_chart': {
+            'datasets': [
+                {
+                    'label': 'ASN Count',
+                    'data': asn_counts,
+                    'backgroundColor': 'rgba(255, 159, 64, 0.6)',
+                    'borderColor': 'rgba(255, 159, 64, 1)',
+                    'borderWidth': 1
                 }
             ]
         }
