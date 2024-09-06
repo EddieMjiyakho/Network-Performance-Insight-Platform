@@ -41,7 +41,20 @@
                     {% endfor %}
                 </select>
             </div>
+            
         </form>
+            <!-- Country Filter -->
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select name="country" id="country" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                    <option value="" {% if not request.GET.country %}selected{% endif %}>All Countries</option>
+                    {% for country in countries %}
+                        <option value="{{ country }}" {% if request.GET.country == country %}selected{% endif %}>
+                            {{ country }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
 
         <!-- Display Charts -->
         {% if chart_data %}

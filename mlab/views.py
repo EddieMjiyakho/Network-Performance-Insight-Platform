@@ -24,17 +24,6 @@ def network_data_filtered(request):
         count = ASN.objects.filter(asn__in=queryset.filter(clientCountry=country).values_list('clientASN', flat=True)).count()
         asn_counts.append(count)
 
-    # Prepare data for the pie chart
-    pie_chart_data = {
-        'labels': countries,
-        'datasets': [
-            {
-                'label': 'Number of ASNs',
-                'data': asn_counts,
-                'backgroundColor': ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)', 'rgba(153, 102, 255, 0.6)']
-            }
-        ]
-    }
 
     chart_data = {
         'line_chart': {
@@ -85,4 +74,5 @@ def network_data_filtered(request):
     return render(request, 'network_data_filtered_list.html', {
         'chart_data': chart_data_json,
         'africa_regions': AfricaRegion.objects.all(),
+        'countries': countries
     })
