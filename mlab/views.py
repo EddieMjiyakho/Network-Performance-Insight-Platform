@@ -25,14 +25,14 @@ def network_data_filtered(request):
         count = ASN.objects.filter(asn__in=queryset.filter(clientCountry=country).values_list('clientASN', flat=True)).count()
         asn_counts.append(count)
 
-    # Prepare data for the bubble chart
-    bubble_chart_data = {
+    # Prepare data for the pie chart
+    pie_chart_data = {
         'labels': countries,
         'datasets': [
             {
                 'label': 'Number of ASNs',
-                'data': [{'x': i, 'y': 0, 'r': count} for i, count in enumerate(asn_counts)],
-                'backgroundColor': 'rgba(255, 99, 132, 0.6)'
+                'data': asn_counts,
+                'backgroundColor': ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)', 'rgba(153, 102, 255, 0.6)']
             }
         ]
     }
@@ -68,7 +68,7 @@ def network_data_filtered(request):
                 }
             ]
         },
-        'bubble_chart': bubble_chart_data
+        'pie_chart': pie_chart_data
     }
 
     # Convert chart_data to JSON and ensure it's safe for JavaScript
