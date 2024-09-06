@@ -8,18 +8,21 @@
     <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Custom styling for charts */
         .chart-container {
             margin-bottom: 20px;
         }
         .chart-container .chart {
-            height: 300px; /* Adjust height as needed */
+            height: 300px;
         }
-
-        /* Adjust size of pie chart container */
         .pie-chart-container {
-            max-width: 400px; /* Set a maximum width */
-            margin: 0 auto; /* Center the container */
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 0;
+        }
+        .filter-row {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -30,31 +33,38 @@
         <!-- Filter Form -->
         <form method="get" action="{% url 'network_data_filtered' %}" id="filterForm" class="mb-4">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="africa_region">Africa Region</label>
-                <select name="africa_region" id="africa_region" class="form-control" onchange="document.getElementById('filterForm').submit();">
-                    <option value="" {% if not request.GET.africa_region %}selected{% endif %}>All Regions</option>
-                    {% for region in africa_regions %}
-                        <option value="{{ region.africa_region_name }}" {% if request.GET.africa_region == region.africa_region_name %}selected{% endif %}>
-                            {{ region.africa_region_name }}
-                        </option>
-                    {% endfor %}
-                </select>
+            <div class="row filter-row">
+                <!-- Africa Region Filter -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="africa_region">Africa Region</label>
+                        <select name="africa_region" id="africa_region" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                            <option value="" {% if not request.GET.africa_region %}selected{% endif %}>All Regions</option>
+                            {% for region in africa_regions %}
+                                <option value="{{ region.africa_region_name }}" {% if request.GET.africa_region == region.africa_region_name %}selected{% endif %}>
+                                    {{ region.africa_region_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Country Filter -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select name="country" id="country" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                            <option value="" {% if not request.GET.country %}selected{% endif %}>All Countries</option>
+                            {% for country in countries %}
+                                <option value="{{ country }}" {% if request.GET.country == country %}selected{% endif %}>
+                                    {{ country }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
             </div>
-            
         </form>
-            <!-- Country Filter -->
-            <div class="form-group">
-                <label for="country">Country</label>
-                <select name="country" id="country" class="form-control" onchange="document.getElementById('filterForm').submit();">
-                    <option value="" {% if not request.GET.country %}selected{% endif %}>All Countries</option>
-                    {% for country in countries %}
-                        <option value="{{ country }}" {% if request.GET.country == country %}selected{% endif %}>
-                            {{ country }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
 
         <!-- Display Charts -->
         {% if chart_data %}
