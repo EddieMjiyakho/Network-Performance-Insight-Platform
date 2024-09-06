@@ -51,7 +51,16 @@
                     <h3>Bar Chart: Average Latency</h3>
                     <canvas id="barChart" class="chart"></canvas>
                 </div>
+
+                <!-- Bubble Chart -->
+                <div class="col-md-4 mb-4">
+                    <h3>Bubble Chart: ASN Count per Country</h3>
+                    <canvas id="bubbleChart" class="chart"></canvas>
+                </div>
+
             </div>
+
+
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -109,6 +118,42 @@
                                         label: function(tooltipItem) {
                                             return tooltipItem.label + ': ' + tooltipItem.raw + ' ms';
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    
+                    // Bubble Chart
+                    const bubbleCtx = document.getElementById('bubbleChart').getContext('2d');
+                    new Chart(bubbleCtx, {
+                        type: 'bubble',
+                        data: chartData.bubble_chart,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return tooltipItem.label + ': ' + tooltipItem.raw.y + ' ASNs';
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Country'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Number of ASNs'
                                     }
                                 }
                             }
