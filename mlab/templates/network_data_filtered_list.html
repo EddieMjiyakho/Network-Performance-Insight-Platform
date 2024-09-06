@@ -123,7 +123,7 @@
                             }
                         }
                     });
-                    
+
                     // Bubble Chart
                     const bubbleCtx = document.getElementById('bubbleChart').getContext('2d');
                     new Chart(bubbleCtx, {
@@ -138,7 +138,7 @@
                                 tooltip: {
                                     callbacks: {
                                         label: function(tooltipItem) {
-                                            return tooltipItem.label + ': ' + tooltipItem.raw.y + ' ASNs';
+                                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw.r + ' ASNs';
                                         }
                                     }
                                 }
@@ -147,13 +147,13 @@
                                 x: {
                                     title: {
                                         display: true,
-                                        text: 'Country'
+                                        text: 'Country Index'
                                     }
                                 },
                                 y: {
                                     title: {
                                         display: true,
-                                        text: 'Number of ASNs'
+                                        text: 'ASN Count'
                                     }
                                 }
                             }

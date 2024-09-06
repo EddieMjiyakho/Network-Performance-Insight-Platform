@@ -1,4 +1,5 @@
 import json
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import NetworkPerformanceData, AfricaRegion, ASN
@@ -18,11 +19,23 @@ def network_data_filtered(request):
 
     avg_latencies = [queryset.filter(clientCountry=country).first().avg_latency for country in countries]
 
-    # New: Count ASNs for each country
+    # Counting ASNs per country
     asn_counts = []
     for country in countries:
-        count = ASN.objects.filter(networkperformancedata__clientCountry=country).count()
-        asn_counts.append({'x': country, 'y': count, 'r': count})  # Bubble chart expects x, y, and radius (r)
+        count = ASN.objects.filter(asn__in=queryset.filter(clientCountry=country).values_list('clientASN', flat=True)).count()
+        asn_counts.append(count)
+
+    # Prepare data for the bubble chart
+    bubble_chart_data = {
+        'labels': countries,
+        'datasets': [
+            {
+                'label': 'Number of ASNs',
+                'data': [{'x': i, 'y': 0, 'r': count} for i, count in enumerate(asn_counts)],
+                'backgroundColor': 'rgba(255, 99, 132, 0.6)'
+            }
+        ]
+    }
 
     chart_data = {
         'line_chart': {
@@ -55,17 +68,7 @@ def network_data_filtered(request):
                 }
             ]
         },
-        'bubble_chart': {
-            'datasets': [
-                {
-                    'label': 'ASN Count',
-                    'data': asn_counts,
-                    'backgroundColor': 'rgba(255, 159, 64, 0.6)',
-                    'borderColor': 'rgba(255, 159, 64, 1)',
-                    'borderWidth': 1
-                }
-            ]
-        }
+        'bubble_chart': bubble_chart_data
     }
 
     # Convert chart_data to JSON and ensure it's safe for JavaScript
