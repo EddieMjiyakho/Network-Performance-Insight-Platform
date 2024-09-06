@@ -15,6 +15,12 @@
         .chart-container .chart {
             height: 300px; /* Adjust height as needed */
         }
+
+        /* Adjust size of pie chart container */
+        .pie-chart-container {
+            max-width: 400px; /* Set a maximum width */
+            margin: 0 auto; /* Center the container */
+        }
     </style>
 </head>
 <body>
@@ -53,8 +59,8 @@
                 </div>
             </div>
 
-            <!-- Pie Chart Container -->
-            <div class="chart-container">
+            <!--Pie Chart Container -->
+            <div class="chart-container pie-chart-container">
                 <h3>Pie Chart: Number of ASNs</h3>
                 <canvas id="pieChart" class="chart"></canvas>
             </div>

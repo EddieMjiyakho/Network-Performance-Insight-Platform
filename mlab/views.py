@@ -1,5 +1,4 @@
 import json
-from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import NetworkPerformanceData, AfricaRegion, ASN
