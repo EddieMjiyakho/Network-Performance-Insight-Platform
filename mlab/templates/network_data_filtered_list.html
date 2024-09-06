@@ -15,6 +15,13 @@
         .chart-container .chart {
             height: 300px; /* Adjust height as needed */
         }
+        /* Full-width container for bubble chart */
+        .full-width-container {
+            margin-bottom: 20px;
+        }
+        .full-width-container .chart {
+            height: 500px; /* Adjust height as needed */
+        }
     </style>
 </head>
 <body>
@@ -52,14 +59,13 @@
                     <canvas id="barChart" class="chart"></canvas>
                 </div>
 
-                <!-- Bubble Chart -->
-                <div class="col-md-4 mb-4">
-                    <h3>Bubble Chart: ASN Count per Country</h3>
-                    <canvas id="bubbleChart" class="chart"></canvas>
-                </div>
-
             </div>
 
+            <!-- Full-width container for Bubble Chart -->
+            <div class="full-width-container">
+                <h3>Bubble Chart: Number of ASNs</h3>
+                <canvas id="bubbleChart" class="chart"></canvas>
+            </div>
 
 
             <script>
@@ -147,14 +153,21 @@
                                 x: {
                                     title: {
                                         display: true,
-                                        text: 'Country Index'
-                                    }
+                                        text: 'Country'
+                                    },
+                                    ticks: {
+                                        autoSkip: false
+                                    },
+                                    min: -1,  // Adjust if needed
+                                    max: chartData.bubble_chart.labels.length // Adjust to ensure all bubbles fit
                                 },
                                 y: {
                                     title: {
                                         display: true,
-                                        text: 'ASN Count'
-                                    }
+                                        text: 'Number of ASNs'
+                                    },
+                                    min: 0,
+                                    suggestedMax: Math.max(...chartData.bubble_chart.datasets[0].data.map(d => d.r)) + 10 // Adjust as needed
                                 }
                             }
                         }
