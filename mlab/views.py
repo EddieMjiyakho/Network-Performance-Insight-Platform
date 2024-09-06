@@ -67,7 +67,16 @@ def network_data_filtered(request):
                 }
             ]
         },
-        'pie_chart': pie_chart_data
+        'pie_chart': {
+            'labels': countries,
+            'datasets': [
+                {
+                    'label': 'Number of ASNs',
+                    'data': asn_counts,
+                    'backgroundColor': ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)', 'rgba(153, 102, 255, 0.6)']
+                }
+            ]          
+        }
     }
 
     # Convert chart_data to JSON and ensure it's safe for JavaScript
