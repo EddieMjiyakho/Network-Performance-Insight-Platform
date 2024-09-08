@@ -1,12 +1,7 @@
 from . import views
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-# from .views import MyModelViewSet
-
-# router = DefaultRouter()
-# router.register(r'mymodel', MyModelViewSet)
+from django.urls import path
 
 urlpatterns = [
-    # path('api/', include(router.urls)),
-    path('metrics/', views.show_Metrics, name='metrics'),
+    # path('', views.index, name='index')
+    path('',views.network_data_filtered, name='network_data_filtered')
 ]
