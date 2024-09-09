@@ -67,7 +67,7 @@
                 <!-- Region Filter -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="region">Region</label>
+                        <label for="region">Provinces</label>
                         <select name="region" id="region" class="form-control" onchange="document.getElementById('filterForm').submit();">
                             <option value="" {% if not request.GET.region %}selected{% endif %}>All Regions</option>
                             {% for region in regions %}
