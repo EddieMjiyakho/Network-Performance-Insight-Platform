@@ -30,12 +30,12 @@
     <div class="container">
         <h1 class="my-4">Network Performance Platform</h1>
 
-        <!-- Filter Form -->
+    <!-- Updated Filter Form -->
         <form method="get" action="{% url 'network_data_filtered' %}" id="filterForm" class="mb-4">
             {% csrf_token %}
             <div class="row filter-row">
                 <!-- Africa Region Filter -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="africa_region">Africa Region</label>
                         <select name="africa_region" id="africa_region" class="form-control" onchange="document.getElementById('filterForm').submit();">
@@ -50,7 +50,7 @@
                 </div>
 
                 <!-- Country Filter -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="country">Country</label>
                         <select name="country" id="country" class="form-control" onchange="document.getElementById('filterForm').submit();">
@@ -58,6 +58,21 @@
                             {% for country in countries %}
                                 <option value="{{ country }}" {% if request.GET.country == country %}selected{% endif %}>
                                     {{ country }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Region Filter -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="region">Region</label>
+                        <select name="region" id="region" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                            <option value="" {% if not request.GET.region %}selected{% endif %}>All Regions</option>
+                            {% for region in regions %}
+                                <option value="{{ region }}" {% if request.GET.region == region %}selected{% endif %}>
+                                    {{ region }}
                                 </option>
                             {% endfor %}
                         </select>
