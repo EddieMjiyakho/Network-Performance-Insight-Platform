@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from google.cloud import bigquery
 from mlab.models import NetworkPerformanceData
 import logging
+import os
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -11,6 +12,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         logging.info('Starting data fetch from BigQuery')
+
+        # Set the credentials path if not already set
+        if not os.getenv("GOOGLE_APPLICATION_CREDENTIALS"):
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "mlab\\management\\commands\\credits\\glossy-apex-435110-p6-577d38d7c831.json"
 
         query = """
             SELECT
@@ -83,13 +88,15 @@ class Command(BaseCommand):
         """
 
         try:
-            client = bigquery.Client()
+            # Initialize BigQuery client
+            client = bigquery.Client()  # Uses the environment variable for credentials
             query_job = client.query(query)
             results = query_job.result()
 
             new_records_count = 0
             updated_records_count = 0
 
+            # Process the results from BigQuery
             for row in results:
                 obj, created = NetworkPerformanceData.objects.update_or_create(
                     date=row.date,
