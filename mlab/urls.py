@@ -1,7 +1,7 @@
-from . import views
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    # path('', views.index, name='index')
-    path('',views.network_data_filtered, name='network_data_filtered')
+    # Existing URL pattern for filtering network data
+    path('', views.network_data_filtered, name='network_data_filtered'),
 ]

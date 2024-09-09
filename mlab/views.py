@@ -1,26 +1,39 @@
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import NetworkPerformanceData, AfricaRegion, ASN
+from .models import NetworkPerformanceData, AfricaRegion, ASN, Region
 
 def network_data_filtered(request):
     africa_region_name = request.GET.get('africa_region', None)
-    if africa_region_name:
+    country_name = request.GET.get('country', None)
+    region_name = request.GET.get('region_name', None)
+
+    if africa_region_name and country_name:  
+        # Fetch data based on both Africa region and country
+        queryset = NetworkPerformanceData.objects.filter(africa_regions=africa_region_name, clientCountry=country_name,clientRegion = region_name)
+
+    elif africa_region_name:
+        # Fetch data based on Africa region
         queryset = NetworkPerformanceData.objects.filter(africa_regions=africa_region_name)
     else:
+        # Fetch all data
         queryset = NetworkPerformanceData.objects.all()
 
     countries = list(queryset.values_list('clientCountry', flat=True).distinct())
+    regions = list(queryset.values_list('clientRegion', flat=True).distinct())
 
-    avg_download_speeds = [queryset.filter(clientCountry=country).first().avg_download_speed for country in countries]
-
-    avg_upload_speeds = [queryset.filter(clientCountry=country).first().avg_upload_speed for country in countries]
-
-    avg_latencies = [queryset.filter(clientCountry=country).first().avg_latency for country in countries]
-
-    # Counting ASNs per country
+    avg_download_speeds = []
+    avg_upload_speeds = []
+    avg_latencies = []
     asn_counts = []
+
     for country in countries:
+        # Add network metrics
+        avg_download_speeds.append(queryset.filter(clientCountry=country).first().avg_download_speed)
+        avg_upload_speeds.append(queryset.filter(clientCountry=country).first().avg_upload_speed)
+        avg_latencies.append(queryset.filter(clientCountry=country).first().avg_latency)
+
+        # Counting ASNs per country
         count = ASN.objects.filter(asn__in=queryset.filter(clientCountry=country).values_list('clientASN', flat=True)).count()
         asn_counts.append(count)
 
@@ -74,5 +87,6 @@ def network_data_filtered(request):
     return render(request, 'network_data_filtered_list.html', {
         'chart_data': chart_data_json,
         'africa_regions': AfricaRegion.objects.all(),
-        'countries': countries
+        'countries': countries,
+        'regions' : regions,
     })
