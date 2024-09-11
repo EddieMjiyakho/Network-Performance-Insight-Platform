@@ -33,8 +33,8 @@ class ndt_unified_downloads(models.Model):
     throughput = models.FloatField()  # MeanThroughputMbps
     min_rtt = models.FloatField()  # MinRTT
     packet_loss = models.FloatField()  # LossRate
-    country = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True) 
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     accuracy_radius_km = models.FloatField()
@@ -50,8 +50,8 @@ class ndt_unified_uploads(models.Model):
     throughput = models.FloatField()  # MeanThroughputMbps
     min_rtt = models.FloatField()  # MinRTT
     packet_loss = models.FloatField()  # LossRate
-    country = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True) 
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     accuracy_radius_km = models.FloatField()

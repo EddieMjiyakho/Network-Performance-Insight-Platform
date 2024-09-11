@@ -18,9 +18,8 @@ class Command(BaseCommand):
             os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "mlab\\management\\commands\\credits\\networkperformancedata-8b6857d2f299.json"
 
         query = """
-                SELECT
+            SELECT
                 id,
-                date as Date, 
                 a.TestTime as TestTime, 
                 a.MeanThroughputMbps as Throughput, 
                 a.MinRTT as MinRTT, 
@@ -32,11 +31,11 @@ class Command(BaseCommand):
                 client.Geo.AccuracyRadiusKm as AccuracyRadiusKm, 
                 client.Network.ASNumber as ISP_number, 
                 client.Network.ASName as ISP
-                FROM
+            FROM
                 `measurement-lab.ndt.unified_downloads`
-                WHERE
+            WHERE
                 date = '2023-09-01'
-                AND client.Geo.ContinentCode ="AF"
+                AND client.Geo.ContinentCode = "AF"
         """
 
         try:
@@ -51,7 +50,6 @@ class Command(BaseCommand):
             # Process the results from BigQuery
             for row in results:
                 obj, created = ndt_unified_downloads.objects.update_or_create(
-                    date=row.date,
                     test_time=row.TestTime,
                     defaults={
                         'throughput': row.Throughput,
