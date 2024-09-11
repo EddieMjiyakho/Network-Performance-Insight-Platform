@@ -52,15 +52,18 @@ class Command(BaseCommand):
             for row in results:
                 obj, created = ndt_unified_downloads.objects.update_or_create(
                     date=row.date,
-                    clientCountry=row.clientCountry,
-                    clientCity=row.clientCity,
-                    clientRegion=row.clientRegion,
-                    clientASN=row.clientASN,
+                    test_time=row.TestTime,
                     defaults={
-                        'avg_download_speed': row.avg_download_speed,
-                        'avg_upload_speed': row.avg_upload_speed,
-                        'avg_latency': row.avg_latency,
-                        'africa_regions': row.africa_regions,
+                        'throughput': row.Throughput,
+                        'min_rtt': row.MinRTT,
+                        'packet_loss': row.PacketLoss,
+                        'country': row.Country,
+                        'city': row.City,
+                        'latitude': row.Latitude,
+                        'longitude': row.Longitude,
+                        'accuracy_radius_km': row.AccuracyRadiusKm,
+                        'isp_number': row.ISP_number,
+                        'isp': row.ISP,
                     }
                 )
                 if created:
