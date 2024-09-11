@@ -39,7 +39,7 @@ class ndt_unified_downloads(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     accuracy_radius_km = models.FloatField()
     isp_number = models.IntegerField()  # ASNumber
-    isp = models.CharField(max_length=255)  # ASName
+    isp = models.CharField(max_length=255, null=True, blank=True)  # ASName
 
     def __str__(self):
         return f"{self.date} - {self.city} ({self.isp})"
@@ -56,7 +56,7 @@ class ndt_unified_uploads(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     accuracy_radius_km = models.FloatField()
     isp_number = models.IntegerField()  # ASNumber
-    isp = models.CharField(max_length=255)  # ASName
+    isp = models.CharField(max_length=255, null=True, blank=True)  # ASName
 
     def __str__(self):
         return f"{self.date} - {self.city} ({self.isp})"
