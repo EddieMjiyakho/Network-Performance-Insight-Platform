@@ -29,7 +29,6 @@ class City(models.Model):
 
 # dataset from measurement-lab.ndt.unified_downloads
 class ndt_unified_downloads(models.Model):
-    date = models.DateField()
     test_time = models.TimeField()
     throughput = models.FloatField()  # MeanThroughputMbps
     min_rtt = models.FloatField()  # MinRTT
@@ -47,7 +46,6 @@ class ndt_unified_downloads(models.Model):
     
 # dataset from measurement-lab.ndt.unified_uploads
 class ndt_unified_uploads(models.Model):
-    date = models.DateField()
     test_time = models.TimeField()
     throughput = models.FloatField()  # MeanThroughputMbps
     min_rtt = models.FloatField()  # MinRTT
