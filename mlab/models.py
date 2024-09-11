@@ -29,16 +29,16 @@ class City(models.Model):
 
 # dataset from measurement-lab.ndt.unified_downloads
 class ndt_unified_downloads(models.Model):
-    test_time = models.TimeField()
-    throughput = models.FloatField()  # MeanThroughputMbps
-    min_rtt = models.FloatField()  # MinRTT
-    packet_loss = models.FloatField()  # LossRate
+    test_time = models.TimeField(null=True, blank=True)
+    throughput = models.FloatField(null=True, blank=True)  # MeanThroughputMbps
+    min_rtt = models.FloatField(null=True, blank=True)  # MinRTT
+    packet_loss = models.FloatField(null=True, blank=True)  # LossRate
     country = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True) 
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    accuracy_radius_km = models.FloatField()
-    isp_number = models.IntegerField()  # ASNumber
+    accuracy_radius_km = models.FloatField(null=True, blank=True)
+    isp_number = models.IntegerField(null=True, blank=True)  # ASNumber
     isp = models.CharField(max_length=255, null=True, blank=True)  # ASName
 
     def __str__(self):
@@ -46,16 +46,16 @@ class ndt_unified_downloads(models.Model):
     
 # dataset from measurement-lab.ndt.unified_uploads
 class ndt_unified_uploads(models.Model):
-    test_time = models.TimeField()
-    throughput = models.FloatField()  # MeanThroughputMbps
-    min_rtt = models.FloatField()  # MinRTT
-    packet_loss = models.FloatField()  # LossRate
+    test_time = models.TimeField(null=True, blank=True)
+    throughput = models.FloatField(null=True, blank=True)  # MeanThroughputMbps
+    min_rtt = models.FloatField(null=True, blank=True)  # MinRTT
+    packet_loss = models.FloatField(null=True, blank=True)  # LossRate
     country = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True) 
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    accuracy_radius_km = models.FloatField()
-    isp_number = models.IntegerField()  # ASNumber
+    accuracy_radius_km = models.FloatField(null=True, blank=True)
+    isp_number = models.IntegerField(null=True, blank=True)  # ASNumber
     isp = models.CharField(max_length=255, null=True, blank=True)  # ASName
 
     def __str__(self):
