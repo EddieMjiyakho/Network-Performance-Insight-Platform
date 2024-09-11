@@ -19,23 +19,23 @@ class Command(BaseCommand):
 
         query = """
             SELECT
-                id,
-                a.TestTime as TestTime, 
-                a.MeanThroughputMbps as Throughput, 
-                a.MinRTT as MinRTT, 
-                a.LossRate as PacketLoss, 
-                client.Geo.CountryName as Country, 
-                client.Geo.City as City,
-                client.Geo.Latitude as Latitude, 
-                client.Geo.Longitude as Longitude, 
-                client.Geo.AccuracyRadiusKm as AccuracyRadiusKm, 
-                client.Network.ASNumber as ISP_number, 
-                client.Network.ASName as ISP
+            id, 
+            a.TestTime as TestTime, 
+            a.MeanThroughputMbps as Throughput, 
+            a.MinRTT as MinRTT, 
+            a.LossRate as PacketLoss, 
+            client.Geo.CountryName as Country, 
+            client.Geo.City as City,
+            client.Geo.Latitude as Latitude, 
+            client.Geo.Longitude as Longitude, 
+            client.Geo.AccuracyRadiusKm as AccuracyRadiusKm, 
+            client.Network.ASNumber as ISP_number, 
+            client.Network.ASName as ISP
             FROM
-                `measurement-lab.ndt.unified_downloads`
+            `measurement-lab.ndt.unified_downloads`
             WHERE
-                date = '2023-09-01'
-                AND client.Geo.ContinentCode = "AF"
+            date = '2023-09-02'
+            AND client.Geo.ContinentCode ="AF";
         """
 
         try:
@@ -45,36 +45,31 @@ class Command(BaseCommand):
             results = query_job.result()
 
             new_records_count = 0
-            updated_records_count = 0
 
             # Process the results from BigQuery
             for row in results:
-                obj, created = ndt_unified_downloads.objects.update_or_create(
+                # Use create() to add new records
+                ndt_unified_downloads.objects.create(
                     test_time=row.TestTime,
-                    defaults={
-                        'throughput': row.Throughput,
-                        'min_rtt': row.MinRTT,
-                        'packet_loss': row.PacketLoss,
-                        'country': row.Country,
-                        'city': row.City,
-                        'latitude': row.Latitude,
-                        'longitude': row.Longitude,
-                        'accuracy_radius_km': row.AccuracyRadiusKm,
-                        'isp_number': row.ISP_number,
-                        'isp': row.ISP,
-                    }
+                    throughput=row.Throughput,
+                    min_rtt=row.MinRTT,
+                    packet_loss=row.PacketLoss,
+                    country=row.Country,
+                    city=row.City,
+                    latitude=row.Latitude,
+                    longitude=row.Longitude,
+                    accuracy_radius_km=row.AccuracyRadiusKm,
+                    isp_number=row.ISP_number,
+                    isp=row.ISP,
                 )
-                if created:
-                    new_records_count += 1
-                else:
-                    updated_records_count += 1
+                new_records_count += 1
 
             # Calculate total records in the database
             total_records_count = ndt_unified_downloads.objects.count()
 
             # Print results
             self.stdout.write(self.style.SUCCESS(
-                f'Successfully fetched data. New records: {new_records_count}, Updated records: {updated_records_count}'
+                f'Successfully fetched data. New records added: {new_records_count}'
             ))
             self.stdout.write(self.style.SUCCESS(f'Total number of records in the database: {total_records_count}'))
 
