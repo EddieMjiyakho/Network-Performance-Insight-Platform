@@ -70,37 +70,29 @@
             mapContainer.scrollLeft = mapContainer.scrollWidth / 2 - mapContainer.clientWidth / 2;
         };
 
-        // Variables to keep track of the current circle and its marker
+        // Variable to keep track of the current circle
         var currentCircle = null;
 
-        // Add a click event listener to the map container
-        document.getElementById('map-container').addEventListener('click', function(event) {
-        // Get the map container's position
-        var mapContainerRect = document.getElementById('map-container').getBoundingClientRect();
+        // Add a click event listener to the map
+        map.on('click', function(event) {
+            var latlng = event.latlng; // Get the latitude and longitude of the click event
 
-        // Get the position of the click relative to the map container
-        var clickX = event.clientX - mapContainerRect.left;
-        var clickY = event.clientY - mapContainerRect.top;
+            // Remove the previous circle if it exists
+            if (currentCircle) {
+                map.removeLayer(currentCircle);
+            }
 
-        // Convert click position to map coordinates
-        var latlng = map.containerPointToLatLng([clickX, clickY]);
+            // Create and add a new circle with a 1000 km radius at the click location
+            currentCircle = L.circle(latlng, {
+                color: 'blue',
+                fillColor: '#30f',
+                fillOpacity: 0.2,
+                radius: 1000000 // Radius in meters (1000 km)
+            }).addTo(map);
 
-        // Remove the previous circle if it exists
-        if (currentCircle) {
-            map.removeLayer(currentCircle);
-        }
-
-        // Create and add a new circle with a 1000 km radius at the click location
-        currentCircle = L.circle(latlng, {
-            color: 'blue',
-            fillColor: '#30f',
-            fillOpacity: 0.2,
-            radius: 1000000 // Radius in meters (1000 km)
-        }).addTo(map);
-
-        // Center the map on the clicked location
-        map.setView(latlng, map.getZoom(), { animate: true });
-    });
+            // Center the map on the clicked location
+            map.setView(latlng, map.getZoom(), { animate: true });
+        });
     </script>
 </body>
 </html>
