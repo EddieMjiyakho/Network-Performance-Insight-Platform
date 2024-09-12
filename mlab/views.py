@@ -1,32 +1,9 @@
 import json
-from decimal import Decimal
 from django.shortcuts import render
-from django.db.models import Count
 from .models import ndt_unified_downloads
 
-def map_view(request):
-    # Aggregate the number of ISPs per country
-    data = ndt_unified_downloads.objects.values('country', 'latitude', 'longitude') \
-        .annotate(num_isps=Count('isp_number'))
-
-    # Convert data to a format suitable for JavaScript
-    heatmap_data = [
-        {
-            'country': entry['country'],
-            'latitude': float(entry['latitude']),
-            'longitude': float(entry['longitude']),
-            'num_isps': entry['num_isps']
-        }
-        for entry in data
-    ]
-
-    # Render the template with the JSON data
-    context = {
-        'heatmap_data_json': json.dumps(heatmap_data)  # Convert to JSON string
-    }
-    return render(request, 'map.html', context)
-
-
+def map(request):
+    return render(request, 'map.html')
 
 
 # def network_data_filtered(request):

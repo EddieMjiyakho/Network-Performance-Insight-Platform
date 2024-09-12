@@ -2,87 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Performance Map</title>
-    
+    <title>Scrollable Map Focused on Africa</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    
-    <!-- Leaflet Heatmap CSS and JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-heat/dist/leaflet-heat.css" />
-    <script src="https://unpkg.com/leaflet-heat/dist/leaflet-heat.js"></script>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
-        #map {
-            height: 600px; /* Set the height of the map */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px; /* Space between containers */
             width: 100%;
-            margin: 20px auto;
+            height: 100vh;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ddd; /* Optional border for visualization */
+            overflow: auto; /* Enable scrolling */
+            position: relative;
+        }
+
+        #map {
+            width: 200%;
+            height: 200%;
+        }
+
+        .other-container {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ddd; /* Optional border for visualization */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="my-4">Network Performance Map</h1>
-        <div id="map"></div>
+        <!-- Map container at the top left -->
+        <div class="map-container" id="map-container">
+            <div id="map"></div>
+        </div>
+        <!-- Other containers in the grid -->
+        <div class="other-container">Container 2</div>
+        <div class="other-container">Container 3</div>
+        <div class="other-container">Container 4</div>
     </div>
 
-    <!-- Safely include the JSON data -->
-    <script id="heatmap-data" type="application/json">
-        {{ heatmap_data_json|safe }}
-    </script>
-
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize the map and set its view to a chosen geographical coordinates and zoom level
-            var map = L.map('map').setView([0, 0], 2); // Initial center [Latitude, Longitude] and zoom level
+        // Initialize the map centered on Africa with a suitable zoom level
+        var map = L.map('map').setView([0, 20], 3); // Coordinates roughly center Africa
 
-            // Add a tile layer to the map (OpenStreetMap tiles in this example)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+        // Add a tile layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-            // Get heatmap data from the script tag
-            var heatmapData = JSON.parse(document.getElementById('heatmap-data').textContent);
-
-            if (heatmapData.length > 0) {
-                // Convert data into the format required by leaflet.heat
-                var heatData = heatmapData.map(function(point) {
-                    return [point.latitude, point.longitude, point.num_isps || 0]; // Use num_isps for the heat layer
-                });
-
-                // Add the heatmap layer to the map
-                L.heatLayer(heatData, {
-                    radius: 25,
-                    blur: 15,
-                    maxZoom: 17
-                }).addTo(map);
-            } else {
-                console.log('No valid heatmap data to display.');
-            }
-
-            // Optional: Add markers for additional information
-            heatmapData.forEach(function(point) {
-                L.marker([point.latitude, point.longitude])
-                    .bindPopup(
-                        `<b>${point.country || 'Unknown'}</b><br>
-                        Number of ISPs: ${point.num_isps || 'N/A'}`
-                    )
-                    .addTo(map);
-            });
-        });
+        // Initialize scroll position to the center
+        window.onload = function() {
+            var mapContainer = document.getElementById('map-container');
+            mapContainer.scrollTop = mapContainer.scrollHeight / 2 - mapContainer.clientHeight / 2;
+            mapContainer.scrollLeft = mapContainer.scrollWidth / 2 - mapContainer.clientWidth / 2;
+        };
     </script>
-
-    <!-- Include Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
 
