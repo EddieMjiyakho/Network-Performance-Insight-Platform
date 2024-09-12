@@ -34,7 +34,7 @@ class Command(BaseCommand):
             FROM
             `measurement-lab.ndt.unified_downloads`
             WHERE
-            date = '2023-09-02'
+            date = '2023-09-08'
             AND client.Geo.ContinentCode ="AF";
         """
 
