@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map with Radius</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
@@ -73,26 +74,36 @@
         // Variable to keep track of the current circle
         var currentCircle = null;
 
-        // Add a click event listener to the map
         map.on('click', function(event) {
-            var latlng = event.latlng; // Get the latitude and longitude of the click event
-
+            // Get latitude and longitude from the click event
+            var clickLat = event.latlng.lat;
+            var clickLng = event.latlng.lng;
+    
             // Remove the previous circle if it exists
             if (currentCircle) {
                 map.removeLayer(currentCircle);
             }
-
-            // Create and add a new circle with a 1000 km radius at the click location
-            currentCircle = L.circle(latlng, {
+    
+            // Create and add a new circle with a 1000 km radius at the clicked location
+            currentCircle = L.circle([clickLat, clickLng], {
                 color: 'blue',
                 fillColor: '#30f',
                 fillOpacity: 0.2,
-                radius: 1000000 // Radius in meters (1000 km)
+                radius: 500000 // Radius in meters (1000 km)
             }).addTo(map);
 
             // Center the map on the clicked location
-            map.setView(latlng, map.getZoom(), { animate: true });
-        });
+            map.setView([clickLat, clickLng], 6, { animate: true });
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${clickLat}&lon=${clickLng}`)
+            .then(response => response.json())
+            .then(data => {
+                var city = data.address.city || data.address.town || 'Unknown';
+                var country = data.address.country || 'Unknown';
+                alert(`City: ${city}, Country: ${country}`);
+            })
+            .catch(error => console.error('Error fetching location data:', error));
+    });
     </script>
 </body>
 </html>

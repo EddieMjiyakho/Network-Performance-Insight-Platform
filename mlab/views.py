@@ -1,8 +1,30 @@
-import json
 from django.shortcuts import render
-from .models import ndt_unified_downloads
+from django.http import JsonResponse
+from .models import ndt_unified_downloads  # Import your model
+from django.db.models import Avg
 
 def map(request):
+    if request.method == 'POST':
+        country = request.POST.get('country')
+        
+        if country:
+            # Fetch data filtered by country
+            isp_data = ndt_unified_downloads.objects.filter(country=country)
+            
+            # Aggregate packet loss for each ISP in the selected country
+            packet_loss_data = isp_data.values('isp').annotate(avg_packet_loss=Avg('packet_loss'))
+            
+            # Prepare data for the chart
+            isp_names = [entry['isp'] for entry in packet_loss_data]
+            packet_losses = [entry['avg_packet_loss'] for entry in packet_loss_data]
+            
+            # Return data as JSON
+            return JsonResponse({
+                'labels': isp_names,
+                'data': packet_losses,
+            })
+
+    # Handle GET request or render map page initially
     return render(request, 'map.html')
 
 
