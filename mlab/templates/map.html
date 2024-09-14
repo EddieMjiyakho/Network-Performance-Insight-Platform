@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map with Radius</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px; /* Space between containers */
+            width: 100%;
+            height: 100vh;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ddd; /* Optional border for visualization */
+            overflow: auto; /* Enable scrolling */
+            position: relative;
+        }
+
+        #map {
+            width: 200%;
+            height: 200%;
+        }
+
+        .other-container {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #ddd; /* Optional border for visualization */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Map container at the top left -->
+        <div class="map-container" id="map-container">
+            <div id="map"></div>
+        </div>
+        <!-- Other containers in the grid -->
+        <!-- Donut chart container -->
+        <div class="other-container" id="donutChartContainer">
+            <canvas id="donutChart"></canvas> <!-- Canvas for Chart.js donut chart -->
+        </div>
+        <div class="other-container">Container 3</div>
+        <div class="other-container">Container 4</div>
+    </div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map centered on Africa with a suitable zoom level
+        var map = L.map('map').setView([0, 20], 3); // Coordinates roughly center Africa
+
+        // Add a tile layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Initialize scroll position to the center
+        window.onload = function() {
+            var mapContainer = document.getElementById('map-container');
+            mapContainer.scrollTop = mapContainer.scrollHeight / 2 - mapContainer.clientHeight / 2;
+            mapContainer.scrollLeft = mapContainer.scrollWidth / 2 - mapContainer.clientWidth / 2;
+        };
+
+        // Variable to keep track of the current circle
+        var currentCircle = null;
+
+        map.on('click', function(event) {
+            var clickLat = event.latlng.lat;
+            var clickLng = event.latlng.lng;
+
+            if (currentCircle) {
+                map.removeLayer(currentCircle);
+            }
+
+            currentCircle = L.circle([clickLat, clickLng], {
+                color: 'blue',
+                fillColor: '#30f',
+                fillOpacity: 0.2,
+                radius: 500000 // 1000 km
+            }).addTo(map);
+
+            map.setView([clickLat, clickLng], 6, { animate: true });
+
+            // Reverse geocode to get the country
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${clickLat}&lon=${clickLng}`)
+            .then(response => response.json())
+            .then(data => {
+                var country = data.address.country || 'Unknown';
+
+                // Fetch data using GET based on the clicked country
+                fetch(`/?country=${country}`)  // URL for your Django view
+                .then(response => response.json())
+                .then(chartData => {                  
+                    // Create or update the donut chart with the fetched data
+                    var ctx = document.getElementById('donutChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: chartData.labels, // ISP names
+                            datasets: [{
+                                label: 'Avg Packet Loss',
+                                data: chartData.data, // Avg packet loss per ISP
+                                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                            }]
+                        },
+                        options: {
+                            responsive: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2) + '%';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching chart data:', error));
+            })
+            .catch(error => console.error('Error reverse geocoding:', error));
+        });
+    </script>
+</body>
+</html>
+
+
