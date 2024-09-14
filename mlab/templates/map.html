@@ -47,7 +47,10 @@
             <div id="map"></div>
         </div>
         <!-- Other containers in the grid -->
-        <div class="other-container">Container 2</div>
+        <!-- Donut chart container -->
+        <div class="other-container" id="donutChartContainer">
+            <canvas id="donutChart"></canvas> <!-- Canvas for Chart.js donut chart -->
+        </div>
         <div class="other-container">Container 3</div>
         <div class="other-container">Container 4</div>
     </div>
@@ -75,38 +78,68 @@
         var currentCircle = null;
 
         map.on('click', function(event) {
-            // Get latitude and longitude from the click event
             var clickLat = event.latlng.lat;
             var clickLng = event.latlng.lng;
-    
-            // Remove the previous circle if it exists
+
             if (currentCircle) {
                 map.removeLayer(currentCircle);
             }
-    
-            // Create and add a new circle with a 1000 km radius at the clicked location
+
             currentCircle = L.circle([clickLat, clickLng], {
                 color: 'blue',
                 fillColor: '#30f',
                 fillOpacity: 0.2,
-                radius: 500000 // Radius in meters (1000 km)
+                radius: 500000 // 1000 km
             }).addTo(map);
 
-            // Center the map on the clicked location
             map.setView([clickLat, clickLng], 6, { animate: true });
 
+            // Reverse geocode to get the country
             fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${clickLat}&lon=${clickLng}`)
             .then(response => response.json())
             .then(data => {
-                var city = data.address.city || data.address.town || 'Unknown';
                 var country = data.address.country || 'Unknown';
-                alert(`City: ${city}, Country: ${country}`);
+
+                // Fetch data using GET based on the clicked country
+                fetch(`/?country=${country}`)  // URL for your Django view
+                .then(response => response.json())
+                .then(chartData => {
+                    // Create or update the donut chart with the fetched data
+                    var ctx = document.getElementById('donutChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: chartData.labels, // ISP names
+                            datasets: [{
+                                label: 'Avg Packet Loss',
+                                data: chartData.data, // Avg packet loss per ISP
+                                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2) + '%';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching chart data:', error));
             })
-            .catch(error => console.error('Error fetching location data:', error));
-    });
+            .catch(error => console.error('Error reverse geocoding:', error));
+        });
     </script>
 </body>
 </html>
-
 
 

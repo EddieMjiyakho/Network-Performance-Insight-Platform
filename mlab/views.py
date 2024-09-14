@@ -1,11 +1,11 @@
+import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import ndt_unified_downloads  # Import your model
 from django.db.models import Avg
 
 def map(request):
-    if request.method == 'POST':
-        country = request.POST.get('country')
+        country = request.GET.get('country')
         
         if country:
             # Fetch data filtered by country
@@ -19,13 +19,15 @@ def map(request):
             packet_losses = [entry['avg_packet_loss'] for entry in packet_loss_data]
             
             # Return data as JSON
-            return JsonResponse({
+            response_data = {
                 'labels': isp_names,
                 'data': packet_losses,
-            })
+            }
+                    # Serialize the dictionary to JSON with no indent (compact format)
+            return JsonResponse(json.loads(json.dumps(response_data)), safe=False)
 
-    # Handle GET request or render map page initially
-    return render(request, 'map.html')
+        # Handle GET request or render map page initially
+        return render(request, 'map.html')
 
 
 # def network_data_filtered(request):
