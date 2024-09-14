@@ -103,7 +103,7 @@
                 // Fetch data using GET based on the clicked country
                 fetch(`/?country=${country}`)  // URL for your Django view
                 .then(response => response.json())
-                .then(chartData => {
+                .then(chartData => {                  
                     // Create or update the donut chart with the fetched data
                     var ctx = document.getElementById('donutChart').getContext('2d');
                     new Chart(ctx, {
