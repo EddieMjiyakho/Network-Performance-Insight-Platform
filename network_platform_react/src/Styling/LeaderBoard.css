@@ -1,0 +1,37 @@
+.leaderboard-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .search-bar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-select {
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .isp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .isp-table th, .isp-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .isp-table th {
+    cursor: pointer;
+  }
+  
+  .top-isp {
+    background-color: #e0ffe0;
+  }
+  
