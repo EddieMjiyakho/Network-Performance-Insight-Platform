@@ -46,7 +46,7 @@ const HistoricalPerformanceAnalysis = () => {
   return (
     <div className="historical-performance-container">
       <h1>Historical Performance Analysis</h1>
-      <ReportPresetOptions onSelectPreset={handleSelectPreset} />
+      {/* <ReportPresetOptions onSelectPreset={handleSelectPreset} /> */}
       <ReportForm onGenerate={handleGenerateReport} />
       <ReportPreview data={reportData} />
       {reportData && <ExportButtons data={reportData} />}
