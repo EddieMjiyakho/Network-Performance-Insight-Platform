@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import ndt_unified_downloads  # Import your model
+from .models import ASN, AfricaRegion, NetworkPerformanceData, ndt_unified_downloads  # Import your model
 from django.db.models import Avg
 
 def map(request):

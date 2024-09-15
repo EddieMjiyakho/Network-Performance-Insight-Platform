@@ -1,22 +1,60 @@
-.metric-card {
-  background-color: #fff;
-  border-radius: 10px;
+/* MetricCard.css */
+
+.card {
+  background-color: white;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.2s;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards; /* Add fade in animation */
 }
 
-.metric-card h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.metric-card p {
-  font-size: 24px;
+/* Value Text */
+.value {
+  font-size: 2rem;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.metric-card:hover {
-  transform: translateY(-5px);
+/* Arrow Styling */
+.arrow {
+  font-size: 1.5rem;
+  margin-left: 10px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: arrowBounce 1s forwards;
+}
+
+.arrow.up {
+  color: green;
+}
+
+.arrow.down {
+  color: red;
+}
+
+@keyframes arrowBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

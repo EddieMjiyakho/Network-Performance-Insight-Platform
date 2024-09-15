@@ -1,6 +1,6 @@
 import React from "react";
 import "../Styling/Sidebar.css";
-import logo from "../assets/logo.jpg"; // Replace with your logo path
+import logo from "../assets/logo3.jpg"; // Replace with your logo path
 
 function Sidebar({ setActiveComponent }) {
   return (
