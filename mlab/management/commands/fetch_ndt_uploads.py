@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
         # Set the start date and end date for fetching data (6 months of data)
         start_date = datetime(2023, 9, 1)  # Start date
-        end_date = datetime(2024, 9, 3)  # End date (or any date range you want)
+        end_date = datetime(2024, 2, 29)  # End date (or any date range you want)
 
         # Loop through each day in the specified date range
         current_date = start_date
