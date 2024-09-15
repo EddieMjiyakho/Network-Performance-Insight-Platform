@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from google.cloud import bigquery
-from mlab.models import ndt_unified_downloads
+from mlab.models import ndt_unified_uploads
 import logging
 import os
 from datetime import datetime, timedelta
@@ -18,7 +18,7 @@ class Command(BaseCommand):
         if not os.getenv("GOOGLE_APPLICATION_CREDENTIALS"):
             os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "mlab\\management\\commands\\credits\\networkperformancedata-8b6857d2f299.json"
 
-        # Set the start date and end date for fetching data
+        # Set the start date and end date for fetching data (6 months of data)
         start_date = datetime(2023, 9, 1)  # Start date
         end_date = datetime(2024, 2, 29)  # End date (or any date range you want)
 
@@ -60,7 +60,7 @@ class Command(BaseCommand):
 
                 # Process the results from BigQuery
                 for row in results:
-                    obj = ndt_unified_downloads.objects.create(
+                    obj = ndt_unified_uploads.objects.create(
                         test_time=row.TestTime,
                         throughput=row.Throughput,
                         min_rtt=row.MinRTT,
