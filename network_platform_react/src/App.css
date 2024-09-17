@@ -1,0 +1,18 @@
+.app {
+  display: flex;
+}
+
+.main-content {
+  margin-left: 200px; /* Ensure it aligns with the sidebar */
+  width: calc(100% - 200px);
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}

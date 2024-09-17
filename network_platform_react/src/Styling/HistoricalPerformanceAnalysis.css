@@ -1,0 +1,56 @@
+.historical-performance-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .report-form input, .report-form select {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .report-form button {
+    padding: 10px 15px;
+    background-color: #00897b;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .report-preview table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .report-preview table, th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .report-preview th {
+    background-color: #f4f4f4;
+  }
+  
+  .export-buttons {
+    margin-top: 20px;
+  }
+  
+  .export-buttons button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    background-color: #00897b;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
