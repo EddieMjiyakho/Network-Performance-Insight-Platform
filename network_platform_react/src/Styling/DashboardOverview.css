@@ -1,0 +1,17 @@
+.dashboard-overview {
+  padding: 40px;
+  margin-left: 200px; /* Align with sidebar */
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  left: 10;
+}
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
