@@ -1,0 +1,1095 @@
+[33mcommit dcc8032da6541b9cff0849918dbe6eaf577a346e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mBack_and_Front_end_intergration[m[33m, [m[1;31morigin/Back_and_Front_end_intergration[m[33m)[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Wed Sep 18 04:18:55 2024 +0200
+
+    pyc commit
+
+[33mcommit 1803f02dbb0d987008b4d79391dff1621eaf5907[m
+Merge: 21dfbccf 49ad5beb
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Tue Sep 17 20:26:28 2024 +0200
+
+    Resolved conflicts and added new files
+
+[33mcommit 21dfbccfd36518b15e0b5e02c23a680242771f91[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sun Sep 15 18:25:04 2024 +0200
+
+    Migration commits and added the network_platform_react app
+
+[33mcommit e7ef1bf9c6c2f1de3008de4b5f53b52bc9e138a6[m
+Merge: 54279a11 fa29a169
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Sun Sep 15 14:44:21 2024 +0200
+
+    Merge branch 'backend/add-ndt-unified-uploads' into 'main'
+    
+    Backend/add ndt unified uploads
+    
+    See merge request mskleh001/npip!24
+
+[33mcommit fa29a16941a7e3de2a323b9b01287b2c1eef4160[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 15 14:42:57 2024 +0200
+
+    write the script to automate data fetch range - 6 months
+
+[33mcommit b79a53ed565f25483e56e4f49a8d0dd4a9cbf9c0[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 15 14:42:40 2024 +0200
+
+    write the script to automate data fetch range - 6 months
+
+[33mcommit 49ad5beb19ed050cf56bd9cfe06bf83036b2ef36[m[33m ([m[1;31morigin/React_Frontend[m[33m)[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sun Sep 15 13:29:55 2024 +0200
+
+    commit that has the migrations
+
+[33mcommit 5c8e3f3c2ed6a6f0a0ab5d5924415d3ddf8d239d[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sun Sep 15 01:18:39 2024 +0200
+
+    Pulled from main
+
+[33mcommit 108d29985af802df30f016e0a2cdd592e4e2888d[m
+Merge: 88bd1501 54279a11
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sun Sep 15 01:18:20 2024 +0200
+
+    Merge https://gitlab.cs.uct.ac.za/mskleh001/npip into React_Frontend
+
+[33mcommit 88bd1501f5ba6ee64713948831437da6a775d46a[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sun Sep 15 01:15:46 2024 +0200
+
+    pull
+
+[33mcommit 7d1e15db180f939a903b8833a409bc4c8e98aaa9[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sun Sep 15 01:14:24 2024 +0200
+
+    node models
+
+[33mcommit f7e694851698f963e864e2f6cbf5dcf1e02d1086[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sun Sep 15 00:56:32 2024 +0200
+
+    Formated the pages in the UI
+
+[33mcommit 5e82b27ca73adf146d7ac31d63e252f86e500839[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sat Sep 14 23:50:03 2024 +0200
+
+    Moved the files from "network-performance-platform" to "network_platform_react" app
+
+[33mcommit 1e6e565e640368bf479fa91393c3885bb1db66dc[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sat Sep 14 23:25:36 2024 +0200
+
+    Created a new app network_platform_react
+
+[33mcommit a2a856fe1557cb1d15d20a49481f4d7234349e8a[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sat Sep 14 22:43:55 2024 +0200
+
+    Test track changes
+
+[33mcommit 98fd6a3a576a14c35b8787e67ada5b9766b126ee[m
+Merge: ffd69080 e5a3adc4
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sat Sep 14 21:37:17 2024 +0200
+
+    Merge branch 'React_Frontend' of https://gitlab.cs.uct.ac.za/mskleh001/npip into React_Frontend
+
+[33mcommit ffd69080aaf802232c01372cb0e04c37ca7d63c5[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sat Sep 14 21:34:57 2024 +0200
+
+    The commit to send the updated app to git
+
+[33mcommit e5a3adc49d4caafec1dd597da4d3442ba155b71c[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sat Sep 14 21:02:10 2024 +0200
+
+    The commit to send the updated app to git
+
+[33mcommit dc2520d0a8112bb3b683d070102bf80d20df6be5[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sat Sep 14 15:50:58 2024 +0200
+
+    fetch data in batches
+
+[33mcommit 54279a11f546eb8f4cd5f0b4a367453ceeac0c41[m
+Merge: b41565cd 06eca14f
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Sat Sep 14 11:17:50 2024 +0200
+
+    Merge branch 'views/connect-logic-to-ndt' into 'main'
+    
+    Views/connect logic to ndt
+    
+    See merge request mskleh001/npip!23
+
+[33mcommit 06eca14f6b7f904ad908de5785ca4fd068e606e9[m[33m ([m[1;31morigin/views/connect-logic-to-ndt[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sat Sep 14 11:12:20 2024 +0200
+
+    fix the size of the chart
+
+[33mcommit b063c0685588aa88a0406c1d1e45d2dbf68d7942[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sat Sep 14 10:59:47 2024 +0200
+
+    set relative to false
+
+[33mcommit e0ffee9be171ce9f6d3201730cd1f24777f0f561[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sat Sep 14 10:56:43 2024 +0200
+
+    fix urls
+
+[33mcommit 2f855e03493da869f589ca8d1049ac414e78d052[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Sat Sep 14 10:23:44 2024 +0200
+
+    Added All the componetnts neede for the UI
+
+[33mcommit 09cd8fb064ecf5200b024980ecb4c95afd1cbefe[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 13 23:49:05 2024 +0200
+
+    submit country into a hidden form
+
+[33mcommit 0d8d77719a9357ba1da1c92c7f38ae653ed8c21d[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 12 22:53:42 2024 +0200
+
+    get coordinates of the click event relative to the map
+
+[33mcommit f27ead4689df40dec17151003991290e628fc794[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 12 22:44:53 2024 +0200
+
+    use the coordinates of the click event to get the precise location
+
+[33mcommit a66b5fe87ede088a766c5e2fa463b8b40c830d08[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 12 21:55:56 2024 +0200
+
+    create 1000kms circle for when the user clicks the map
+
+[33mcommit c941e3e57a7049bf8a2bd38e0165c4c0efe29b83[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 12 21:53:14 2024 +0200
+
+    add the map to the container
+
+[33mcommit 07a18760f3e6ab0ce345c16f49e79585b0f2d1e3[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 12 12:35:13 2024 +0200
+
+    add the map to the page using leaf-flet
+
+[33mcommit b41565cd4d23f98a1422f4990150cbd040d857e4[m
+Merge: c6cd28f9 43de2cb3
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Thu Sep 12 10:10:33 2024 +0200
+
+    Merge branch 'ndt/fetch-ndt-data' into 'main'
+    
+    Ndt/fetch ndt data
+    
+    See merge request mskleh001/npip!22
+
+[33mcommit 43de2cb365ee7a51d026ef44ffe79cc9effd68a6[m[33m ([m[1;31morigin/ndt/fetch-ndt-data[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 12 05:44:43 2024 +0200
+
+    fetch data for 8 days without limits
+
+[33mcommit 7aacbddd82584f4a6d02c8e1f76537aadf4f4e24[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 12 01:04:58 2024 +0200
+
+    use create method instead of update_or_create
+
+[33mcommit 3ab79d1f5ff8b633d6ecea02a7071faecac51875[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 20:02:40 2024 +0200
+
+    allow null fields
+
+[33mcommit 69c45f491e816622b07c8a26f0658e98d83c5580[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 19:56:26 2024 +0200
+
+    allow null isps
+
+[33mcommit 438d70b965df1f7d238f42d11eee4a47fb3bb94b[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 19:53:06 2024 +0200
+
+    allow null fields
+
+[33mcommit e7c0810f2b41d6f11d758bcef229ee6185564052[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 19:37:16 2024 +0200
+
+    remove date fields from the tables
+
+[33mcommit f081724cc98cbb982dabebbc44119cf3b743161c[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 15:00:57 2024 +0200
+
+    add mlab credits json files
+
+[33mcommit a7f2bcb0fc44df5039e9202755ab7688f8b920b1[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 14:58:12 2024 +0200
+
+    process the results from bigquery
+
+[33mcommit 5d2e10da2f5e45e719e335d2daaa1aa1a1b5dbf3[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 14:41:53 2024 +0200
+
+    add sql query to script
+
+[33mcommit ec5639c86d054a1468e81b0853115cb8b65afb95[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 14:30:24 2024 +0200
+
+    add tables to postgreSQL
+
+[33mcommit d1e76fcd5049516a85cba756dae761650fc495bd[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 11 14:17:24 2024 +0200
+
+    create ndt uploads and downloads tables
+
+[33mcommit 475eecc6673f57f9215420701e918a1dc4e3b367[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 10 19:18:56 2024 +0200
+
+    add a json file to the project
+
+[33mcommit c6cd28f98cddeb798f7d41a0424c139c459e964c[m
+Merge: 0df8f7c0 44195ba1
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Tue Sep 10 01:13:08 2024 +0200
+
+    Merge branch 'frontend/display-cities' into 'main'
+    
+    Frontend/display cities
+    
+    See merge request mskleh001/npip!21
+
+[33mcommit 44195ba134777711b89fd1b3f980de8c3a732552[m[33m ([m[1;31morigin/frontend/display-cities[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 10 01:04:11 2024 +0200
+
+    modify views.py to match the html
+
+[33mcommit e7d5804aa647585a18ac6776f5168b1c94317d03[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Sep 9 22:26:40 2024 +0200
+
+    add provinces filter
+
+[33mcommit f9f1c014d2e85f708d0a4da678d894edca988900[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Sep 9 21:08:36 2024 +0200
+
+    refactor the network filter function
+
+[33mcommit 7907ea5e4c96dfb5c8f21556bfe10e77b56f1284[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Sep 9 20:20:02 2024 +0200
+
+    add service account credentials to BigQuery
+
+[33mcommit e7ec2befeee4880cebbfe000083ccbe4b4f39b99[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Sep 9 17:37:43 2024 +0200
+
+    connect html files to urls.py
+
+[33mcommit 48c1fac1a0ee72244d0cd2e8dedbfb938b6a6a0b[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Sep 9 17:35:58 2024 +0200
+
+    add visuals to line, bar, pie chart for each region
+
+[33mcommit f04b6e2263c56a23a9a10f8593398446a21a940a[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Sep 9 17:32:35 2024 +0200
+
+    add a function to show provinces in a country
+
+[33mcommit 0df8f7c0b1203218b5f9859701ec0df2cde7936a[m
+Merge: 50f5ea2a 61837278
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Fri Sep 6 23:44:16 2024 +0200
+
+    Merge branch 'frontend/logic-layer' into 'main'
+    
+    Frontend/logic layer
+    
+    See merge request mskleh001/npip!20
+
+[33mcommit 61837278ee7fb59da6cb754a2e09b0b498f60e74[m[33m ([m[1;31morigin/frontend/logic-layer[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 23:03:16 2024 +0200
+
+    adjust the filters
+
+[33mcommit fcfc741981d1c2e444a39795063373dd8f8ea997[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 22:48:59 2024 +0200
+
+    put the filters side by side in horizontal
+
+[33mcommit 0c254f0156d0e5191f4cf62a5cf542d66e8de8e1[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 22:12:29 2024 +0200
+
+    refactor views.py
+
+[33mcommit 864e18d3178f0cb0ad46c4e3c5ba21c44fc1d958[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 21:18:50 2024 +0200
+
+    adjust the size of the pie chart container
+
+[33mcommit 9466e70adf379d04a084002023dd10655b6e40a2[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 18:53:29 2024 +0200
+
+    add x and y axis for the latency graph
+
+[33mcommit dc2de5deda081ffcafc81da2c10c96d925035384[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 18:51:13 2024 +0200
+
+    generate different colours for all countries
+
+[33mcommit e2f546b6f967e5be23b7367851b5e640fc3bda33[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 18:27:23 2024 +0200
+
+    remove a bubble chart rather use a pie chart
+
+[33mcommit 9f81a912dee1e9f9e22345ff54d5b41c9382a1ee[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 17:13:28 2024 +0200
+
+    add the bubble chart in its own container
+
+[33mcommit 062e255982c73baf3c6b78323cf2df8c91559c06[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 17:06:54 2024 +0200
+
+    modify the views.py to fetch the bubble chart data to display the chart
+
+[33mcommit 2c75199b4ebe726536f79dbf58659b35dcee181f[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 15:45:08 2024 +0200
+
+    add the bubble in html file
+
+[33mcommit 393a2666ea1aea24c923b7c07f82b8546cb5741b[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Sep 6 15:43:57 2024 +0200
+
+    Count ASNs for each country
+
+[33mcommit 58397b23c74fdc057d011f5443c66488d62f6e7f[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 21:11:08 2024 +0200
+
+    add styling using bootstrap
+
+[33mcommit 9fcb15e5158bac049c76c5dfe82b90063f9f33b9[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 18:34:16 2024 +0200
+
+    style the graphs
+
+[33mcommit db5caf4c1e60ffeff47a5869ace8ab8c95fcea60[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 17:54:46 2024 +0200
+
+    use a bar graph for latency visualization
+
+[33mcommit ac62c0a53dfa1f11910b3846685f95fce986833e[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 16:17:00 2024 +0200
+
+    adjust the opacity of the pie chart colors
+
+[33mcommit 833823e1ae9bbd9d03459d68f3128118fc0818fa[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 15:10:18 2024 +0200
+
+    add use pie_chart_data to display a pie chart
+
+[33mcommit 0144512a26eddfa08d5a79fb7b36afa971ed5d32[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 15:08:09 2024 +0200
+
+    store average_latencies in pie chart data
+
+[33mcommit e939507f8f4048938985f72664bc656dd344225f[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 14:56:12 2024 +0200
+
+    remove average latency data in views.py
+
+[33mcommit cc6efdc6819d21e28050b9e13deeb5941da3e99c[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 14:05:32 2024 +0200
+
+    save the state of the regions selected
+
+[33mcommit e8c22570a39bdb7dc0eccf375024ef68ef11ae68[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 13:54:03 2024 +0200
+
+    remove the submit use onChange state
+
+[33mcommit 881e5117da821ed72b1772e141edec9ab0894c70[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 04:22:00 2024 +0200
+
+    add a filter for africa_regions
+
+[33mcommit 1743c6ab2c3109051a4125ac27f60d0a7b17b61f[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Sep 5 00:49:04 2024 +0200
+
+    refine entities.py instances to match the  models.py data
+
+[33mcommit 50f5ea2a04d4a7699bea1f89cb1a1ec67db93d93[m
+Merge: 196d62af 5c8118c0
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Wed Sep 4 16:47:10 2024 +0200
+
+    Merge branch 'database/normalise' into 'main'
+    
+    Applied First Normal Form(1NF) on the database
+    
+    See merge request mskleh001/npip!19
+
+[33mcommit 5c8118c049bd1418441b01e17709c8db69001e6c[m[33m ([m[1;31morigin/database/normalise[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 4 16:43:48 2024 +0200
+
+    add error messages for debugging
+
+[33mcommit 47bc0ef9c7a14da6bf8feb505b84b4dba87af507[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 4 16:42:59 2024 +0200
+
+    update the script to use first normal form
+
+[33mcommit 3ae16a1572718f05494306f8d105fe6d600dcded[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 4 15:19:17 2024 +0200
+
+    add client_asn id
+
+[33mcommit ff2e08ce68ca414f7c7ae2b38c6db99a64012a3d[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 4 12:29:36 2024 +0200
+
+    Add print statement to check the script executed successfully
+
+[33mcommit dd4b2892b4a39d227c480172ad3bc69d8f1b2e01[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 4 12:17:29 2024 +0200
+
+    fix keys dependencies
+
+[33mcommit e8e39c3a5f585606dcee48345ed6a8644fef83f6[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 4 11:52:53 2024 +0200
+
+    Make sure that ON CONFLICT is used correctly to avoid inserting duplicate records.
+
+[33mcommit 45eb4b9d37614139755d350044dec131bf7ddedc[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Wed Sep 4 10:14:31 2024 +0200
+
+    add network metric model to database
+
+[33mcommit aeebc2a435dad5734e33af128386432a752aa816[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 16:42:19 2024 +0200
+
+    normalize all fields to respective tables
+
+[33mcommit 05300e971c67e4596c35946dab0a3536ecfbd300[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 15:46:57 2024 +0200
+
+    atomically update the NetworkPerformanceDataNormalized
+
+[33mcommit 474603ee404a9ecc285fbf66affa366bd41cc530[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 15:30:31 2024 +0200
+
+    add try and catch method to print success or error message
+
+[33mcommit a88f99092d6b96ecdb42ed5a519e2f063189f9b6[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 15:28:55 2024 +0200
+
+    normalize data to reduce redundancies
+
+[33mcommit 96182d4009904cd9b3cff0a1600b68318c85493b[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 15:01:22 2024 +0200
+
+    edit entities.py to match the structure of the database
+
+[33mcommit a59e3f02132dd0f51d2cef4815cc7ec947767de1[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 13:57:03 2024 +0200
+
+    models initial migration
+
+[33mcommit 590b2badaff6c93e1832a3e642cef9fa68e0f9bd[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 13:48:05 2024 +0200
+
+    add new tables to normalize network performance data
+
+[33mcommit e1de97b64ec083c5f8fd04b7ef1b13063029d65b[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 05:28:28 2024 +0200
+
+    add african_regions
+
+[33mcommit a38bac420e7b698344310cd5a53916b4f630bde9[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 04:34:27 2024 +0200
+
+    modify the script to include region column
+
+[33mcommit c92e0deaf13bd13d5206820ffd9bd16798502b22[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Tue Sep 3 04:32:10 2024 +0200
+
+    add region field in the database
+
+[33mcommit 23aa46d85de03ef92210391a4bdde460da394907[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Sep 2 20:29:48 2024 +0200
+
+    add region column in the SQL query
+
+[33mcommit f39f801b5837a2e5a2af618184608936b3239a38[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 1 02:50:43 2024 +0200
+
+    JavaScript(chart-area-demo.js) to fetch data from the new API endpoint and use it to create the chart
+
+[33mcommit 95284b281f5eb5fc2ee03c18ed5fca7422428895[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 1 02:23:23 2024 +0200
+
+    Add a URL route for the new API endpoint in urls.py
+
+[33mcommit 41b53339df914da403f65bacf2107f5206e7e1ec[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 1 02:21:04 2024 +0200
+
+    define a to get countries and download speeds in views.py
+
+[33mcommit 135105b7ae972c9e8bdb4a8e327746cc17c13eda[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 1 01:34:18 2024 +0200
+
+    add catched files to git
+
+[33mcommit e51c9bef2a12adec43308301e071c15da432dcd8[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 1 01:15:13 2024 +0200
+
+    Count the number of total records inserted
+
+[33mcommit 462464c3d6424bad21e3c9075726a2a0faba6259[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 1 00:40:25 2024 +0200
+
+    Count the number of new records added and updated records
+
+[33mcommit 2abbf8e535389cb8b3596b016b5dbeeb36435d8c[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Sep 1 00:28:27 2024 +0200
+
+    print all number of total records
+
+[33mcommit 196d62af1e552a46e2938b321d955d6798063dde[m
+Merge: bfdc4285 80cbaec8
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Fri Aug 30 13:58:19 2024 +0200
+
+    Merge branch 'graphs/add-charts' into 'main'
+    
+    add javascript and css static files
+    
+    See merge request mskleh001/npip!18
+
+[33mcommit 80cbaec8abc0e0030c650b52c5110be3f85194c3[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Aug 30 13:56:21 2024 +0200
+
+    add javascript and css static files
+
+[33mcommit bfdc4285abac73689b70d7a7786a36a83abbc2d4[m
+Merge: 4329bdab 96c1b617
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Thu Aug 29 18:53:11 2024 +0200
+
+    Merge branch 'database/schedule-data-fetching' into 'main'
+    
+    Database/schedule data fetching
+    
+    See merge request mskleh001/npip!17
+
+[33mcommit 4329bdab9aab4395d58514a544a587ed65bdc7d7[m
+Merge: eedf2fe3 003bfef1
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Thu Aug 29 18:47:59 2024 +0200
+
+    Merge branch 'dashboard/data-visualisation' into 'main'
+    
+    Dashboard/data visualisation
+    
+    See merge request mskleh001/npip!16
+
+[33mcommit 003bfef146f8a82ca95e14658f0f891c0e40b959[m[33m ([m[1;31morigin/dashboard/data-visualisation[m[33m)[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Thu Aug 29 18:21:56 2024 +0200
+
+    Added a html template for the UI
+
+[33mcommit 96c1b6172b00ef9c0b4b9292fea75e7bc100f6fd[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Aug 29 16:41:55 2024 +0200
+
+    add cached files
+
+[33mcommit 894b21ebe83e69158d643d9af8580cbbeb7756fc[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Aug 29 16:40:28 2024 +0200
+
+    add initial migration file
+
+[33mcommit 023bc8323b9914390edaad1a25d82056cee9c3e8[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Aug 29 16:38:52 2024 +0200
+
+    add network data tables to models.py
+
+[33mcommit a110e7a9fc0ad527723d1f59b8b9c05ed86f80c9[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Tue Aug 20 10:09:11 2024 +0200
+
+    Back up UI
+
+[33mcommit eedf2fe3986cfe6f87af3307f9441f73e9ab18de[m
+Merge: 13a218ea 6ed61e86
+Author: Sakhile Mjiyakho <mjysak001@cs.uct.ac.za>
+Date:   Sun Aug 18 15:47:32 2024 +0200
+
+    Merge branch 'VisualizingContinues' into 'main'
+    
+    Continued on visualizing, made the graphs more clear and bigger
+    
+    See merge request mskleh001/npip!15
+
+[33mcommit 6ed61e8646a2dd95df210103e0e214dde03ee709[m[33m ([m[1;31morigin/VisualizingContinues[m[33m)[m
+Author: EddieMjiyakho <eddie.mjiyakho@gmail.com>
+Date:   Sun Aug 18 15:34:51 2024 +0200
+
+    Continued on visualizing, made the graphs more clear and bigger
+
+[33mcommit 13a218eab7761a309ebd0e0cd52c8bbdbbde07d0[m
+Merge: ac64ed3e 03b46e2f
+Author: Sakhile Mjiyakho <mjysak001@cs.uct.ac.za>
+Date:   Fri Aug 16 02:35:36 2024 +0200
+
+    Merge branch 'visualizingdata' into 'main'
+    
+    VisualizngData data
+    
+    See merge request mskleh001/npip!14
+
+[33mcommit 03b46e2fe987922a47318e261525fb18e34f6bc5[m[33m ([m[1;31morigin/visualizingdata[m[33m)[m
+Author: EddieMjiyakho <eddie.mjiyakho@gmail.com>
+Date:   Fri Aug 16 02:33:07 2024 +0200
+
+    VisualizngData data
+
+[33mcommit ac64ed3e0743d5ccf9c63bbb8e2608931305833d[m
+Merge: 7d48ead3 9371783a
+Author: Sakhile Mjiyakho <mjysak001@cs.uct.ac.za>
+Date:   Fri Aug 16 02:07:33 2024 +0200
+
+    Merge branch 'Visualizing' into 'main'
+    
+    Visualizing
+    
+    See merge request mskleh001/npip!12
+
+[33mcommit 7d48ead340b9d6b10f472a42fd0b4892454f732c[m
+Merge: a55d9a8f 993ab6a0
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Fri Aug 16 00:20:54 2024 +0200
+
+    Merge branch 'update-SQL-query/remove-duplicates' into 'main'
+    
+    Update sql query/remove duplicates
+    
+    See merge request mskleh001/npip!11
+
+[33mcommit 993ab6a0f979816077f7f5dd28f6f59672dc26c3[m[33m ([m[1;31morigin/update-SQL-query/remove-duplicates[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Aug 16 00:17:27 2024 +0200
+
+    update-SQL-query/remove-duplicates
+
+[33mcommit 2d3149461568234e5972f2505c634ee2da9e5164[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Fri Aug 16 00:15:42 2024 +0200
+
+    update the script to catch errors
+
+[33mcommit ef64210cb95168eb820ad6ed320c5d9290a0c499[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Aug 15 22:58:12 2024 +0200
+
+    fix the SQL query
+
+[33mcommit ac89829a915ab1b81863c77e548dd551e2fa6ff9[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Aug 15 22:49:06 2024 +0200
+
+    update the SQL query to group data by date, country, city, region and ASN
+
+[33mcommit a55d9a8f5083f677cb7e927bb143818bb6115449[m
+Merge: 0a11aec4 5dc96e3b
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Thu Aug 15 21:09:17 2024 +0200
+
+    Merge branch 'Entities_oop' into 'main'
+    
+    1. Added the entities class that has the classes
+    
+    See merge request mskleh001/npip!10
+
+[33mcommit 5dc96e3b66992899a5fe5d5772671940bb39070a[m[33m ([m[1;31morigin/Entities_oop[m[33m)[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Thu Aug 15 20:52:29 2024 +0200
+
+    1. Added the entities class that has the classes
+       in domain model class diagram
+    2. added index.html in taplates to test the Entities classes
+    3. modified the settings to work with tamplate
+    4. added a paths NPIP/urls.py to register mlab app paths
+    5. adde the dispayed function on mlab/views.py
+
+[33mcommit 0a11aec465b1baec77d85917b1ad261efdadfc11[m
+Merge: 72ec0fb8 f9fb631a
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Thu Aug 15 20:39:04 2024 +0200
+
+    Merge branch 'test-script/fetch-data' into 'main'
+    
+    Test script/fetch data
+    
+    See merge request mskleh001/npip!9
+
+[33mcommit f9fb631a2439ea7fbcbdbc09b51d4e082112a178[m[33m ([m[1;31morigin/test-script/fetch-data[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Aug 15 20:37:28 2024 +0200
+
+    update the date range
+
+[33mcommit bc6cdcd66945b1ac44ca94e3d1582d29b98ddbf0[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Thu Aug 15 20:36:00 2024 +0200
+
+    update to retrieve 30000 rows
+
+[33mcommit 9371783a87300a4d2410967d0687993d74cfe1d5[m
+Author: EddieMjiyakho <eddie.mjiyakho@gmail.com>
+Date:   Thu Aug 15 16:02:04 2024 +0200
+
+    Your commit message
+
+[33mcommit 72ec0fb8cc083ea151cf446b6492912f598d35be[m
+Merge: 3a4bee26 6bf64ce2
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Wed Aug 14 17:06:28 2024 +0200
+
+    Merge branch 'Store-data-from-bigquery-to-postgreSQL' into 'main'
+    
+    Configured the script to fetch mlab data
+    
+    See merge request mskleh001/npip!8
+
+[33mcommit 6bf64ce2f80e6e1d32c9eb569c5f075c810cf0a5[m[33m ([m[1;31morigin/Store-data-from-bigquery-to-postgreSQL[m[33m)[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Wed Aug 14 12:21:16 2024 +0200
+
+    Fixed bug in Print the Metrics to the terminal
+
+[33mcommit b72ceac83f3489df712e0cbcec39494b8895d980[m
+Author: Maphuti <Fabridgeshilabje01@gmail.com>
+Date:   Wed Aug 14 12:01:22 2024 +0200
+
+    Configured the script to fetch mlab data
+    addded Print_Metrics script to fetch data from postgreSQL to terminal
+
+[33mcommit 3a4bee2656147c30f2f43e2d1875c59026a2f2e8[m
+Merge: 4cafe97b 2cc2dab3
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Mon Aug 12 22:59:11 2024 +0200
+
+    Merge branch 'database/add-fields' into 'main'
+    
+    Database/add fields
+    
+    See merge request mskleh001/npip!7
+
+[33mcommit 2cc2dab368e3ab2d353ff6e3c5b39d008c40be61[m[33m ([m[1;31morigin/database/add-fields[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Aug 12 22:57:47 2024 +0200
+
+    networkperformancedata table migration done
+
+[33mcommit ec0422b81e4b76e9d04f9032e2e3d33ba7e1667f[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Aug 12 22:56:47 2024 +0200
+
+    add variables clientCity and clientRegion
+
+[33mcommit 89f4c302a2c073df7ec7627553faed56536fd36c[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Aug 12 19:06:51 2024 +0200
+
+    add fields clientCountry and clientCity in models.py
+
+[33mcommit db4af7292de279b4962ed77992163267d1c88549[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Mon Aug 12 19:02:58 2024 +0200
+
+    update the query to fetch other fields clientCity and clientRegion
+
+[33mcommit 4cafe97b4268004ba1b6c3578fa590de1a9bd2fc[m
+Merge: 783dcd5f 2111b253
+Author: Sakhile Mjiyakho <mjysak001@cs.uct.ac.za>
+Date:   Sun Aug 11 19:33:31 2024 +0200
+
+    Merge branch 'configure-project/fetch-data' into 'main'
+    
+    Configure project/fetch data
+    
+    See merge request mskleh001/npip!6
+
+[33mcommit 2111b2537f5df108640dd6a7c6070dbb5d0cf316[m[33m ([m[1;31morigin/configure-project/fetch-data[m[33m)[m
+Author: EddieMjiyakho <eddie.mjiyakho@gmail.com>
+Date:   Sun Aug 11 18:59:34 2024 +0200
+
+    creacting react project to connect with backend
+
+[33mcommit b884e49db8cfd4e5b1452dfc14594c17fd50d41b[m
+Author: EddieMjiyakho <eddie.mjiyakho@gmail.com>
+Date:   Sun Aug 11 18:24:03 2024 +0200
+
+    create urls.py file in mlab app
+
+[33mcommit fef215c8e22081d1e2925fade7a7de411e4d5381[m
+Author: EddieMjiyakho <eddie.mjiyakho@gmail.com>
+Date:   Sun Aug 11 18:23:26 2024 +0200
+
+    create MyModelViewSet class in views.py
+
+[33mcommit e36945a7d31b2cee030439b0aa5c04146b40405b[m
+Author: EddieMjiyakho <eddie.mjiyakho@gmail.com>
+Date:   Sun Aug 11 18:21:47 2024 +0200
+
+    create MyModelSerializer class in serializers.py
+
+[33mcommit dfef10658c722b4d8059735e42d2a5bf5d6a9ea0[m
+Author: EddieMjiyakho <eddie.mjiyakho@gmail.com>
+Date:   Sun Aug 11 18:11:45 2024 +0200
+
+    add modelserializer class in models.py
+
+[33mcommit 783dcd5f6c4c70ac491032048bc1cf25adb5908d[m
+Merge: 9bc7425a 05d5802a
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Sun Aug 11 00:12:45 2024 +0200
+
+    Merge branch 'bigquery-to-postgre/fetch-data' into 'main'
+    
+    Bigquery to postgre/fetch data
+    
+    See merge request mskleh001/npip!5
+
+[33mcommit 05d5802ab083211e82d52f2df19dea077d5bfe64[m[33m ([m[1;31morigin/bigquery-to-postgre/fetch-data[m[33m)[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Aug 11 00:10:28 2024 +0200
+
+    catched files
+
+[33mcommit 3294691991fde436423f3df70c9ea6c8338defb4[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Aug 11 00:07:08 2024 +0200
+
+    fetch data for African countries query
+
+[33mcommit b6670022418feb3454462015ecb1f3d7c936b8b8[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sat Aug 10 21:50:19 2024 +0200
+
+    add 0003 migration file to git
+
+[33mcommit 5d138a3ebde584be11974a262aedcfaaf7ab12c3[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sat Aug 10 21:37:11 2024 +0200
+
+    add another table to store data from mlab
+
+[33mcommit 9bc7425a82c626100c0392dfdea07ca515870f4d[m
+Merge: 0055d904 dd73cb31
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Sun Aug 4 18:04:01 2024 +0200
+
+    Merge branch 'RipeAtlas-API/fetch-data-from-web' into 'main'
+    
+    Ripe atlas api/fetch data from web
+    
+    See merge request mskleh001/npip!4
+
+[33mcommit dd73cb315e7f3dbb2ff7a245e142aa5d85afd0ac[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Aug 4 18:00:06 2024 +0200
+
+    import datetime to format start time and end time
+
+[33mcommit 75a2d4eac094f5ace4dfd79e43c31a8f550b53d6[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Aug 4 16:26:59 2024 +0200
+
+    import existing model RipeAtlasData
+
+[33mcommit b60bf1d363619988a0fb4c50e032425aed1412b4[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Aug 4 16:22:10 2024 +0200
+
+    Format start time and end time
+
+[33mcommit 2a30bff96bda9c75d8605cf012cc454fd88ee955[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Aug 4 15:58:54 2024 +0200
+
+    Fetch data from the RIPE Atlas API and stores it in the database
+
+[33mcommit 6173e8e20ff6eed4a2c14b10807ea1ebd5e0a9b7[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sun Aug 4 15:45:32 2024 +0200
+
+    Add RipeAtlasData class in models.py
+
+[33mcommit 0055d90443534d30a0467f5f28c7f7e86603038e[m
+Merge: 907c4983 13b1d5f0
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Sat Aug 3 22:34:46 2024 +0200
+
+    Merge branch 'database/connect-postgreSQL' into 'main'
+    
+    Database/connect postgre sql
+    
+    See merge request mskleh001/npip!3
+
+[33mcommit 13b1d5f050306f4585d0836972e6317e5423b4d9[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sat Aug 3 22:31:07 2024 +0200
+
+    connection to SQL final changes
+
+[33mcommit 290ac42406a5039177f15f72ca1eafcd852df5cb[m
+Author: karabo-debug <82844238+karabo-debug@users.noreply.github.com>
+Date:   Sat Aug 3 22:29:24 2024 +0200
+
+    add postgreSQL port number
+
+[33mcommit 907c4983c5671fa0372faa46a0e90cb8ee6c8bfa[m
+Merge: ea033d00 10a30007
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Sat Aug 3 20:16:36 2024 +0200
+
+    Merge branch 'database/connect-postgreSQL' into 'main'
+    
+    Database/connect postgre sql
+    
+    See merge request mskleh001/npip!2
+
+[33mcommit 10a300070818f45db9aa115caee019dd20644dcb[m
+Author: Lehlohonolo Mosikili <karabolehlohonolo242@gmail.com>
+Date:   Sat Aug 3 20:06:50 2024 +0200
+
+    Connect postgreSQL database
+
+[33mcommit cfec101f4e60b5698e3e741aaee2c7dab35d7b40[m
+Author: Lehlohonolo Mosikili <karabolehlohonolo242@gmail.com>
+Date:   Sat Aug 3 11:07:31 2024 +0200
+
+    Make the request to the M-Lab API and check if it is successful
+
+[33mcommit 2a6e6309309ff724daa4fa26dc419c8d31b0cb38[m
+Author: Lehlohonolo Mosikili <karabolehlohonolo242@gmail.com>
+Date:   Sat Aug 3 11:00:38 2024 +0200
+
+    Define the API endpoint and parameters
+
+[33mcommit cb6256d00fcba5d5ef38f6dc95becf5f0bbc43aa[m
+Author: Lehlohonolo Mosikili <karabolehlohonolo242@gmail.com>
+Date:   Sat Aug 3 10:58:28 2024 +0200
+
+    Define a command class to fetch data from M-Lab API
+
+[33mcommit ac953189eba5e03ed38e9888907f85e88d35016d[m
+Author: Lehlohonolo Mosikili <karabolehlohonolo242@gmail.com>
+Date:   Sat Aug 3 10:47:34 2024 +0200
+
+    define a model in mlab/models.py to store the M-Lab data
+
+[33mcommit ea033d0049a1a26c671a8ee008b5d54bde07093d[m
+Merge: 9ddc884c d8e3e51c
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Fri Aug 2 12:37:46 2024 +0200
+
+    Merge branch 'tools/django-framework' into 'main'
+    
+    Install django framework
+    
+    See merge request mskleh001/npip!1
+
+[33mcommit d8e3e51c34ee5ec520c099b3f372ef43c08f3164[m
+Author: Lehlohonolo Mosikili <karabolehlohonolo242@gmail.com>
+Date:   Fri Aug 2 12:34:31 2024 +0200
+
+    Install django framework
+
+[33mcommit 9ddc884c5edc8ac9d0eda41bf98ffeeac475d675[m
+Author: Lehlohonolo Mosikili <mskleh001@cs.uct.ac.za>
+Date:   Thu Aug 1 12:46:27 2024 +0200
+
+    Initial commit
