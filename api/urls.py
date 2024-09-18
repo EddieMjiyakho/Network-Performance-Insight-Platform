@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('isp-data/', views.isp_data_api, name='isp_data'),
+    path('isp-data/', views.get_filtered_data, name='isp_data'),
 ]

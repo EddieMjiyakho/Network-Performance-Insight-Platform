@@ -9,7 +9,10 @@ function ChartsGraphs() {
       <h1>Graphs & Charts </h1>
       {/* Add content specific to Charts & Graphs */}
       <FilterBar/>
+      <LineChart/>
     </div>
+
+    
   );
 }
 
