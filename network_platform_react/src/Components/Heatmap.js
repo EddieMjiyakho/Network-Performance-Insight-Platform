@@ -30,7 +30,7 @@ const Heatmap = () => {
             onEachFeature: (feature, layer) => {
               // Add a click event to each country
               layer.on('click', (e) => {
-                const countryName = feature.properties.ADMIN; // Assuming 'ADMIN' is the country name
+                const countryName = feature.properties.ADMIN; 
                 const { lat, lng } = e.latlng;
 
                 // Show a popup with country name and coordinates
@@ -50,9 +50,13 @@ const Heatmap = () => {
 
       // Heatmap data example
       const heatData = [
-        [9.0820, 8.6753, 0.5],  // Example points
-        [10.7749, 7.4194, 0.7],
-        [8.7949, 9.4294, 0.6]
+        [9.0820, 8.6753, 1],  // Example points
+        [10.7749, 7.4194, 3],
+        [8.7949, 9.4294, 5],
+        [-29.86, 24.08, 0.9],
+        [-22.13, 17.05, 0.5],
+        [8.7949, 9.4294, 5],
+        [ -2.13, 21.45, 0.3]
       ];
 
       // Add heatmap layer

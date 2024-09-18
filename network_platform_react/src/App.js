@@ -5,11 +5,13 @@ import GeospatialMap from "./Components/GeospatialMap"; // Placeholder component
 import ChartsGraphs from "./Components/ChartsGraphs"; // Placeholder component
 import ISPLeaderboard from "./Components/ISPLeaderboard"; // Placeholder component
 import HistoryAnalysis from "./Components/HistoricalPerformanceAnalysis"; // Placeholder component
+import { DataProvider } from './DataContext'; // Import the DataProvider to wrap the app
 import "./App.css";
 
 function App() {
   const [activeComponent, setActiveComponent] = useState("DashboardOverview");
 
+  // Dynamically render the active component based on the state
   const renderComponent = () => {
     switch (activeComponent) {
       case "DashboardOverview":
@@ -28,10 +30,13 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <Sidebar setActiveComponent={setActiveComponent} />
-      <div className="main-content">{renderComponent()}</div>
-    </div>
+    // Wrap the whole app in the DataProvider to provide global data access
+    <DataProvider>
+      <div className="app">
+        <Sidebar setActiveComponent={setActiveComponent} />
+        <div className="main-content">{renderComponent()}</div>
+      </div>
+    </DataProvider>
   );
 }
 
