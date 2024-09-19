@@ -60,6 +60,9 @@
             font-weight: 700;
             color: #007bff; /* Bootstrap primary color */
         }
+        .filter-form {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -70,9 +73,23 @@
         <!-- Add more links here as needed -->
     </div>
     <div class="main-content">
+        <!-- City Filter Form -->
+        <div class="filter-form">
+            <form action="{% url 'index' %}" method="get">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <select id="city" name="city" class="form-control">
+                        <option value="Cape Town" selected>Cape Town</option>
+                        <option value="Joburg">Johannesburg</option>
+                        <option value="Durban">Durban</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
         <!-- Main content goes here -->
         {% block content %}
-        
+
         <!-- Metric Cards Section -->
         <div class="container">
             <div class="row">
@@ -116,13 +133,33 @@
                 </div>
             </div>
         </div>
-        
+
         {% endblock %}
     </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var responseData = JSON.parse('{{ response_data|escapejs }}');
+
+    // Function to calculate the average of an array of numbers
+    function calculateAverage(values) {
+        if (values.length === 0) return 0;
+        var total = values.reduce((sum, value) => sum + value, 0);
+        return total / values.length;
+    }
+
+    // Calculate averages for each metric
+    var avgDownloadSpeed = calculateAverage(responseData.throughputDownload);
+    var avgUploadSpeed = calculateAverage(responseData.throughputUpload);
+    var avgPacketLoss = calculateAverage(responseData.data);
+    var avgMinRtt = calculateAverage(responseData.minrtt);
+
+    // Update metric cards with average values
+    document.getElementById('avg-download-speed').textContent = avgDownloadSpeed.toFixed(2) + ' Mbps';
+    document.getElementById('avg-upload-speed').textContent = avgUploadSpeed.toFixed(2) + ' Mbps';
+    document.getElementById('packet-loss').textContent = avgPacketLoss.toFixed(2) + ' %';
+    document.getElementById('min-rtt').textContent = avgMinRtt.toFixed(2) + ' ms';
+});
+    </script>
 </body>
 </html>
-
-
-
-
 
