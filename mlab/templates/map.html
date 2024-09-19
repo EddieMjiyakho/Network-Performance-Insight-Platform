@@ -11,8 +11,7 @@
     <style>
         .container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
             gap: 10px; /* Space between containers */
             width: 100%;
             height: 100vh;
@@ -21,38 +20,62 @@
         }
 
         .map-container {
-            width: 100%;
-            height: 100%;
+            grid-column: span 2; /* Map spans both columns */
+            height: 400px;
             border: 1px solid #ddd; /* Optional border for visualization */
-            overflow: auto; /* Enable scrolling */
+            overflow: auto;
             position: relative;
         }
 
-        #map {
-            width: 200%;
-            height: 200%;
+        .chart-container {
+            height: 400px;
+            border: 1px solid #ddd; /* Optional border for visualization */
+            padding: 10px;
         }
 
-        .other-container {
+        #map {
             width: 100%;
             height: 100%;
-            border: 1px solid #ddd; /* Optional border for visualization */
+        }
+
+        /* Ensure the charts fill their respective containers */
+        #barChart, #lineChart, #throughputDownloadChart, #throughputUploadChart {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Map container at the top left -->
+        <!-- Map container -->
         <div class="map-container" id="map-container">
             <div id="map"></div>
         </div>
-        <!-- Other containers in the grid -->
-        <!-- Donut chart container -->
-        <div class="other-container" id="donutChartContainer">
-            <canvas id="donutChart"></canvas> <!-- Canvas for Chart.js donut chart -->
+
+        <!-- Bar chart container with heading -->
+        <div class="chart-container">
+            <h3>ISP Packet Loss (Bar Chart)</h3>
+            <canvas id="barChart"></canvas>
         </div>
-        <div class="other-container">Container 3</div>
-        <div class="other-container">Container 4</div>
+
+        <!-- Line chart for Min RTT with heading -->
+        <div class="chart-container">
+            <h3>Min RTT by ISP (Line Chart)</h3>
+            <canvas id="lineChart"></canvas>
+        </div>
+
+        <!-- Line chart for Throughput with heading -->
+        <div class="chart-container">
+            <h3>Download Speed Throughput by ISP (Line Chart)</h3>
+            <canvas id="throughputDownloadChart"></canvas>
+        </div>
+
+
+        <!-- New Chart Container with heading -->
+        <div class="chart-container">
+            <h3>Upload Speed Throughput by ISP (Line Chart)</h3>
+            <canvas id="throughputUploadChart"></canvas>
+        </div>
     </div>
 
     <!-- Leaflet JavaScript -->
@@ -73,9 +96,118 @@
             mapContainer.scrollTop = mapContainer.scrollHeight / 2 - mapContainer.clientHeight / 2;
             mapContainer.scrollLeft = mapContainer.scrollWidth / 2 - mapContainer.clientWidth / 2;
         };
+        
+        // Adjust scroll position after a short delay to ensure map is rendered
+        window.onload = function() {
+            setTimeout(centerMapContainerScroll, 1000); // Delay in milliseconds
+        };
 
         // Variable to keep track of the current circle
         var currentCircle = null;
+        // Initialize chart variables
+        var barChart = null;
+        var lineChart = null;
+        var throughputDownloadChart = null;
+        var throughputUploadChart = null;
+
+        // Function to update all charts with new data
+        function updateCharts(chartData) {
+            if (barChart) barChart.destroy();
+            if (lineChart) lineChart.destroy();
+            if (throughputDownloadChart) throughputDownloadChart.destroy();
+            if (throughputUploadChart) throughputUploadChart.destroy();
+
+            // Bar chart
+            var ctxBar = document.getElementById('barChart').getContext('2d');
+            barChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Avg Packet Loss (%)',
+                        data: chartData.data,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Line chart for Min RTT
+            var ctxLine = document.getElementById('lineChart').getContext('2d');
+            lineChart = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Min RTT (ms)',
+                        data: chartData.minrtt,
+                        borderColor: '#36A2EB',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Line chart for Download Speed Throughput
+            var ctxThroughputDownload = document.getElementById('throughputDownloadChart').getContext('2d');
+            throughputDownloadChart = new Chart(ctxThroughputDownload, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Download Speed (Mbps)',
+                        data: chartData.throughputDownload,
+                        borderColor: '#FFCE56',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Line chart for Upload Speed Throughput
+            var ctxThroughputUpload = document.getElementById('throughputUploadChart').getContext('2d');
+            throughputUploadChart = new Chart(ctxThroughputUpload, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Upload Speed (Mbps)',
+                        data: chartData.throughputUpload,
+                        borderColor: '#FF5733',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
 
         map.on('click', function(event) {
             var clickLat = event.latlng.lat;
@@ -94,45 +226,18 @@
 
             map.setView([clickLat, clickLng], 6, { animate: true });
 
+
             // Reverse geocode to get the country
             fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${clickLat}&lon=${clickLng}`)
             .then(response => response.json())
             .then(data => {
                 var country = data.address.country || 'Unknown';
 
-                // Fetch data using GET based on the clicked country
-                fetch(`/?country=${country}`)  // URL for your Django view
+                // Fetch chart data for the selected country
+                fetch(`/?country=${country}`)
                 .then(response => response.json())
-                .then(chartData => {                  
-                    // Create or update the donut chart with the fetched data
-                    var ctx = document.getElementById('donutChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: chartData.labels, // ISP names
-                            datasets: [{
-                                label: 'Avg Packet Loss',
-                                data: chartData.data, // Avg packet loss per ISP
-                                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-                                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
-                            }]
-                        },
-                        options: {
-                            responsive: false,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(tooltipItem) {
-                                            return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2) + '%';
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
+                .then(chartData => {
+                    updateCharts(chartData);
                 })
                 .catch(error => console.error('Error fetching chart data:', error));
             })
