@@ -54,26 +54,26 @@
 
         <!-- Bar chart container with heading -->
         <div class="chart-container">
-            <h3>ISP Packet Loss (Bar Chart)</h3>
+            <h3>Packet Loss by ISP </h3>
             <canvas id="barChart"></canvas>
         </div>
 
         <!-- Line chart for Min RTT with heading -->
         <div class="chart-container">
-            <h3>Min RTT by ISP (Line Chart)</h3>
+            <h3>Min RTT by ISP </h3>
             <canvas id="lineChart"></canvas>
         </div>
 
         <!-- Line chart for Throughput with heading -->
         <div class="chart-container">
-            <h3>Download Speed Throughput by ISP (Line Chart)</h3>
+            <h3>Download Speed Throughput by ISP </h3>
             <canvas id="throughputDownloadChart"></canvas>
         </div>
 
 
         <!-- New Chart Container with heading -->
         <div class="chart-container">
-            <h3>Upload Speed Throughput by ISP (Line Chart)</h3>
+            <h3>Upload Speed Throughput by ISP</h3>
             <canvas id="throughputUploadChart"></canvas>
         </div>
     </div>
@@ -234,7 +234,7 @@
                 var country = data.address.country || 'Unknown';
 
                 // Fetch chart data for the selected country
-                fetch(`/?country=${country}`)
+                fetch(`/map/?country=${country}`)
                 .then(response => response.json())
                 .then(chartData => {
                     updateCharts(chartData);

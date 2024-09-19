@@ -42,6 +42,24 @@
             font-size: 20px;
             text-align: center;
         }
+        .card {
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #007bff; /* Bootstrap primary color */
+        }
     </style>
 </head>
 <body>
@@ -54,7 +72,57 @@
     <div class="main-content">
         <!-- Main content goes here -->
         {% block content %}
+        
+        <!-- Metric Cards Section -->
+        <div class="container">
+            <div class="row">
+                <!-- Average Download Speed Card -->
+                <div class="col-md-6 col-lg-6">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Average Download Speed</h5>
+                            <p class="card-text" id="avg-download-speed">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Average Upload Speed Card -->
+                <div class="col-md-6 col-lg-6">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Average Upload Speed</h5>
+                            <p class="card-text" id="avg-upload-speed">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Packet Loss Card -->
+                <div class="col-md-6 col-lg-6">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Packet Loss</h5>
+                            <p class="card-text" id="packet-loss">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Minimum RTT Card -->
+                <div class="col-md-6 col-lg-6">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Minimum RTT</h5>
+                            <p class="card-text" id="min-rtt">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         {% endblock %}
     </div>
 </body>
 </html>
+
+
+
+
+

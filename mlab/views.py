@@ -6,9 +6,6 @@ from .models import NetworkPerformanceData, ASN, AfricaRegion
 from django.db.models import Avg
 
 def index(request):
-    """
-    Render the index page with sidebar navigation.
-    """
     return render(request, 'index.html')
 
 def map(request):
