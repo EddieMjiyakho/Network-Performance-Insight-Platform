@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>NPIP Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -46,6 +46,7 @@
         }
         .card {
             margin-bottom: 20px;
+            border-radius: 0.5rem;
         }
         .card-title {
             font-size: 1.25rem;
@@ -63,15 +64,35 @@
             color: #007bff; /* Bootstrap primary color */
         }
         .filter-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 20px;
+            text-align: center;
+        }
+        .filter-form .form-group {
+            margin-bottom: 10px; /* Space between select box and button */
+        }
+        .btn-primary {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .btn-primary:active {
+            background-color: #004085;
+            border-color: #003766;
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <div class="header">NPIP Dashboard</div>
+        <a href="{% url 'index' %}">Overview</a>
         <a href="{% url 'map' %}">Map</a>
-        <a href="{% url 'network_data_filtered' %}">Network Data</a>
+        <a href="{% url 'network_data_filtered' %}">Charts</a>
         <!-- Add more links here as needed -->
     </div>
     <div class="main-content">
@@ -87,8 +108,7 @@
                         <option value="Midrand">Midrand</option>
                         <option value="Port Elizabeth">Port Elizabeth</option>
                         <option value="Gaborone">Gaborone</option>
-                        <option value="Gaborone">Harare</option>
-                        <option value="Cape Town">Cape Town</option>
+                        <option value="Harare">Harare</option>
                         <option value="Joburg">Johannesburg</option>
                         <option value="Durban">Durban</option>
                     </select>
