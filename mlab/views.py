@@ -1,36 +1,52 @@
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import ASN, AfricaRegion, NetworkPerformanceData, ndt_unified_downloads  # Import your model
+from .models import ndt_unified_downloads  # Import your model
 from django.db.models import Avg
 
 def map(request):
-        country = request.GET.get('country')
+    country = request.GET.get('country')
+    
+    if country:
+        # Fetch data filtered by country
+        isp_data = ndt_unified_downloads.objects.filter(country=country)
         
-        if country:
-            # Fetch data filtered by country
-            isp_data = ndt_unified_downloads.objects.filter(country=country)
-            
-            # Aggregate packet loss for each ISP in the selected country
-            packet_loss_data = isp_data.values('isp').annotate(avg_packet_loss=Avg('packet_loss'))
-            
-            # Prepare data for the chart
-            isp_names = [entry['isp'] for entry in packet_loss_data]
-            packet_losses = [entry['avg_packet_loss'] for entry in packet_loss_data]
-            
-            # Return data as JSON
-            response_data = {
-                'labels': isp_names,
-                'data': packet_losses,
-            }
-                    # Serialize the dictionary to JSON with no indent (compact format)
-            return JsonResponse(json.loads(json.dumps(response_data)), safe=False)
+        # Aggregate packet loss for each ISP in the selected country
+        packet_loss_data = isp_data.values('isp').annotate(avg_packet_loss=Avg('packet_loss'))
+        
+        # Prepare data for the bar chart
+        isp_names = [entry['isp'] for entry in packet_loss_data]
+        packet_losses = [entry['avg_packet_loss'] for entry in packet_loss_data]
+        
+        # Aggregate min RTT for each ISP
+        min_rtt_data = isp_data.values('isp').annotate(avg_min_rtt=Avg('min_rtt'))
+        
+        # Prepare data for the line chart (Min RTT)
+        min_rtt_values = [entry['avg_min_rtt'] for entry in min_rtt_data]
+        
+        # Aggregate throughput for each ISP
+        throughput_data = isp_data.values('isp').annotate(avg_throughput=Avg('throughput'))
+        
+        # Prepare data for the line chart (Throughput)
+        throughput_values = [entry['avg_throughput'] for entry in throughput_data]
+        
+        # Return data as JSON
+        response_data = {
+            'labels': isp_names,
+            'data': packet_losses,
+            'minrtt': min_rtt_values,
+            'throughput': throughput_values
+        }
+        
+        # Serialize the dictionary to JSON with no indent (compact format)
+        return JsonResponse(json.loads(json.dumps(response_data)), safe=False)
 
-        # Handle GET request or render map page initially
-        return render(request, 'map.html')
+    # Handle GET request or render map page initially
+    return render(request, 'map.html')
 
-def index(request):
-    return render(request, 'index.html')
+
+# def index(request):
+#     return render(request, 'index.html')
 
 
 # def network_data_filtered(request):
