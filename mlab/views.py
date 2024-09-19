@@ -6,7 +6,48 @@ from .models import NetworkPerformanceData, ASN, AfricaRegion
 from django.db.models import Avg
 
 def index(request):
-    return render(request, 'index.html')
+    # Check if a city is provided in the GET parameters
+    selected_city = request.GET.get('city')
+    
+    if selected_city:
+        # Query data based on the selected city
+        data_downloads = ndt_unified_downloads.objects.filter(city=selected_city)
+        data_uploads = ndt_unified_uploads.objects.filter(city=selected_city)
+
+        # Aggregate data
+        packet_loss_data = data_downloads.values('isp').annotate(avg_packet_loss=Avg('packet_loss'))
+        min_rtt_data = data_downloads.values('isp').annotate(avg_min_rtt=Avg('min_rtt'))
+        throughput_data_downloads = data_downloads.values('isp').annotate(avg_throughput=Avg('throughput'))
+        throughput_data_uploads = data_uploads.values('isp').annotate(avg_upload_throughput=Avg('throughput'))
+
+        # Prepare data for JSON response
+        response_data = {
+            'labels': [entry['isp'] for entry in packet_loss_data],
+            'data': [entry['avg_packet_loss'] for entry in packet_loss_data],
+            'minrtt': [entry['avg_min_rtt'] for entry in min_rtt_data],
+            'throughputDownload': [entry['avg_throughput'] for entry in throughput_data_downloads],
+            'throughputUpload': [entry['avg_upload_throughput'] for entry in throughput_data_uploads]
+        }
+
+        # Serialize data to JSON
+        response_data_json = json.dumps(response_data)
+    else:
+        # No city selected; return empty data
+        response_data_json = json.dumps({
+            'labels': [],
+            'data': [],
+            'minrtt': [],
+            'throughputDownload': [],
+            'throughputUpload': []
+        })
+
+    # Cities list (can be dynamically fetched if needed)
+    cities = ['Cape Town', 'Joburg', 'Durban']
+
+    return render(request, 'index.html', {
+        'cities': cities,
+        'response_data': response_data_json
+    })
 
 def map(request):
     country = request.GET.get('country')

@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>NPIP Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             display: flex;
             height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scrolling for fixed sidebar */
         }
         .sidebar {
             width: 250px;
@@ -34,6 +35,7 @@
             margin-left: 250px;
             padding: 20px;
             flex: 1;
+            overflow-y: auto; /* Allow scrolling in main content */
         }
         .header {
             background-color: #007bff;
@@ -44,6 +46,7 @@
         }
         .card {
             margin-bottom: 20px;
+            border-radius: 0.5rem;
         }
         .card-title {
             font-size: 1.25rem;
@@ -60,19 +63,63 @@
             font-weight: 700;
             color: #007bff; /* Bootstrap primary color */
         }
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .filter-form .form-group {
+            margin-bottom: 10px; /* Space between select box and button */
+        }
+        .btn-primary {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .btn-primary:active {
+            background-color: #004085;
+            border-color: #003766;
+        }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <div class="header">Dashboard</div>
+        <div class="header">NPIP Dashboard</div>
+        <a href="{% url 'index' %}">Overview</a>
         <a href="{% url 'map' %}">Map</a>
-        <a href="{% url 'network_data_filtered' %}">Network Data</a>
+        <a href="{% url 'network_data_filtered' %}">Charts</a>
         <!-- Add more links here as needed -->
     </div>
     <div class="main-content">
+        <!-- City Filter Form -->
+        <div class="filter-form">
+            <form action="{% url 'index' %}" method="get">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <select id="city" name="city" class="form-control">
+                        <option value="">Select City</option>
+                        <option value="Cape Town">Cape Town</option>
+                        <option value="Sandton">Sandton</option>
+                        <option value="Midrand">Midrand</option>
+                        <option value="Port Elizabeth">Port Elizabeth</option>
+                        <option value="Gaborone">Gaborone</option>
+                        <option value="Harare">Harare</option>
+                        <option value="Joburg">Johannesburg</option>
+                        <option value="Durban">Durban</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Test</button>
+            </form>
+        </div>
+
         <!-- Main content goes here -->
         {% block content %}
-        
+
         <!-- Metric Cards Section -->
         <div class="container">
             <div class="row">
@@ -116,13 +163,37 @@
                 </div>
             </div>
         </div>
-        
+
         {% endblock %}
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                var responseData = JSON.parse('{{ response_data|escapejs }}');
+
+                // Function to calculate the average of an array of numbers
+                function calculateAverage(values) {
+                    if (!Array.isArray(values) || values.length === 0) return 0;
+                    var total = values.reduce((sum, value) => sum + value, 0);
+                    return total / values.length;
+                }
+
+                // Calculate averages for each metric
+                var avgDownloadSpeed = calculateAverage(responseData.throughputDownload);
+                var avgUploadSpeed = calculateAverage(responseData.throughputUpload);
+                var avgPacketLoss = calculateAverage(responseData.packetLoss); // Adjusted key name
+                var avgMinRtt = calculateAverage(responseData.minrtt);
+
+                // Update metric cards with average values
+                document.getElementById('avg-download-speed').textContent = avgDownloadSpeed.toFixed(2) + ' Mbps';
+                document.getElementById('avg-upload-speed').textContent = avgUploadSpeed.toFixed(2) + ' Mbps';
+                document.getElementById('packet-loss').textContent = avgPacketLoss.toFixed(2) + ' %';
+                document.getElementById('min-rtt').textContent = avgMinRtt.toFixed(2) + ' ms';
+            } catch (e) {
+                console.error('Error parsing response data:', e);
+            }
+        });
+    </script>
 </body>
 </html>
-
-
-
-
 
