@@ -11,6 +11,7 @@
             display: flex;
             height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scrolling for fixed sidebar */
         }
         .sidebar {
             width: 250px;
@@ -34,6 +35,7 @@
             margin-left: 250px;
             padding: 20px;
             flex: 1;
+            overflow-y: auto; /* Allow scrolling in main content */
         }
         .header {
             background-color: #007bff;
@@ -67,7 +69,7 @@
 </head>
 <body>
     <div class="sidebar">
-        <div class="header">Dashboard</div>
+        <div class="header">NPIP Dashboard</div>
         <a href="{% url 'map' %}">Map</a>
         <a href="{% url 'network_data_filtered' %}">Network Data</a>
         <!-- Add more links here as needed -->
@@ -79,11 +81,14 @@
                 <div class="form-group">
                     <label for="city">City</label>
                     <select id="city" name="city" class="form-control">
-                        <option value="Cape Town" selected>Cape Town</option>
+                        <option value="">Select City</option>
+                        <option value="Sandton">Sandton</option>
+                        <option value="Cape Town">Cape Town</option>
                         <option value="Joburg">Johannesburg</option>
                         <option value="Durban">Durban</option>
                     </select>
                 </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
 
@@ -138,26 +143,30 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var responseData = JSON.parse('{{ response_data|escapejs }}');
+            try {
+                var responseData = JSON.parse('{{ response_data|escapejs }}');
 
-            // Function to calculate the average of an array of numbers
-            function calculateAverage(values) {
-                if (values.length === 0) return 0;
-                var total = values.reduce((sum, value) => sum + value, 0);
-                return total / values.length;
+                // Function to calculate the average of an array of numbers
+                function calculateAverage(values) {
+                    if (!Array.isArray(values) || values.length === 0) return 0;
+                    var total = values.reduce((sum, value) => sum + value, 0);
+                    return total / values.length;
+                }
+
+                // Calculate averages for each metric
+                var avgDownloadSpeed = calculateAverage(responseData.throughputDownload);
+                var avgUploadSpeed = calculateAverage(responseData.throughputUpload);
+                var avgPacketLoss = calculateAverage(responseData.packetLoss); // Adjusted key name
+                var avgMinRtt = calculateAverage(responseData.minrtt);
+
+                // Update metric cards with average values
+                document.getElementById('avg-download-speed').textContent = avgDownloadSpeed.toFixed(2) + ' Mbps';
+                document.getElementById('avg-upload-speed').textContent = avgUploadSpeed.toFixed(2) + ' Mbps';
+                document.getElementById('packet-loss').textContent = avgPacketLoss.toFixed(2) + ' %';
+                document.getElementById('min-rtt').textContent = avgMinRtt.toFixed(2) + ' ms';
+            } catch (e) {
+                console.error('Error parsing response data:', e);
             }
-
-            // Calculate averages for each metric
-            var avgDownloadSpeed = calculateAverage(responseData.throughputDownload);
-            var avgUploadSpeed = calculateAverage(responseData.throughputUpload);
-            var avgPacketLoss = calculateAverage(responseData.data);
-            var avgMinRtt = calculateAverage(responseData.minrtt);
-
-            // Update metric cards with average values
-            document.getElementById('avg-download-speed').textContent = avgDownloadSpeed.toFixed(2) + ' Mbps';
-            document.getElementById('avg-upload-speed').textContent = avgUploadSpeed.toFixed(2) + ' Mbps';
-            document.getElementById('packet-loss').textContent = avgPacketLoss.toFixed(2) + ' %';
-            document.getElementById('min-rtt').textContent = avgMinRtt.toFixed(2) + ' ms';
         });
     </script>
 </body>
