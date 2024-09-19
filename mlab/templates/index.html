@@ -137,28 +137,28 @@
         {% endblock %}
     </div>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var responseData = JSON.parse('{{ response_data|escapejs }}');
+        document.addEventListener('DOMContentLoaded', function() {
+            var responseData = JSON.parse('{{ response_data|escapejs }}');
 
-    // Function to calculate the average of an array of numbers
-    function calculateAverage(values) {
-        if (values.length === 0) return 0;
-        var total = values.reduce((sum, value) => sum + value, 0);
-        return total / values.length;
-    }
+            // Function to calculate the average of an array of numbers
+            function calculateAverage(values) {
+                if (values.length === 0) return 0;
+                var total = values.reduce((sum, value) => sum + value, 0);
+                return total / values.length;
+            }
 
-    // Calculate averages for each metric
-    var avgDownloadSpeed = calculateAverage(responseData.throughputDownload);
-    var avgUploadSpeed = calculateAverage(responseData.throughputUpload);
-    var avgPacketLoss = calculateAverage(responseData.data);
-    var avgMinRtt = calculateAverage(responseData.minrtt);
+            // Calculate averages for each metric
+            var avgDownloadSpeed = calculateAverage(responseData.throughputDownload);
+            var avgUploadSpeed = calculateAverage(responseData.throughputUpload);
+            var avgPacketLoss = calculateAverage(responseData.data);
+            var avgMinRtt = calculateAverage(responseData.minrtt);
 
-    // Update metric cards with average values
-    document.getElementById('avg-download-speed').textContent = avgDownloadSpeed.toFixed(2) + ' Mbps';
-    document.getElementById('avg-upload-speed').textContent = avgUploadSpeed.toFixed(2) + ' Mbps';
-    document.getElementById('packet-loss').textContent = avgPacketLoss.toFixed(2) + ' %';
-    document.getElementById('min-rtt').textContent = avgMinRtt.toFixed(2) + ' ms';
-});
+            // Update metric cards with average values
+            document.getElementById('avg-download-speed').textContent = avgDownloadSpeed.toFixed(2) + ' Mbps';
+            document.getElementById('avg-upload-speed').textContent = avgUploadSpeed.toFixed(2) + ' Mbps';
+            document.getElementById('packet-loss').textContent = avgPacketLoss.toFixed(2) + ' %';
+            document.getElementById('min-rtt').textContent = avgMinRtt.toFixed(2) + ' ms';
+        });
     </script>
 </body>
 </html>
