@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Performance Insights Platform</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -15,7 +14,7 @@
             height: 300px;
         }
         .pie-chart-container {
-            max-width: 400px;
+            max-width: 500px;
             margin: 0 auto;
         }
         .form-group {
@@ -24,18 +23,29 @@
         .filter-row {
             margin-bottom: 20px;
         }
+        .card {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="my-4">Network Performance Platform</h1>
 
-    <!-- Updated Filter Form -->
+        <!-- Updated Filter Form -->
         <form method="get" action="{% url 'network_data_filtered' %}" id="filterForm" class="mb-4">
             {% csrf_token %}
             <div class="row filter-row">
+
+                <!-- Start Date Filter -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="form-group">
+                        <label for="start_date">Date</label>
+                        <input type="date" name="date" id="date" class="form-control" value="{% if request.GET.date %}{{ request.GET.date }}{% endif %}">
+                    </div>
+                </div>
+
                 <!-- Africa Region Filter -->
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-4">
                     <div class="form-group">
                         <label for="africa_region">Africa Region</label>
                         <select name="africa_region" id="africa_region" class="form-control" onchange="document.getElementById('filterForm').submit();">
@@ -50,7 +60,7 @@
                 </div>
 
                 <!-- Country Filter -->
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-4">
                     <div class="form-group">
                         <label for="country">Country</label>
                         <select name="country" id="country" class="form-control" onchange="document.getElementById('filterForm').submit();">
@@ -63,28 +73,49 @@
                         </select>
                     </div>
                 </div>
+            </div>
         </form>
 
         <!-- Display Charts -->
         {% if chart_data %}
-            <div class="row chart-container">
+            <div class="row">
                 <!-- Line Chart -->
-                <div class="col-md-6 mb-4">
-                    <h3>Line Chart: Download and Upload Speeds</h3>
-                    <canvas id="lineChart" class="chart"></canvas>
+                <div class="col-md-12 col-lg-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Download and Upload Speeds</h3>
+                            <div class="chart-container">
+                                <canvas id="lineChart" class="chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Bar Chart -->
-                <div class="col-md-6 mb-4">
-                    <h3>Bar Chart: Average Latency</h3>
-                    <canvas id="barChart" class="chart"></canvas>
+                <div class="col-md-12 col-lg-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Average Latency</h3>
+                            <div class="chart-container">
+                                <canvas id="barChart" class="chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!--Pie Chart Container -->
-            <div class="chart-container pie-chart-container">
-                <h3>Pie Chart: Number of ASNs</h3>
-                <canvas id="pieChart" class="chart"></canvas>
+            <!-- Pie Chart Container -->
+            <div class="row">
+                <div class="col-md-12 pie-chart-container">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Number of ISPs</h3>
+                            <div class="chart-container">
+                                <canvas id="pieChart" class="chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <script>
@@ -210,7 +241,7 @@
                 });
             </script>
         {% else %}
-            <p>No data available for the selected region.</p>
+            <p class="text-center">No data available for the selected region.</p>
         {% endif %}
     </div>
 
@@ -220,3 +251,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
