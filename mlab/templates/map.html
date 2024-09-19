@@ -27,9 +27,10 @@
             position: relative;
         }
 
-        .other-container {
+        .chart-container {
             height: 400px;
             border: 1px solid #ddd; /* Optional border for visualization */
+            padding: 10px;
         }
 
         #map {
@@ -38,7 +39,7 @@
         }
 
         /* Ensure the charts fill their respective containers */
-        #barChart, #lineChart {
+        #barChart, #lineChart, #throughputDownloadChart, #throughputUploadChart {
             width: 100%;
             height: 100%;
         }
@@ -66,7 +67,14 @@
         <!-- Line chart for Throughput with heading -->
         <div class="chart-container">
             <h3>Download Speed Throughput by ISP (Line Chart)</h3>
-            <canvas id="throughputChart"></canvas>
+            <canvas id="throughputDownloadChart"></canvas>
+        </div>
+
+
+        <!-- New Chart Container with heading -->
+        <div class="chart-container">
+            <h3>Upload Speed Throughput by ISP (Line Chart)</h3>
+            <canvas id="throughputUploadChart"></canvas>
         </div>
     </div>
 
@@ -88,19 +96,26 @@
             mapContainer.scrollTop = mapContainer.scrollHeight / 2 - mapContainer.clientHeight / 2;
             mapContainer.scrollLeft = mapContainer.scrollWidth / 2 - mapContainer.clientWidth / 2;
         };
+        
+        // Adjust scroll position after a short delay to ensure map is rendered
+        window.onload = function() {
+            setTimeout(centerMapContainerScroll, 1000); // Delay in milliseconds
+        };
 
         // Variable to keep track of the current circle
         var currentCircle = null;
         // Initialize chart variables
         var barChart = null;
         var lineChart = null;
-        var throughputChart = null;
+        var throughputDownloadChart = null;
+        var throughputUploadChart = null;
 
         // Function to update all charts with new data
         function updateCharts(chartData) {
             if (barChart) barChart.destroy();
             if (lineChart) lineChart.destroy();
-            if (throughputChart) throughputChart.destroy();
+            if (throughputDownloadChart) throughputDownloadChart.destroy();
+            if (throughputUploadChart) throughputUploadChart.destroy();
 
             // Bar chart
             var ctxBar = document.getElementById('barChart').getContext('2d');
@@ -147,16 +162,39 @@
                 }
             });
 
-            // Line chart for Throughput
-            var ctxThroughput = document.getElementById('throughputChart').getContext('2d');
-            throughputChart = new Chart(ctxThroughput, {
+            // Line chart for Download Speed Throughput
+            var ctxThroughputDownload = document.getElementById('throughputDownloadChart').getContext('2d');
+            throughputDownloadChart = new Chart(ctxThroughputDownload, {
                 type: 'line',
                 data: {
                     labels: chartData.labels,
                     datasets: [{
-                        label: 'Throughput (Mbps)',
-                        data: chartData.throughput,
+                        label: 'Download Speed (Mbps)',
+                        data: chartData.throughputDownload,
                         borderColor: '#FFCE56',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Line chart for Upload Speed Throughput
+            var ctxThroughputUpload = document.getElementById('throughputUploadChart').getContext('2d');
+            throughputUploadChart = new Chart(ctxThroughputUpload, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Upload Speed (Mbps)',
+                        data: chartData.throughputUpload,
+                        borderColor: '#FF5733',
                         fill: false
                     }]
                 },

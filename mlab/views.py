@@ -1,41 +1,51 @@
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import ndt_unified_downloads  # Import your model
+from .models import ndt_unified_downloads, ndt_unified_uploads  # Import your models
 from django.db.models import Avg
 
 def map(request):
     country = request.GET.get('country')
     
     if country:
-        # Fetch data filtered by country
-        isp_data = ndt_unified_downloads.objects.filter(country=country)
+        # Fetch data filtered by country from downloads
+        isp_data_downloads = ndt_unified_downloads.objects.filter(country=country)
         
         # Aggregate packet loss for each ISP in the selected country
-        packet_loss_data = isp_data.values('isp').annotate(avg_packet_loss=Avg('packet_loss'))
+        packet_loss_data = isp_data_downloads.values('isp').annotate(avg_packet_loss=Avg('packet_loss'))
         
         # Prepare data for the bar chart
         isp_names = [entry['isp'] for entry in packet_loss_data]
         packet_losses = [entry['avg_packet_loss'] for entry in packet_loss_data]
         
         # Aggregate min RTT for each ISP
-        min_rtt_data = isp_data.values('isp').annotate(avg_min_rtt=Avg('min_rtt'))
+        min_rtt_data = isp_data_downloads.values('isp').annotate(avg_min_rtt=Avg('min_rtt'))
         
         # Prepare data for the line chart (Min RTT)
         min_rtt_values = [entry['avg_min_rtt'] for entry in min_rtt_data]
         
         # Aggregate throughput for each ISP
-        throughput_data = isp_data.values('isp').annotate(avg_throughput=Avg('throughput'))
+        throughput_data_downloads = isp_data_downloads.values('isp').annotate(avg_throughput=Avg('throughput'))
         
-        # Prepare data for the line chart (Throughput)
-        throughput_values = [entry['avg_throughput'] for entry in throughput_data]
+        # Prepare data for the line chart (Throughput Download)
+        throughput_download_values = [entry['avg_throughput'] for entry in throughput_data_downloads]
+        
+        # Fetch data filtered by country from uploads
+        isp_data_uploads = ndt_unified_uploads.objects.filter(country=country)
+        
+        # Aggregate throughput for each ISP in uploads
+        throughput_data_uploads = isp_data_uploads.values('isp').annotate(avg_upload_throughput=Avg('throughput'))
+        
+        # Prepare data for the line chart (Throughput Upload)
+        throughput_upload_values = [entry['avg_upload_throughput'] for entry in throughput_data_uploads]
         
         # Return data as JSON
         response_data = {
             'labels': isp_names,
             'data': packet_losses,
             'minrtt': min_rtt_values,
-            'throughput': throughput_values
+            'throughputDownload': throughput_download_values,
+            'throughputUpload': throughput_upload_values
         }
         
         # Serialize the dictionary to JSON with no indent (compact format)
