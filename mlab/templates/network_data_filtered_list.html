@@ -18,11 +18,13 @@
             max-width: 500px;
             margin: 0 auto;
         }
-        .form-group {
-            margin-bottom: 0;
-        }
         .filter-row {
-            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .filter-column {
+            width: 100%;
+            padding: 0 15px;
         }
         .card {
             margin-bottom: 20px;
@@ -32,21 +34,13 @@
 <body>
     <div class="container">
 
-        <!-- Updated Filter Form -->
+        <!-- Updated Filter Form with 2x2 Grid -->
         <form method="get" action="{% url 'network_data_filtered' %}" id="filterForm" class="mb-4">
             {% csrf_token %}
             <div class="row filter-row">
-
-                <!-- Start Date Filter -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="form-group">
-                        <label for="start_date">Date</label>
-                        <input type="date" name="date" id="date" class="form-control" value="{% if request.GET.date %}{{ request.GET.date }}{% endif %}">
-                    </div>
-                </div>
-
-                <!-- Africa Region Filter -->
-                <div class="col-md-6 col-lg-4">
+                <!-- First Column: Africa Region and Start Date -->
+                <div class="col-md-6 col-lg-6 filter-column">
+                    <!-- Africa Region Filter -->
                     <div class="form-group">
                         <label for="africa_region">Africa Region</label>
                         <select name="africa_region" id="africa_region" class="form-control" onchange="document.getElementById('filterForm').submit();">
@@ -58,10 +52,17 @@
                             {% endfor %}
                         </select>
                     </div>
+
+                    <!-- Start Date Picker -->
+                    <div class="form-group">
+                        <label for="start_date">Start Date (Between 01-08-2023 and 24-01-2024)</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" min="2023-08-01" max="2024-01-24" value="{{ request.GET.start_date }}">
+                    </div>
                 </div>
 
-                <!-- Country Filter -->
-                <div class="col-md-6 col-lg-4">
+                <!-- Second Column: Country and End Date -->
+                <div class="col-md-6 col-lg-6 filter-column">
+                    <!-- Country Filter -->
                     <div class="form-group">
                         <label for="country">Country</label>
                         <select name="country" id="country" class="form-control" onchange="document.getElementById('filterForm').submit();">
@@ -72,6 +73,12 @@
                                 </option>
                             {% endfor %}
                         </select>
+                    </div>
+
+                    <!-- End Date Picker -->
+                    <div class="form-group">
+                        <label for="end_date">End Date (Between 01-08-2023 and 24-01-2024)</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" min="2023-08-01" max="2024-01-24" value="{{ request.GET.end_date }}">
                     </div>
                 </div>
             </div>
@@ -248,8 +255,5 @@
 
     <!-- Include Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    <script src="https://cdn.jsdelivr.net/npm
 
