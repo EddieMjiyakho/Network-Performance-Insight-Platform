@@ -1,9 +1,29 @@
+import os 
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import ndt_unified_downloads, ndt_unified_uploads  # Import your models
 from .models import NetworkPerformanceData, ASN, AfricaRegion
 from django.db.models import Avg
+from django.conf import settings
+from .models import NetworkMetric
+
+
+def fetch_network_data(request):
+    json_path = os.path.join(settings.BASE_DIR, "npip/data/network_metrics.json")
+
+    # 1️⃣ Try to Load JSON First
+    if os.path.exists(json_path):
+        try:
+            with open(json_path, "r") as file:
+                data = json.load(file)
+            return JsonResponse(data, safe=False)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON format."}, status=500)
+
+    # 2️⃣ If JSON is Unavailable, Fetch from Database
+    metrics = NetworkMetric.objects.all().values()
+    return JsonResponse(list(metrics), safe=False)
 
 def index(request):
     # Check if a city is provided in the GET parameters
