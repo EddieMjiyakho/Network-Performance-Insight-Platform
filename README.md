@@ -178,8 +178,8 @@ This project is licensed under the MIT License. See the LICENSE file for details
 **Contact**
 For any questions or feedback, please contact:
 
-Sakhile Mjiyakho: MJYSAK001@example.com
+Sakhile Mjiyakho: Fullstack (Team Leader)
 
-Lehlohonolo Mosikili: MSKLEH001@example.com
+Lehlohonolo Mosikili: Backend (Architect)
 
-Maphuti Shilabje: SHLMAP001@example.com
+Maphuti Shilabje: Frontend (Communicator)
