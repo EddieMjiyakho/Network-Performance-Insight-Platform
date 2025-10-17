@@ -73,8 +73,7 @@ Data Flow:
 - Boundary testing: Testing large data queries from BigQuery.  
 
 📑 Project Report  
-A detailed project report covering the **design, implementation, testing**, and **evaluation** of NPIP is available here:  
-👉 [Final Report - Network Performance Insights Platform]([https://github.com/your-repo/NPIP/blob/main/docs/Final_Report.pdf](https://drive.google.com/file/d/1kIWECehAAe9QiEAno0cgxXhs4kvpkijw/view?usp=sharing))
+A detailed project report covering the **design, implementation, testing**, and **evaluation** of NPIP is available here: [`Final_Report`](https://drive.google.com/file/d/1kIWECehAAe9QiEAno0cgxXhs4kvpkijw/view?usp=sharing).
 
 ▶️ Running the Project
 Clone this repository
