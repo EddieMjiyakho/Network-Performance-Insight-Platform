@@ -1,185 +1,151 @@
-**Introduction**
-The Network Performance Insights Platform (NPIP) is a web-based application designed to analyze and visualize internet performance metrics across Africa. By leveraging data from MLAB, Google BigQuery, and PostgreSQL, NPIP provides insights into key network performance indicators such as latency, throughput, packet loss, upload speed, download speed, and user satisfaction. The platform offers interactive dashboards, geospatial analysis, and historical data tracking, enabling stakeholders to identify regional disparities, detect anomalies, and improve internet infrastructure in underserved areas.
+🌍 Network Performance Insights Platform (NPIP)
 
-**Features**
-Data Filtering: Filter network performance data by country, region, city, and ISP.
+📖 Overview  
+The **Network Performance Insights Platform (NPIP)** is a web-based application designed to analyze and visualize internet performance metrics across Africa.  
+By integrating data from **MLAB**, **Google BigQuery**, and **PostgreSQL**, NPIP provides valuable insights into key indicators such as **latency**, **throughput**, **packet loss**, **upload/download speed**, and **user satisfaction**.
 
-Date Range Selection: Analyze data for specific time periods.
+This project was developed as part of my final-year capstone to demonstrate my skills in:
 
-Data Visualization: Visualize metrics using interactive charts (line, bar, pie) and geospatial maps.
+- Full-stack web development (Django + HTML/CSS/JS)
+- Data engineering with BigQuery and PostgreSQL
+- Data visualization using Chart.js and Leaflet
+- API integration and backend automation
+- Agile development and collaborative teamwork
 
-Geospatial Analysis: View network performance across Africa using latitude and longitude.
+👨‍💻 My Role & Contributions  
+As the **Team Leader and Fullstack Developer**, my responsibilities included:
 
-Data Export: Export filtered data for further analysis.
+- Designing the system architecture using Django’s MVT pattern.  
+- Implementing backend logic to fetch and process network performance data from BigQuery to PostgreSQL.  
+- Developing interactive visualizations and geospatial dashboards.  
+- Conducting regression testing using GitLab CI/CD.  
+- Coordinating development tasks and sprint reviews with team members.
 
-User Authentication: Public access without requiring login.
+Team Members:
+- **Sakhile Mjiyakho** – Fullstack (Team Leader)  
+- **Lehlohonolo Mosikili** – Backend (Architect)  
+- **Maphuti Shilabje** – Frontend (Communicator)
 
-Error Handling: Graceful handling of missing or invalid data.
+🚀 Features  
 
-**Requirements**
-**Functional Requirements**
-Filter data by country, region, city, and ISP.
+**Core Features**
+- 📊 **Data Visualization:** Interactive charts (line, bar, pie) and geospatial maps.  
+- 🌐 **Geospatial Analysis:** Visualize performance across Africa using latitude and longitude.  
+- 🎚️ **Filtering:** Filter data by **region**, **country**, **province**, **city**, and **ISP**.  
+- 🗓️ **Date Range Selection:** Analyze data across custom time periods.  
+- 💾 **Data Export:** Export filtered data for extended analysis.  
+- 🔒 **Error Handling:** Graceful handling of missing or invalid data.  
+- 📱 **Responsive Design:** Optimized for desktop and mobile users.  
 
-Support date range selection for data analysis.
+🛠️ Tech Stack  
 
-Visualize network performance metrics (latency, throughput, packet loss, etc.).
+**Backend:** Django (Python)  
+**Frontend:** HTML, CSS, JavaScript, Chart.js, Leaflet  
+**Database:** PostgreSQL  
+**Cloud Services:** Google BigQuery  
+**CI/CD:** GitLab for regression testing and automation  
+**Hosting:** Localhost (development)  
 
-Provide geospatial analysis using latitude and longitude.
+🧠 System Architecture  
 
-Allow data export in a user-friendly format.
+The NPIP follows the **Model-View-Template (MVT)** architecture pattern:
 
-Handle errors gracefully (e.g., no data available for selected criteria).
+- **Model:** Manages data storage and interaction with PostgreSQL.  
+- **View:** Processes data from BigQuery, applies filters, and passes data to templates.  
+- **Template:** Displays visualizations and maps using Chart.js and Leaflet.  
 
-**Non-Functional Requirements**
-Performance: Efficiently query large datasets from BigQuery and PostgreSQL, with data retrieval and visualization within 3 seconds.
+Data Flow:
+1. Fetch data from Google BigQuery.  
+2. Store processed data in PostgreSQL.  
+3. Visualize metrics on the frontend dashboard.  
 
-Scalability: Handle data across various countries and regions in Africa.
+🧪 Testing  
 
-Security: Encrypt data transmission using TLS.
+**Testing Methods**
+- ✅ **Unit Testing:** Tested individual components (API integrations, data models, etc.)  
+- ✅ **Integration Testing:** Verified data flow between backend and frontend.  
+- ✅ **Functional Testing:** Confirmed data filtering and visualizations operate correctly.  
+- ✅ **Regression Testing:** Automated via GitLab to ensure stability after updates.  
 
-Availability: Ensure 99.5% uptime for reliable access.
+**Example Test Scenarios**
+- Normal use: Filtering data by region/country/city.  
+- Edge cases: Handling empty or invalid datasets.  
+- Boundary testing: Testing large data queries from BigQuery.  
 
-**Usability Requirements**
-Intuitive user interface with easy-to-access filters and visualizations.
+📑 Project Report  
+A detailed project report covering the **design, implementation, testing**, and **evaluation** of NPIP is available here:  
+👉 [Final Report - Network Performance Insights Platform]([https://github.com/your-repo/NPIP/blob/main/docs/Final_Report.pdf](https://drive.google.com/file/d/1kIWECehAAe9QiEAno0cgxXhs4kvpkijw/view?usp=sharing))
 
-Responsive design for desktops, tablets, and smartphones.
-
-Help section to guide users through key tasks.
-
-Installation
-Prerequisites
-Python 3.x
-
-Django
-
-PostgreSQL
-
-Google Cloud BigQuery API access
-
-Node.js (for frontend dependencies)
-
-Steps
-Clone the Repository:
-
-bash
-Copy
+▶️ Running the Project
+Clone this repository
 git clone https://github.com/your-repo/NPIP.git
+
+Navigate into the project folder
 cd NPIP
-Set Up Virtual Environment:
 
-bash
-Copy
+Create a virtual environment and activate it
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install Dependencies:
+source venv/bin/activate    # On Windows: venv\Scripts\activate
 
-bash
-Copy
+Install dependencies
 pip install -r requirements.txt
-Set Up PostgreSQL Database:
 
-Create a PostgreSQL database and update the settings.py file with your database credentials.
+Set up the PostgreSQL database
+
+Create a PostgreSQL database.
+
+Update your settings.py with database credentials.
 
 Run migrations:
 
-bash
-Copy
 python manage.py migrate
-Load Data from BigQuery:
 
-Use the provided Python script to fetch data from BigQuery and load it into PostgreSQL:
-
-bash
-Copy
+Load data from BigQuery
 python scripts/load_data.py
-Run the Development Server:
 
-bash
-Copy
+Run the development server
 python manage.py runserver
-Access the Platform:
-Open your browser and navigate to http://127.0.0.1:8000/.
 
-**Usage**
+
+📊 Usage
 Dashboard Overview
-Interactive Map: Visualize network performance metrics across Africa.
 
-Metric Cards: View key performance indicators (latency, throughput, packet loss, etc.).
+🗺️ Interactive Map: Visualizes network performance across Africa.
 
-Filters: Filter data by region, country, city, and date range.
+📈 Metric Cards: Display KPIs (latency, throughput, packet loss, etc.).
 
-**How to Use**
-Select Region: Use the region filter to narrow down data based on geographic location.
+🎚️ Filters: Filter by region, country, city, and date range.
 
-Select Country/Province/City: Refine your insights by choosing specific countries, provinces, or cities.
+How to Use
 
-View Insights: Visualizations and metric cards will update dynamically based on your selections.
+Select a region or country using the filters.
 
-**Common Issues**
-No Data Visualized: Ensure the selected country or region has available data. Try selecting a broader region or different country.
+Adjust the date range to focus on a specific period.
 
-Slow Loading: Narrow down your filter options or check your internet connection.
+Visualizations update dynamically to reflect your selections.
 
-**Architecture**
-**Design Overview**
-NPIP is built using Django’s Model-View-Template (MVT) pattern:
+Common Issues
 
-Model: Manages data interaction with PostgreSQL.
+❌ No Data: Try selecting a different region or broader time range.
 
-View: Handles business logic and data flow between the model and UI.
+🕒 Slow Load: Narrow filters or check your internet connection.
 
-Template: Renders the user interface using HTML, CSS (Bootstrap), and JavaScript (Chart.js, Leaflet).
+📈 Performance & Scalability
 
-**Data Structure**
-NetworkPerformanceData: Central model for storing network performance metrics.
+⚡ Query Efficiency: Optimized queries retrieve data within ~3 seconds.
 
-AfricaRegion, Country, Region, City, ASN: Normalized tables for geographic and ISP data.
+🌍 Scalability: Supports multiple African countries and large datasets.
 
-**External Services**
-Google BigQuery: Data source for historical and real-time network performance data.
+🔒 Security: TLS encryption ensures secure data transfer.
 
-PostgreSQL: Database for storing and querying network performance data.
+💻 Availability: Designed for 99.5% uptime in production environments.
 
-Chart.js: JavaScript library for interactive data visualization.
+📌 Future Improvements
 
-Leaflet: JavaScript library for geospatial maps.
+🔐 Add user authentication and role-based access.
 
-**Testing**
-**Testing Approach**
-Unit Testing: Test individual components (API integrations, database queries, etc.).
+🧠 Integrate real-time data from RIPE Atlas or similar APIs.
 
-Integration Testing: Verify data flow between frontend, backend, and database.
+📉 Add advanced analytics (trend forecasting, anomaly detection).
 
-Functional Testing: Ensure features like data filtering and visualization work as intended.
-
-Regression Testing: Automate tests using GitLab CI to ensure new updates don’t break existing functionality.
-
-**Test Cases**
-Normal Functioning: Filtering data by region, country, and city.
-
-Extreme Boundary Cases: Handling areas with little to no data.
-
-Invalid Data Handling: Graceful handling of invalid inputs.
-
-**Contributing**
-We welcome contributions to the NPIP project! If you'd like to contribute, please follow these steps:
-
-**Fork the repository.**
-
-Create a new branch for your feature or bug fix.
-
-Commit your changes and push to your branch.
-
-Submit a pull request with a detailed description of your changes.
-
-**License**
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-**Contact**
-For any questions or feedback, please contact:
-
-Sakhile Mjiyakho: Fullstack (Team Leader)
-
-Lehlohonolo Mosikili: Backend (Architect)
-
-Maphuti Shilabje: Frontend (Communicator)
+☁️ Deploy to a cloud-based production environment (AWS or GCP).
